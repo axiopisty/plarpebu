@@ -25,7 +25,7 @@ import com.bluedragontavern.albumgrabber.allmusic.AlbumSearch;
 
 /**
  * Album grabber plugin
- *
+ * 
  * @author kmschmidt
  */
 public class AlbumGrabberPlugin extends FramePlugin implements ActionListener, BasicPlayerListener {
@@ -127,7 +127,7 @@ public class AlbumGrabberPlugin extends FramePlugin implements ActionListener, B
 
     /**
      * getPlugin
-     *
+     * 
      * @return BasicPlayerListener
      */
     public BasicPlayerListener getPlugin() {
@@ -136,7 +136,7 @@ public class AlbumGrabberPlugin extends FramePlugin implements ActionListener, B
 
     /**
      * setController
-     *
+     * 
      * @param controller
      *        BasicController
      */
@@ -144,7 +144,7 @@ public class AlbumGrabberPlugin extends FramePlugin implements ActionListener, B
 
     /**
      * actionPerformed
-     *
+     * 
      * @param e
      *        ActionEvent
      */
@@ -169,7 +169,7 @@ public class AlbumGrabberPlugin extends FramePlugin implements ActionListener, B
 
         /**
          * Constructor
-         *
+         * 
          * @param album
          *        DOCUMENT ME!
          */

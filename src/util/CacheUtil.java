@@ -4,7 +4,7 @@ import java.io.File;
 
 /**
  * Manages temporary cache directories
- *
+ * 
  * @author kmschmidt
  */
 public class CacheUtil {
@@ -14,7 +14,7 @@ public class CacheUtil {
 
     /**
      * Get mp3g cache dir. Make sure it exists.
-     *
+     * 
      * @return File mp3g cache dir
      */
     public static File getMP3GCacheDir() {
@@ -31,7 +31,7 @@ public class CacheUtil {
 
     /**
      * Get album cache dir. Make sure it exists.
-     *
+     * 
      * @return File album cache dir
      */
     public static File getAlbumCacheDir() {
@@ -48,7 +48,7 @@ public class CacheUtil {
 
     /**
      * Get top level cache dir(that hold all other cache dirs)
-     *
+     * 
      * @return File top level cache dir
      */
     private static File getTopLevelCacheDir() {
