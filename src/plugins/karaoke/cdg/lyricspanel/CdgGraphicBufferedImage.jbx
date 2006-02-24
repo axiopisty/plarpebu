@@ -1,0 +1,28 @@
+[PropertyInfo]
+blues,byte[],false,false, , ,false,<default>
+colormapHigh,Color[],false,false, , ,true,<default>
+colormapLow,Color[],false,false, , ,true,<default>
+forceDrawFullImage,boolean,false,false, , ,true,<default>
+forceRedrawFullImage,boolean,false,false, , ,false,<default>
+fromPartialRedraw,boolean,false,false, , ,false,<default>
+fullRectangle,Rectangle,false,false, , ,false,<default>
+g,Graphics,false,false, , ,false,<default>
+greens,byte[],false,false, , ,false,<default>
+height,int,false,false, , ,false,<default>
+icm,IndexColorModel,false,false, , ,false,<default>
+img,BufferedImage,false,false, , ,false,<default>
+pixels,byte[],false,false, , ,true,<default>
+r,Rectangle,false,false, , ,false,<default>
+raster,WritableRaster,false,false, , ,false,<default>
+rDestination,Rectangle,false,false, , ,false,<default>
+reds,byte[],false,false, , ,false,<default>
+sx,double,false,false, , ,false,<default>
+sy,double,false,false, , ,false,<default>
+width,int,false,false, , ,false,<default>
+windowedMode,boolean,false,false, , ,false,<default>
+bilinearInterpolation,boolean,false,false,bilinearInterpolation,bilinearInterpolation,true,<default>
+[IconNames]
+
+
+
+

@@ -1,0 +1,22 @@
+[PropertyInfo]
+CDG_BORDER_PRESET,byte,false,false, , ,false,<default>
+CDG_DEF_TRANS_COLOR,byte,false,false, , ,false,<default>
+CDG_LOAD_COL_TABLE_HIGH,byte,false,false, , ,false,<default>
+CDG_LOAD_COL_TABLE_LOW,byte,false,false, , ,false,<default>
+CDG_MEMORY_PRESET,byte,false,false, , ,false,<default>
+CDG_SCROLL_COPY,byte,false,false, , ,false,<default>
+CDG_SCROLL_PRESET,byte,false,false, , ,false,<default>
+CDG_TILE_NORMAL,byte,false,false, , ,false,<default>
+CDG_TILE_XOR,byte,false,false, , ,false,<default>
+cdgCommand,byte,false,false, , ,true,<default>
+cdgData,byte[],false,false, , ,true,<default>
+cdgInstruction,byte,false,false, , ,true,<default>
+colormap,Color[],false,false, , ,false,<default>
+offset,int,false,false, , ,false,<default>
+parityP,byte[],false,false, , ,true,<default>
+parityQ,byte[],false,false, , ,true,<default>
+[IconNames]
+
+
+
+

@@ -1,0 +1,12 @@
+[PropertyInfo]
+font,java.awt.Font,false,false,font,font,true,<default>
+fontMetrics,FontMetrics,false,false, , ,false,<default>
+frc,FontRenderContext,false,false, , ,false,<default>
+text,String,false,false, , ,true,<default>
+outlineColor,java.awt.Color,false,false,outlineColor,outlineColor,true,<default>
+fillColor,java.awt.Color,false,false,fillColor,fillColor,true,<default>
+[IconNames]
+
+
+
+

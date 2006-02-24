@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vcsstatus version="1.0">
+  <file status="chiw">MP3spi1.8andVorbissoi1.0.jar</file>
+  <file status="chiw">albumgrabber.jar</file>
+  <file status="chiw">chardet.jar</file>
+  <file status="chiw">commons-logging-api.jar</file>
+  <file status="chiw">commons-logging.jar</file>
+  <file status="chiw">jakarta-regexp-1.2.jar</file>
+  <file status="chiw">jbcl.jar</file>
+  <file status="chiw">jid3.jar</file>
+  <file status="chiw">jl0.4.jar</file>
+  <file status="chiw">jogg-0.0.5.jar</file>
+  <file status="chiw">jorbis-0.0.12.jar</file>
+  <file status="chiw">l2fprod-common-directorychooser.jar</file>
+  <file status="chiw">l2fprod-common-fontchooser.jar</file>
+  <file status="chiw">pluginLoaderAPI.jar</file>
+  <file status="chiw">skinlf.jar</file>
+  <file status="chiw">src/basicplayer/ZipUtil.java</file>
+  <file status="chiw">src/player/test/icones/next.gif</file>
+  <file status="chiw">src/player/test/icones/pause.gif</file>
+  <file status="chiw">src/player/test/icones/play.gif</file>
+  <file status="chiw">src/player/test/icones/prev.gif</file>
+  <file status="chiw">src/player/test/icones/splash.jpg</file>
+  <file status="chiw">src/player/test/icones/stop.gif</file>
+  <file status="chiw">tritonus_share.jar</file>
+  <file status="niw">build.xml</file>
+  <file status="niw">demo files/mp3+cdg+zipped/(Beatles) A Little Help From My Friends-.zip</file>
+  <file status="niw">plarpebu lib.library</file>
+  <file status="niw">plarpebu.jpx</file>
+  <file status="niw">plarpebu.jpx.local</file>
+  <file status="niw">plarpebu.jpx.local~</file>
+  <file status="niw">run.bat</file>
+  <file status="niw">src/MANIFEST.mf</file>
+</vcsstatus>

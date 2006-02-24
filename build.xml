@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Exported by JBuilder on 5 avr. 2004 13:59:53-->
+<!--It is RECOMMENDED that JBuilder builds and Ant builds done with
+this exported Ant file be kept separate and be written to different
+directories. For example, the JBuilder output directory might be "classes"
+and the Ant output directory might be "classes.ant".-->
+<project basedir="." default="rebuild" name="player.jpx">
+	<property name="dest" value="classes.ant" />
+	<property name="Generated.Source" value="${dest}/Temporary_Files" />
+	<property name="lib" value="lib" />
+	<property name="src" value="src" />
+
+
+	<path id="project.class.path">
+		<pathelement location="${dest}" />
+		<pathelement location="${lib}/commons-logging.jar" />
+		<pathelement location="${lib}/commons-logging-api.jar" />
+		<pathelement location="${lib}/jl0.4.jar" />
+		<pathelement location="${lib}/MP3spi1.8andVorbissoi1.0.jar" />
+		<pathelement location="${lib}/tritonus_share.jar" />
+		<pathelement location="${lib}/skinlf.jar" />
+		<pathelement location="${lib}/albumgrabber.jar" />
+		<pathelement location="${lib}/jakarta-regexp-1.2.jar" />
+		<pathelement location="${lib}/jid3.jar" />
+		<pathelement location="${lib}/l2fprod-common-directorychooser.jar" />
+		<pathelement location="${lib}/l2fprod-common-fontchooser.jar" />
+		<pathelement location="${lib}/pluginLoaderAPI.jar" />
+		<pathelement location="${lib}/jorbis-0.0.12.jar" />
+		<pathelement location="${lib}/jogg-0.0.5.jar" />
+		<pathelement location="${lib}/buffa_utils.jar" />
+		<pathelement location="${lib}/chardet.jar" />
+		<pathelement location="${lib}/jbcl.jar" />
+	</path>
+
+	<!--Patternset to exclude files from the output directory:-->
+	<patternset id="dest.exclude">
+		<exclude name="Temporary_Files/" />
+		<exclude name="Generated Source/" />
+		<exclude name="package cache/" />
+		<exclude name="dependency cache/" />
+		<exclude name="jsp cache/" />
+	</patternset>
+
+	<target depends="init" name="javacompile">
+		<javac classpathref="project.class.path"
+		       debug="true"
+		       deprecation="true"
+		       destdir="${dest}"
+		       nowarn="false">
+			<src path="${src}" />
+			<src path="${Generated.Source}" />
+		</javac>
+	</target>
+
+	<target depends="compile,resource" name="archive">
+		<jar compress="false" destfile="plugins/albumGrabber.jar">
+			<fileset dir="${dest}">
+				<patternset refid="dest.exclude" />
+				<include name="plugins/misc/**" />
+			</fileset>
+		</jar>
+
+		<jar compress="false" destfile="${lib}/buffa_utils.jar">
+			<fileset dir="${dest}">
+				<patternset refid="dest.exclude" />
+				<include name="fr/unice/buffa/*.*" />
+			</fileset>
+		</jar>
+
+		<jar compress="true" jarfile="player.jar" manifest="${src}/MANIFEST.mf">
+			<fileset dir="${dest}">
+				<patternset refid="dest.exclude" />
+				<include name="**/*.*" />
+			</fileset>
+			<zipfileset src="${lib}/commons-logging.jar" />
+			<zipfileset src="${lib}/commons-logging-api.jar" />
+			<zipfileset src="${lib}/jl0.4.jar" />
+			<zipfileset src="${lib}/tritonus_share.jar" />
+			<zipfileset src="${lib}/skinlf.jar" />
+			<zipfileset src="${lib}/albumgrabber.jar" />
+			<zipfileset src="${lib}/jakarta-regexp-1.2.jar" />
+			<zipfileset src="${lib}/buffa_utils.jar" />
+			<zipfileset src="${lib}/jid3.jar" />
+			<zipfileset src="${lib}/l2fprod-common-directorychooser.jar" />
+			<zipfileset src="${lib}/l2fprod-common-fontchooser.jar" />
+			<zipfileset src="${lib}/pluginLoaderAPI.jar" />
+			<zipfileset src="${lib}/jorbis-0.0.12.jar" />
+			<zipfileset src="${lib}/jogg-0.0.5.jar" />
+			<zipfileset src="${lib}/MP3spi1.8andVorbissoi1.0.jar" />
+			<zipfileset src="${lib}/jbcl.jar" />
+			<zipfileset src="${lib}/chardet.jar" />
+		</jar>
+
+		<jar compress="false" destfile="plugins/basicAndPlaylist.jar">
+			<fileset dir="${dest}">
+				<patternset refid="dest.exclude" />
+				<include name="plugins/basic/**" />
+				<include name="plugins/playlist/**" />
+			</fileset>
+		</jar>
+		<jar compress="false" destfile="plugins/cdg.jar">
+			<fileset dir="${dest}">
+				<patternset refid="dest.exclude" />
+				<include name="plugins/karaoke/**" />
+			</fileset>
+		</jar>
+		<jar compress="false" destfile="plugins/exemples.jar">
+			<fileset dir="${dest}">
+				<patternset refid="dest.exclude" />
+				<include name="plugins/examples/**" />
+			</fileset>
+		</jar>
+	</target>
+	<target name="cleanup">
+		<delete file="plugins/albumGrabber.jar" />
+		<delete file="player.jar" />
+		<delete file="${lib}/buffa_utils.jar" />
+		<delete file="plugins/basicAndPlaylist.jar" />
+		<delete file="plugins/cdg.jar" />
+		<delete file="plugins/exemples.jar" />
+		<delete failonerror="false" includeemptydirs="true">
+			<fileset dir="${dest}" />
+		</delete>
+	</target>
+	<target name="resource">
+		<copy todir="${dest}">
+			<fileset dir="${src}">
+				<include name="**/*.jpe" />
+				<include name="**/*.jpeg" />
+				<include name="**/*.rmf" />
+				<include name="**/*.wav" />
+				<include name="**/*.mid" />
+				<include name="**/*.midi" />
+				<include name="**/*.au" />
+				<include name="**/*.gif" />
+				<include name="**/*.png" />
+				<include name="**/*.jpg" />
+				<include name="**/*.aiff" />
+				<include name="**/*.properties" />
+			</fileset>
+
+		</copy>
+	</target>
+	<target name="javadoc" />
+	<target depends="cleanup" name="clean" />
+	<target name="precompile" />
+	<target depends="javacompile" name="compile" />
+	<target name="postcompile" />
+	<target depends="archive,javadoc,resource" name="package" />
+	<target name="deploy" />
+	<target depends="precompile,compile,postcompile,package,deploy" name="make" />
+	<target depends="clean,make" name="rebuild" />
+	<target name="init">
+		<mkdir dir="${dest}" />
+		<mkdir dir="${Generated.Source}" />
+	</target>
+
+	<target name="run" depends="make">
+		<java classname="player.test.Player" fork="yes">
+			<classpath refid="project.class.path" />
+		</java>
+	</target>
+</project>

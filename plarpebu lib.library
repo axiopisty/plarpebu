@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<library>
+  <!--JBuilder Library Definition File-->
+  <fullname>plarpebu lib</fullname>
+  <class>
+    <path>[lib/ag2.jar]</path>
+    <path>[lib/buffa_utils.jar]</path>
+    <path>[lib/chardet.jar]</path>
+    <path>[lib/commons-logging.jar]</path>
+    <path>[lib/commons-logging-api.jar]</path>
+    <path>[lib/jbcl.jar]</path>
+    <path>[lib/jid3.jar]</path>
+    <path>[lib/jl0.4.jar]</path>
+    <path>[lib/jogg-0.0.5.jar]</path>
+    <path>[lib/jorbis-0.0.12.jar]</path>
+    <path>[lib/l2fprod-common-directorychooser.jar]</path>
+    <path>[lib/l2fprod-common-fontchooser.jar]</path>
+    <path>[lib/MP3spi1.8andVorbissoi1.0.jar]</path>
+    <path>[lib/pluginLoaderAPI.jar]</path>
+    <path>[lib/skinlf.jar]</path>
+    <path>[lib/tritonus_share.jar]</path>
+  </class>
+  <lastmodsaved>1096632517062</lastmodsaved>
+</library>
