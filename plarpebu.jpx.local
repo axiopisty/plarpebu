@@ -7,7 +7,7 @@ classFilter.unittest.2[0]=java.lang.reflect.Method
 classFilter.unittest.3[0]=com.borland.jbuilder.unittest.JBTestRunner
 classFilter.unittest.4[0]=sun.reflect.NativeMethodAccessorImpl
 classFilter.unittest.5[0]=sun.reflect.DelegatingMethodAccessorImpl
-content.layout.xml.[0]=<project-layout><tab_container selected_index="-1"/></project-layout>
+content.layout.xml.[0]=<project-layout><tab_container selected_index="0"><tab node_name="run.bat"/></tab_container></project-layout>
 debug.NoTracingClasses.1[0]=23 com.borland.datastore.*1  1 -1
 debug.NoTracingClasses.10[0]=7  javax.*1  1 -1
 debug.NoTracingClasses.11[0]=5  sun.*1  1 -1
@@ -33,8 +33,11 @@ debug.NoTracingClasses.6[0]=30 com.borland.jbuilder.runtime.*1  1 -1
 debug.NoTracingClasses.7[0]=17 com.borland.sql.*1  1 -1
 debug.NoTracingClasses.8[0]=9  com.sun.*1  1 -1
 debug.NoTracingClasses.9[0]=6  java.*1  1 -1
+history.files.active[0]=run.bat,F;1,1
+history.files.open.1[0]=run.bat,F;1,1
 import.optimize.legacyPropertiesRead[0]=1
 packagebrowser.lastClassName[0]=player.test.Player
+svn.showconsole[0]=1
 sys.Author[0]=
 sys.DefaultPackage[0]=plarpebu
 sys.ReopenHistory.1[0]=src/plugins/misc/albumgrabber/AlbumGrabberPlugin.java
@@ -45,3 +48,5 @@ sys.ReopenHistory.5[0]=src/util/CacheUtil.java
 sys.ReopenHistory.6[0]=src/basicplayer/CompositePlayer.java
 sys.ReopenHistory.7[0]=src/player/test/Player.java
 sys.ReopenHistory.8[0]=src/basicplayer/ZipUtil.java
+team.ActiveVCS[0]=Subversion
+team.lastScanned[0]=1140800967860

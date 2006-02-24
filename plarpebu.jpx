@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--JBuilder XML Project-->
 <project>
   <property category="generalFormatting2" name="overrideBasicFormatting" value="1"/>
@@ -43,5 +43,15 @@
   <property category="sys" name="Version" value="1.0"/>
   <property category="sys" name="VersionLabel" value="@version"/>
   <property category="sys" name="WorkingDirectory" value="."/>
-
+  <property category="team" name="ignorePath.0" value=".localdata"/>
+  <property category="team" name="ignorePath.1" value="bak"/>
+  <property category="team" name="ignorePath.2" value="classes"/>
+  <property category="team" name="ignorePath.3" value="demo files"/>
+  <property category="team" name="ignorePath.4" value="doc"/>
+  <property category="team" name="ignorePath.5" value="lib"/>
+  <property category="team" name="ignorePath.6" value="plugins"/>
+  <property category="team" name="ignorePath.7" value="preferences"/>
+  <property category="team" name="ignorePath.8" value="skins"/>
+  <file path="build.xml"/>
+  <file path="run.bat"/>
 </project>
