@@ -58,27 +58,17 @@ and the Ant output directory might be "classes.ant".-->
 			</fileset>
 		</jar>
 
-		<jar compress="true" jarfile="player.jar" manifest="${src}/MANIFEST.mf">
+		<jar compress="true" jarfile="player.jar">
 			<fileset dir="${dest}">
 				<patternset refid="dest.exclude" />
 				<include name="**/*.*" />
 			</fileset>
-			<zipfileset src="${lib}/commons-logging.jar" />
-			<zipfileset src="${lib}/commons-logging-api.jar" />
-			<zipfileset src="${lib}/jl0.4.jar" />
-			<zipfileset src="${lib}/tritonus_share.jar" />
-			<zipfileset src="${lib}/skinlf.jar" />
-			<zipfileset src="${lib}/albumgrabber.jar" />
-			<zipfileset src="${lib}/jakarta-regexp-1.2.jar" />
-			<zipfileset src="${lib}/jid3.jar" />
-			<zipfileset src="${lib}/l2fprod-common-directorychooser.jar" />
-			<zipfileset src="${lib}/l2fprod-common-fontchooser.jar" />
-			<zipfileset src="${lib}/pluginLoaderAPI.jar" />
-			<zipfileset src="${lib}/jorbis-0.0.12.jar" />
-			<zipfileset src="${lib}/jogg-0.0.5.jar" />
-			<zipfileset src="${lib}/MP3spi1.8andVorbissoi1.0.jar" />
-			<zipfileset src="${lib}/jbcl.jar" />
-			<zipfileset src="${lib}/chardet.jar" />
+			<manifest>
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Main-Class" value="player.test.Player" />
+				<attribute name="Class-Path"
+				           value="${lib}/albumgrabber.jar ${lib}/chardet.jar ${lib}/commons-logging.jar ${lib}/commons-logging-api.jar ${lib}/jakarta-regexp-1.2.jar ${lib}/jbcl.jar ${lib}/jid3.jar ${lib}/jl0.4.jar ${lib}/jogg-0.0.5.jar ${lib}/jorbis-0.0.12.jar ${lib}/l2fprod-common-directorychooser.jar ${lib}/l2fprod-common-fontchooser.jar ${lib}/MP3spi1.8andVorbissoi1.0.jar ${lib}/pluginLoaderAPI.jar ${lib}/skinlf.jar ${lib}/tritonus_share.jar" />
+			</manifest>
 		</jar>
 
 		<jar compress="false" destfile="plugins/basicAndPlaylist.jar">
@@ -101,7 +91,7 @@ and the Ant output directory might be "classes.ant".-->
 			</fileset>
 		</jar>
 	</target>
-	
+
 	<target name="cleanup">
 		<delete file="player.jar" />
 		<delete file="plugins/albumGrabberPlugin.jar" />
@@ -112,7 +102,7 @@ and the Ant output directory might be "classes.ant".-->
 			<fileset dir="${dest}" />
 		</delete>
 	</target>
-	
+
 	<target name="resource">
 		<copy todir="${dest}">
 			<fileset dir="${src}">
@@ -131,25 +121,25 @@ and the Ant output directory might be "classes.ant".-->
 			</fileset>
 		</copy>
 	</target>
-		
+
 	<target name="javadoc" />
-	
+
 	<target depends="cleanup" name="clean" />
-	
+
 	<target name="precompile" />
-	
+
 	<target depends="javacompile" name="compile" />
-	
+
 	<target name="postcompile" />
-	
+
 	<target depends="archive,javadoc,resource" name="package" />
-	
+
 	<target name="deploy" />
-	
+
 	<target depends="precompile,compile,postcompile,package,deploy" name="make" />
-	
+
 	<target depends="clean,make" name="rebuild" />
-	
+
 	<target name="init">
 		<mkdir dir="${dest}" />
 		<mkdir dir="${Generated.Source}" />
