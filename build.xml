@@ -51,7 +51,7 @@ and the Ant output directory might be "classes.ant".-->
 	</target>
 
 	<target depends="compile,resource" name="archive">
-		<jar compress="false" destfile="plugins/albumGrabber.jar">
+		<jar compress="false" destfile="plugins/albumGrabberPlugin.jar">
 			<fileset dir="${dest}">
 				<patternset refid="dest.exclude" />
 				<include name="plugins/misc/**" />
@@ -103,8 +103,8 @@ and the Ant output directory might be "classes.ant".-->
 	</target>
 	
 	<target name="cleanup">
-		<delete file="plugins/albumGrabber.jar" />
 		<delete file="player.jar" />
+		<delete file="plugins/albumGrabberPlugin.jar" />
 		<delete file="plugins/basicAndPlaylist.jar" />
 		<delete file="plugins/cdg.jar" />
 		<delete file="plugins/exemples.jar" />
