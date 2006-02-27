@@ -1,10 +1,5 @@
 package javakarplayer.plugins.AudioPlugins.taras;
 
-/*
- * Panel where karaoke text is drawn, highlighted and pulse ribbon jumps
- *
- * 03 July 2002
- */
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -28,7 +23,8 @@ import java.util.Vector;
 import javax.swing.JPanel;
 
 /**
- * Karaoke text panel
+ * Karaoke text panel. Panel where karaoke text is drawn, highlighted and pulse
+ * ribbon jumps. 03 July 2002
  * 
  * @author Taras P. Galchenko
  */
@@ -275,8 +271,7 @@ class KaraokePane extends JPanel {
         props.height - fm.getHeight() / 2);
 
         /* pulsation ribbon */
-        double c = currentTick == -1 ? 0.6 : 0.6 * (frame.end - currentTick)
-        / (frame.end - frame.start);
+        double c = currentTick == -1 ? 0.6 : 0.6 * (frame.end - currentTick) / (frame.end - frame.start);
         x = props.width / 5;
         y = (fm.getHeight() - props.ribbonWidth) >> 1;
         g.setColor(props.ribbonColor);
