@@ -1,56 +1,61 @@
 package pluginsSDK;
 
-import javax.swing.*;
+import javax.swing.JPanel;
 
+import plugins.basic.InfoPlugin;
+import plugins.basic.StopPlaySeekPlugin;
+import plugins.examples.ProgressBarPlugin;
 
 /**
  * La classe PanelPlugin est la classe mere de tous les plugins qui se rajoutent
- * dans l'interface principale de notre lecteur mp3 sans pour autant creer
- * une nouvelle fenetre.
- * Elle etend Jpanel et doit implementer bien evidemment playerPlugin.
- * Cette classe est logiquement abstraite et nous servira pour le polymorphisme.
+ * dans l'interface principale de notre lecteur mp3 sans pour autant creer une
+ * nouvelle fenetre. Elle etend Jpanel et doit implementer bien evidemment
+ * playerPlugin. Cette classe est logiquement abstraite et nous servira pour le
+ * polymorphisme.
+ * 
  * @author ARNAUD & PEPINO
  * @version finale
- * @see  PainGainPlugin
+ * @see PainGainPlugin
  * @see ProgressBarPlugin
  * @see InfoPlugin
- * @see  StopPlaySeekPlugin
+ * @see StopPlaySeekPlugin
  */
 abstract public class PanelPlugin extends JPanel implements playerPlugin {
 
-/**
-  * Cette fonction retourne le type du plugin.
-  * @return la classe du plugin.
-  */
-  public Class getType() {
-   return PanelPlugin.class;
- }
+    /**
+     * Cette fonction retourne le type du plugin.
+     * 
+     * @return la classe du plugin.
+     */
+    public Class getType() {
+        return PanelPlugin.class;
+    }
 
- /**
-  * Cette fonction permet d'obtenir une description du plugin
-  * @return la description du plugin
-  */
- public String getDescription() {
-   return "no Description";
- }
- /**
-  * Cette fonction permet d'obtenir une description du plugin
-  * @return la description du plugin
- */
+    /**
+     * Cette fonction permet d'obtenir une description du plugin
+     * 
+     * @return la description du plugin
+     */
+    public String getDescription() {
+        return "no Description";
+    }
 
+    /**
+     * Cette fonction permet d'obtenir une description du plugin
+     * 
+     * @return la description du plugin
+     */
 
+    public boolean canProcess(Object o) {
+        return true;
+    }
 
- public boolean canProcess(Object o) {
-   return true;
- }
+    public boolean matches(Class type, String name, Object object) {
+        return true;
+    }
 
- public boolean matches(Class type, String name, Object object) {
-   return true;
- }
-
- public String getVersion() {
-   return "1.0";
- }
-
+    public String getVersion() {
+        return "1.0";
+    }
 
 }

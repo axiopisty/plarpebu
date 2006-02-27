@@ -20,391 +20,311 @@
  * Contributor(s):
  */
 
-package org.mozilla.intl.chardet ;
-import java.lang.* ;
+package org.mozilla.intl.chardet;
 
 public abstract class nsPSMDetector {
 
-   public static final int ALL                 =  0 ;
-   public static final int JAPANESE            =  1 ;
-   public static final int CHINESE             =  2 ;
-   public static final int SIMPLIFIED_CHINESE  =  3 ;
-   public static final int TRADITIONAL_CHINESE =  4 ;
-   public static final int KOREAN              =  5 ;
+    public static final int ALL = 0;
 
-   public static final int NO_OF_LANGUAGES     =  6 ;
-   public static final int MAX_VERIFIERS       = 16 ;
+    public static final int JAPANESE = 1;
 
-   nsVerifier[] mVerifier ;
-   nsEUCStatistics[] mStatisticsData ;
+    public static final int CHINESE = 2;
 
-   nsEUCSampler	mSampler = new nsEUCSampler() ;
-   byte[]    mState = new byte[MAX_VERIFIERS] ;
-   int[]     mItemIdx = new int[MAX_VERIFIERS] ;
+    public static final int SIMPLIFIED_CHINESE = 3;
 
-   int     mItems ;
-   int	   mClassItems ;
- 
-   boolean mDone ;
-   boolean mRunSampler ;
-   boolean mClassRunSampler ;
+    public static final int TRADITIONAL_CHINESE = 4;
 
-   public nsPSMDetector() {
-	initVerifiers( nsPSMDetector.ALL );
-	Reset() ;
-   }
+    public static final int KOREAN = 5;
 
-   public nsPSMDetector(int langFlag) {
-	initVerifiers(langFlag);
-	Reset() ;
-   }
+    public static final int NO_OF_LANGUAGES = 6;
 
-   public nsPSMDetector(int aItems, nsVerifier[] aVerifierSet, 
-					nsEUCStatistics[] aStatisticsSet)  {
-	mClassRunSampler = ( aStatisticsSet != null ) ;
-	mStatisticsData = aStatisticsSet ;
-	mVerifier = aVerifierSet ;
+    public static final int MAX_VERIFIERS = 16;
 
-	mClassItems = aItems ;
-	Reset() ;
-   }
-   
+    nsVerifier[] mVerifier;
 
-   public void Reset() {
-	mRunSampler = mClassRunSampler ;
-	mDone = false ;
-	mItems = mClassItems ;
+    nsEUCStatistics[] mStatisticsData;
 
-	for(int i=0; i<mItems; i++) {
-	   mState[i] = 0;
-	   mItemIdx[i] = i;
-	}
+    nsEUCSampler mSampler = new nsEUCSampler();
 
-	mSampler.Reset() ;
-   }
+    byte[] mState = new byte[MAX_VERIFIERS];
 
-   protected void initVerifiers(int currVerSet) {
+    int[] mItemIdx = new int[MAX_VERIFIERS];
 
-	int idx = 0 ;
-        int currVerifierSet ;
+    int mItems;
 
-	if (currVerSet >=0 && currVerSet < NO_OF_LANGUAGES ) {
-	   currVerifierSet = currVerSet ;
-	}
-	else {
-	   currVerifierSet = nsPSMDetector.ALL ;
-	}
+    int mClassItems;
 
-	mVerifier = null ;
-	mStatisticsData = null ;
+    boolean mDone;
 
-	if ( currVerifierSet == nsPSMDetector.TRADITIONAL_CHINESE ) {
+    boolean mRunSampler;
 
-	   mVerifier = new nsVerifier[] {
-      		new nsUTF8Verifier(),
-      		new nsBIG5Verifier(),
-      		new nsISO2022CNVerifier(),
-      		new nsEUCTWVerifier(),
-      		new nsCP1252Verifier(),
-      		new nsUCS2BEVerifier(),
-      		new nsUCS2LEVerifier()
-	   };
+    boolean mClassRunSampler;
 
-	   mStatisticsData = new nsEUCStatistics[] {
-      		null,
-      		new Big5Statistics(),
-      		null,
-      		new EUCTWStatistics(),
-      		null,
-      		null,
-      		null
-	   };
-	}
+    public nsPSMDetector() {
+        initVerifiers(nsPSMDetector.ALL);
+        Reset();
+    }
 
-	//==========================================================
-	else if ( currVerifierSet == nsPSMDetector.KOREAN ) {
+    public nsPSMDetector(int langFlag) {
+        initVerifiers(langFlag);
+        Reset();
+    }
 
-	   mVerifier = new nsVerifier[] {
-      		new nsUTF8Verifier(),
-      		new nsEUCKRVerifier(),
-      		new nsISO2022KRVerifier(),
-      		new nsCP1252Verifier(),
-      		new nsUCS2BEVerifier(),
-      		new nsUCS2LEVerifier()
-	   };
-	}
+    public nsPSMDetector(int aItems, nsVerifier[] aVerifierSet, nsEUCStatistics[] aStatisticsSet) {
+        mClassRunSampler = (aStatisticsSet != null);
+        mStatisticsData = aStatisticsSet;
+        mVerifier = aVerifierSet;
 
-	//==========================================================
-	else if ( currVerifierSet == nsPSMDetector.SIMPLIFIED_CHINESE ) {
+        mClassItems = aItems;
+        Reset();
+    }
 
-	   mVerifier = new nsVerifier[] {
-      		new nsUTF8Verifier(),
-      		new nsGB2312Verifier(),
-      		new nsGB18030Verifier(),
-      		new nsISO2022CNVerifier(),
-      		new nsHZVerifier(),
-      		new nsCP1252Verifier(),
-      		new nsUCS2BEVerifier(),
-      		new nsUCS2LEVerifier()
-	   };
-	}
+    public void Reset() {
+        mRunSampler = mClassRunSampler;
+        mDone = false;
+        mItems = mClassItems;
 
-	//==========================================================
-	else if ( currVerifierSet == nsPSMDetector.JAPANESE ) {
+        for (int i = 0; i < mItems; i++) {
+            mState[i] = 0;
+            mItemIdx[i] = i;
+        }
 
-	   mVerifier = new nsVerifier[] {
-      		new nsUTF8Verifier(),
-      		new nsSJISVerifier(),
-      		new nsEUCJPVerifier(),
-      		new nsISO2022JPVerifier(),
-      		new nsCP1252Verifier(),
-      		new nsUCS2BEVerifier(),
-      		new nsUCS2LEVerifier()
-	   };
-	}
-	//==========================================================
-	else if ( currVerifierSet == nsPSMDetector.CHINESE ) {
+        mSampler.Reset();
+    }
 
-	   mVerifier = new nsVerifier[] {
-      		new nsUTF8Verifier(),
-      		new nsGB2312Verifier(),
-      		new nsGB18030Verifier(),
-      		new nsBIG5Verifier(),
-      		new nsISO2022CNVerifier(),
-      		new nsHZVerifier(),
-      		new nsEUCTWVerifier(),
-      		new nsCP1252Verifier(),
-      		new nsUCS2BEVerifier(),
-      		new nsUCS2LEVerifier()
-	   };
+    protected void initVerifiers(int currVerSet) {
 
-	   mStatisticsData = new nsEUCStatistics[] {
-      		null,
-      		new GB2312Statistics(),
-		null,
-      		new Big5Statistics(),
-      		null,
-      		null,
-      		new EUCTWStatistics(),
-      		null,
-      		null,
-      		null
-	   };
-	}
+        int idx = 0;
+        int currVerifierSet;
 
-	//==========================================================
-	else if ( currVerifierSet == nsPSMDetector.ALL ) {
+        if (currVerSet >= 0 && currVerSet < NO_OF_LANGUAGES) {
+            currVerifierSet = currVerSet;
+        }
+        else {
+            currVerifierSet = nsPSMDetector.ALL;
+        }
 
-	   mVerifier = new nsVerifier[] {
-      		new nsUTF8Verifier(),
-      		new nsSJISVerifier(),
-      		new nsEUCJPVerifier(),
-      		new nsISO2022JPVerifier(),
-      		new nsEUCKRVerifier(),
-      		new nsISO2022KRVerifier(),
-      		new nsBIG5Verifier(),
-      		new nsEUCTWVerifier(),
-      		new nsGB2312Verifier(),
-      		new nsGB18030Verifier(),
-      		new nsISO2022CNVerifier(),
-      		new nsHZVerifier(),
-      		new nsCP1252Verifier(),
-      		new nsUCS2BEVerifier(),
-      		new nsUCS2LEVerifier()
-	   };
+        mVerifier = null;
+        mStatisticsData = null;
 
-	   mStatisticsData = new nsEUCStatistics[] {
-      		null,
-      		null,
-      		new EUCJPStatistics(),
-      		null,
-      		new EUCKRStatistics(),
-      		null,
-      		new Big5Statistics(),
-      		new EUCTWStatistics(),
-      		new GB2312Statistics(),
-      		null,
-      		null,
-      		null,
-      		null,
-      		null,
-      		null
-	   };
-	}
+        if (currVerifierSet == nsPSMDetector.TRADITIONAL_CHINESE) {
 
-	mClassRunSampler = ( mStatisticsData != null ) ;
-       	mClassItems = mVerifier.length ;
+            mVerifier = new nsVerifier[] { new nsUTF8Verifier(), new nsBIG5Verifier(), new nsISO2022CNVerifier(),
+            new nsEUCTWVerifier(), new nsCP1252Verifier(), new nsUCS2BEVerifier(), new nsUCS2LEVerifier() };
 
-   }
-	  
-   public abstract void Report(String charset) ;
+            mStatisticsData = new nsEUCStatistics[] { null, new Big5Statistics(), null, new EUCTWStatistics(), null,
+            null, null };
+        }
 
-   public boolean HandleData(byte[] aBuf, int len) {
+        // ==========================================================
+        else if (currVerifierSet == nsPSMDetector.KOREAN) {
 
+            mVerifier = new nsVerifier[] { new nsUTF8Verifier(), new nsEUCKRVerifier(), new nsISO2022KRVerifier(),
+            new nsCP1252Verifier(), new nsUCS2BEVerifier(), new nsUCS2LEVerifier() };
+        }
 
-	int i,j;
-	byte b, st;
+        // ==========================================================
+        else if (currVerifierSet == nsPSMDetector.SIMPLIFIED_CHINESE) {
 
- 	for( i=0; i < len; i++) {
-	   b = aBuf[i] ;
+            mVerifier = new nsVerifier[] { new nsUTF8Verifier(), new nsGB2312Verifier(), new nsGB18030Verifier(),
+            new nsISO2022CNVerifier(), new nsHZVerifier(), new nsCP1252Verifier(), new nsUCS2BEVerifier(),
+            new nsUCS2LEVerifier() };
+        }
 
-	   for (j=0; j < mItems; )
-	   {
-		st = nsVerifier.getNextState( mVerifier[mItemIdx[j]], 
-						b, mState[j]) ;
-//if (st != 0)
-//System.out.println( "state(0x" + Integer.toHexString(0xFF&b) +") =>"+ Integer.toHexString(st&0xFF)+ " " + mVerifier[mItemIdx[j]].charset());
+        // ==========================================================
+        else if (currVerifierSet == nsPSMDetector.JAPANESE) {
 
-		if (st == nsVerifier.eItsMe) {
+            mVerifier = new nsVerifier[] { new nsUTF8Verifier(), new nsSJISVerifier(), new nsEUCJPVerifier(),
+            new nsISO2022JPVerifier(), new nsCP1252Verifier(), new nsUCS2BEVerifier(), new nsUCS2LEVerifier() };
+        }
+        // ==========================================================
+        else if (currVerifierSet == nsPSMDetector.CHINESE) {
 
-//System.out.println( "eItsMe(0x" + Integer.toHexString(0xFF&b) +") =>"+ mVerifier[mItemIdx[j]].charset());
+            mVerifier = new nsVerifier[] { new nsUTF8Verifier(), new nsGB2312Verifier(), new nsGB18030Verifier(),
+            new nsBIG5Verifier(), new nsISO2022CNVerifier(), new nsHZVerifier(), new nsEUCTWVerifier(),
+            new nsCP1252Verifier(), new nsUCS2BEVerifier(), new nsUCS2LEVerifier() };
 
-		   Report( mVerifier[mItemIdx[j]].charset() );
-		   mDone = true ;
-		   return mDone ;
+            mStatisticsData = new nsEUCStatistics[] { null, new GB2312Statistics(), null, new Big5Statistics(), null,
+            null, new EUCTWStatistics(), null, null, null };
+        }
 
-	        } else if (st == nsVerifier.eError ) {
+        // ==========================================================
+        else if (currVerifierSet == nsPSMDetector.ALL) {
 
-//System.out.println( "eNotMe(0x" + Integer.toHexString(0xFF&b) +") =>"+ mVerifier[mItemIdx[j]].charset());
-		   mItems--;
-		   if (j < mItems ) {
-			mItemIdx[j] = mItemIdx[mItems];	
-			mState[j]   = mState[mItems];
-		   }
+            mVerifier = new nsVerifier[] { new nsUTF8Verifier(), new nsSJISVerifier(), new nsEUCJPVerifier(),
+            new nsISO2022JPVerifier(), new nsEUCKRVerifier(), new nsISO2022KRVerifier(), new nsBIG5Verifier(),
+            new nsEUCTWVerifier(), new nsGB2312Verifier(), new nsGB18030Verifier(), new nsISO2022CNVerifier(),
+            new nsHZVerifier(), new nsCP1252Verifier(), new nsUCS2BEVerifier(), new nsUCS2LEVerifier() };
 
-		} else {
-		  
-		    mState[j++] = st ;
+            mStatisticsData = new nsEUCStatistics[] { null, null, new EUCJPStatistics(), null, new EUCKRStatistics(),
+            null, new Big5Statistics(), new EUCTWStatistics(), new GB2312Statistics(), null, null, null, null, null,
+            null };
+        }
 
-		}
-	   }
+        mClassRunSampler = (mStatisticsData != null);
+        mClassItems = mVerifier.length;
 
-	   if ( mItems <= 1 ) {
+    }
 
-	        if( 1 == mItems) {
-		   Report( mVerifier[mItemIdx[0]].charset() );
-		}
-		mDone = true ;
-		return mDone ;
+    public abstract void Report(String charset);
 
-	   } 
-	   else {
-		
-		int nonUCS2Num=0;
-		int nonUCS2Idx=0;
+    public boolean HandleData(byte[] aBuf, int len) {
 
-		for(j=0; j<mItems; j++) {
-		   if ( (!(mVerifier[mItemIdx[j]].isUCS2())) &&
-			(!(mVerifier[mItemIdx[j]].isUCS2())) ) 
-		   {
-			nonUCS2Num++ ;
-			nonUCS2Idx = j ;
-		   }
-		}
+        int i, j;
+        byte b, st;
 
-		if (1 == nonUCS2Num) {
-		   Report( mVerifier[mItemIdx[nonUCS2Idx]].charset() );
-		   mDone = true ;
-		   return mDone ;
-		}
-	   }
+        for (i = 0; i < len; i++) {
+            b = aBuf[i];
 
+            for (j = 0; j < mItems;) {
+                st = nsVerifier.getNextState(mVerifier[mItemIdx[j]], b, mState[j]);
+                // if (st != 0)
+                // System.out.println( "state(0x" + Integer.toHexString(0xFF&b)
+                // +") =>"+ Integer.toHexString(st&0xFF)+ " " +
+                // mVerifier[mItemIdx[j]].charset());
 
-       } // End of for( i=0; i < len ...
+                if (st == nsVerifier.eItsMe) {
 
-       if (mRunSampler)
-	  Sample(aBuf, len);
+                    // System.out.println( "eItsMe(0x" +
+                    // Integer.toHexString(0xFF&b) +") =>"+
+                    // mVerifier[mItemIdx[j]].charset());
 
-       return mDone ;
-   }
+                    Report(mVerifier[mItemIdx[j]].charset());
+                    mDone = true;
+                    return mDone;
 
+                }
+                else if (st == nsVerifier.eError) {
 
-   public void DataEnd() {
-	
-	if (mDone == true)
-	    return ;
+                    // System.out.println( "eNotMe(0x" +
+                    // Integer.toHexString(0xFF&b) +") =>"+
+                    // mVerifier[mItemIdx[j]].charset());
+                    mItems--;
+                    if (j < mItems) {
+                        mItemIdx[j] = mItemIdx[mItems];
+                        mState[j] = mState[mItems];
+                    }
 
-	if (mItems == 2) {
-	    if ((mVerifier[mItemIdx[0]].charset()).equals("GB18030")) {
-		Report(mVerifier[mItemIdx[1]].charset()) ;
-		mDone = true ;
-	    } else if ((mVerifier[mItemIdx[1]].charset()).equals("GB18030")) {
-		Report(mVerifier[mItemIdx[0]].charset()) ;
-		mDone = true ;
-	    }
-	}
+                }
+                else {
 
-	if (mRunSampler)
-	   Sample(null, 0, true);
-   }
+                    mState[j++] = st;
 
-   public void Sample(byte[] aBuf, int aLen) {
-	  Sample(aBuf, aLen, false) ;
-   }
+                }
+            }
 
-   public void Sample(byte[] aBuf, int aLen, boolean aLastChance)
-   {
-      	int possibleCandidateNum  = 0;
-	int j;
-	int eucNum=0 ;
+            if (mItems <= 1) {
 
-	for (j=0; j< mItems; j++) {
-	   if (null != mStatisticsData[mItemIdx[j]]) 
-		eucNum++ ;
-	   if ((!mVerifier[mItemIdx[j]].isUCS2()) && 
-			(!(mVerifier[mItemIdx[j]].charset()).equals("GB18030")))
-		possibleCandidateNum++ ;
-	}
+                if (1 == mItems) {
+                    Report(mVerifier[mItemIdx[0]].charset());
+                }
+                mDone = true;
+                return mDone;
 
-	mRunSampler = (eucNum > 1) ;
-	
-     	if (mRunSampler) {
+            }
+            else {
+
+                int nonUCS2Num = 0;
+                int nonUCS2Idx = 0;
+
+                for (j = 0; j < mItems; j++) {
+                    if ((!(mVerifier[mItemIdx[j]].isUCS2())) && (!(mVerifier[mItemIdx[j]].isUCS2()))) {
+                        nonUCS2Num++;
+                        nonUCS2Idx = j;
+                    }
+                }
+
+                if (1 == nonUCS2Num) {
+                    Report(mVerifier[mItemIdx[nonUCS2Idx]].charset());
+                    mDone = true;
+                    return mDone;
+                }
+            }
+
+        } // End of for( i=0; i < len ...
+
+        if (mRunSampler) Sample(aBuf, len);
+
+        return mDone;
+    }
+
+    public void DataEnd() {
+
+        if (mDone == true) return;
+
+        if (mItems == 2) {
+            if ((mVerifier[mItemIdx[0]].charset()).equals("GB18030")) {
+                Report(mVerifier[mItemIdx[1]].charset());
+                mDone = true;
+            }
+            else if ((mVerifier[mItemIdx[1]].charset()).equals("GB18030")) {
+                Report(mVerifier[mItemIdx[0]].charset());
+                mDone = true;
+            }
+        }
+
+        if (mRunSampler) Sample(null, 0, true);
+    }
+
+    public void Sample(byte[] aBuf, int aLen) {
+        Sample(aBuf, aLen, false);
+    }
+
+    public void Sample(byte[] aBuf, int aLen, boolean aLastChance) {
+        int possibleCandidateNum = 0;
+        int j;
+        int eucNum = 0;
+
+        for (j = 0; j < mItems; j++) {
+            if (null != mStatisticsData[mItemIdx[j]]) eucNum++;
+            if ((!mVerifier[mItemIdx[j]].isUCS2()) && (!(mVerifier[mItemIdx[j]].charset()).equals("GB18030")))
+                possibleCandidateNum++;
+        }
+
+        mRunSampler = (eucNum > 1);
+
+        if (mRunSampler) {
             mRunSampler = mSampler.Sample(aBuf, aLen);
-            if(((aLastChance && mSampler.GetSomeData()) || 
-                mSampler.EnoughData())
-               && (eucNum == possibleCandidateNum)) {
-              mSampler.CalFreq();
+            if (((aLastChance && mSampler.GetSomeData()) || mSampler.EnoughData()) && (eucNum == possibleCandidateNum)) {
+                mSampler.CalFreq();
 
-              int bestIdx = -1;
-              int eucCnt=0;
-              float bestScore = 0.0f;
-              for(j = 0; j < mItems; j++) {
-                 if((null != mStatisticsData[mItemIdx[j]])  &&
-                   (!(mVerifier[mItemIdx[j]].charset()).equals("Big5")))
-                 {
-                    float score = mSampler.GetScore(
-                       mStatisticsData[mItemIdx[j]].mFirstByteFreq(),
-                       mStatisticsData[mItemIdx[j]].mFirstByteWeight(),
-                       mStatisticsData[mItemIdx[j]].mSecondByteFreq(),
-                       mStatisticsData[mItemIdx[j]].mSecondByteWeight() );
-//System.out.println("FequencyScore("+mVerifier[mItemIdx[j]].charset()+")= "+ score);
-                    if(( 0 == eucCnt++) || (bestScore > score )) {
-                       bestScore = score;
-                       bestIdx = j;
-                    } // if(( 0 == eucCnt++) || (bestScore > score )) 
-                } // if(null != ...)
-             } // for
-             if (bestIdx >= 0)
-             {
-               Report( mVerifier[mItemIdx[bestIdx]].charset());
-               mDone = true;
-             }
-           } // if (eucNum == possibleCandidateNum)
-         } // if(mRunSampler)
-   }
+                int bestIdx = -1;
+                int eucCnt = 0;
+                float bestScore = 0.0f;
+                for (j = 0; j < mItems; j++) {
+                    if ((null != mStatisticsData[mItemIdx[j]]) && (!(mVerifier[mItemIdx[j]].charset()).equals("Big5"))) {
+                        float score = mSampler.GetScore(mStatisticsData[mItemIdx[j]].mFirstByteFreq(),
+                        mStatisticsData[mItemIdx[j]].mFirstByteWeight(),
+                        mStatisticsData[mItemIdx[j]].mSecondByteFreq(), mStatisticsData[mItemIdx[j]]
+                        .mSecondByteWeight());
+                        // System.out.println("FequencyScore("+mVerifier[mItemIdx[j]].charset()+")=
+                        // "+ score);
+                        if ((0 == eucCnt++) || (bestScore > score)) {
+                            bestScore = score;
+                            bestIdx = j;
+                        } // if(( 0 == eucCnt++) || (bestScore > score ))
+                    } // if(null != ...)
+                } // for
+                if (bestIdx >= 0) {
+                    Report(mVerifier[mItemIdx[bestIdx]].charset());
+                    mDone = true;
+                }
+            } // if (eucNum == possibleCandidateNum)
+        } // if(mRunSampler)
+    }
 
-   public String[] getProbableCharsets() {
+    public String[] getProbableCharsets() {
 
-	if (mItems <= 0) {
-	   String[] nomatch = new String[1];
-	   nomatch[0] = "nomatch" ;
-	   return nomatch ;
-	}
+        if (mItems <= 0) {
+            String[] nomatch = new String[1];
+            nomatch[0] = "nomatch";
+            return nomatch;
+        }
 
-	String ret[] = new String[mItems] ;
-	for (int i=0; i<mItems; i++)
-		ret[i] = mVerifier[mItemIdx[i]].charset() ;
-	return ret ;
-   }
-	
+        String ret[] = new String[mItems];
+        for (int i = 0; i < mItems; i++)
+            ret[i] = mVerifier[mItemIdx[i]].charset();
+        return ret;
+    }
+
 }

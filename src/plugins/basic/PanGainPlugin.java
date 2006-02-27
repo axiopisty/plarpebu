@@ -1,190 +1,178 @@
 package plugins.basic;
-import java.util.*;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+import java.awt.Dimension;
+import java.awt.HeadlessException;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.util.Map;
 
-import pluginsSDK.*;
-import javazoom.jlgui.basicplayer.BasicPlayerListener;
+import javax.swing.Box;
+import javax.swing.DefaultBoundedRangeModel;
+import javax.swing.JLabel;
+import javax.swing.JSlider;
+
 import javazoom.jlgui.basicplayer.BasicController;
 import javazoom.jlgui.basicplayer.BasicPlayerEvent;
 import javazoom.jlgui.basicplayer.BasicPlayerException;
+import javazoom.jlgui.basicplayer.BasicPlayerListener;
+import pluginsSDK.PanelPlugin;
 
 /**
  *
  */
-public class PanGainPlugin extends PanelPlugin implements BasicPlayerListener,
-    MouseListener, MouseMotionListener
-{
-	private JSlider panslider = null;
-	private JSlider gainslider = null;
-	private JLabel panLB = null;
-	private JLabel gainLB = null;
-	private DefaultBoundedRangeModel panmodel = null;
-	private DefaultBoundedRangeModel gainmodel = null;
-	private int scale = 100;
+public class PanGainPlugin extends PanelPlugin implements BasicPlayerListener, MouseListener, MouseMotionListener {
+    private JSlider panslider = null;
 
-	private BasicController controller = null;
+    private JSlider gainslider = null;
 
-	public PanGainPlugin() throws HeadlessException
-	{
-		super();
-		initUI();
-	}
+    private JLabel panLB = null;
 
-	public void initUI()
-	{
-		panmodel = new DefaultBoundedRangeModel(0,1,-scale,scale+1);
-		gainmodel = new DefaultBoundedRangeModel((int)(scale*80/100),1,0,scale+1);
-		//panLB = new JLabel("Pan : ");
-		//gainLB = new JLabel("Gain : ");
-		panslider = new JSlider(panmodel);
-                panslider.setPaintTicks(true);
-                panslider.setMajorTickSpacing(100);
-                panslider.setMinorTickSpacing(5);
-		panslider.addMouseListener(this);
-                panslider.addMouseMotionListener(this);
+    private JLabel gainLB = null;
 
-		gainslider = new JSlider(gainmodel);
-                gainslider.setPaintTicks(true);
-                gainslider.setMajorTickSpacing(50);
-                gainslider.setMinorTickSpacing(2);
-		gainslider.addMouseListener(this);
-                gainslider.addMouseMotionListener(this);
+    private DefaultBoundedRangeModel panmodel = null;
 
-                panslider.setMaximumSize(new Dimension(100, 20));
-                gainslider.setMaximumSize(new Dimension(120, 20));
+    private DefaultBoundedRangeModel gainmodel = null;
 
-                panslider.setEnabled(false);
-                gainslider.setEnabled(false);
+    private int scale = 100;
 
-		//this.setLayout(new GridLayout(0, 2));
-                //this.add(gainLB);
-                //this.add(panLB);
-                Box b = Box.createVerticalBox();
-                b.add(gainslider);
-                b.add(Box.createRigidArea(new Dimension(20, 20)));
-                b.add(panslider);
-                this.add(b);
-	}
+    private BasicController controller = null;
 
-	public void setController(BasicController controller)
-	{
-		this.controller = controller;
-	}
+    public PanGainPlugin() throws HeadlessException {
+        super();
+        initUI();
+    }
 
-	public void opened(Object stream, Map properties)
-	{
-          panslider.setEnabled(true);
-          gainslider.setEnabled(true);
-	}
+    public void initUI() {
+        panmodel = new DefaultBoundedRangeModel(0, 1, -scale, scale + 1);
+        gainmodel = new DefaultBoundedRangeModel((int) (scale * 80 / 100), 1, 0, scale + 1);
+        // panLB = new JLabel("Pan : ");
+        // gainLB = new JLabel("Gain : ");
+        panslider = new JSlider(panmodel);
+        panslider.setPaintTicks(true);
+        panslider.setMajorTickSpacing(100);
+        panslider.setMinorTickSpacing(5);
+        panslider.addMouseListener(this);
+        panslider.addMouseMotionListener(this);
 
-	public void stateUpdated(BasicPlayerEvent event)
-	{
-	}
+        gainslider = new JSlider(gainmodel);
+        gainslider.setPaintTicks(true);
+        gainslider.setMajorTickSpacing(50);
+        gainslider.setMinorTickSpacing(2);
+        gainslider.addMouseListener(this);
+        gainslider.addMouseMotionListener(this);
 
-	public void progress(int bytesread, long microseconds, byte[] pcmdata, Map properties)
-	{
-	}
-	public void mouseEntered(MouseEvent e)
-	{
-	}
+        panslider.setMaximumSize(new Dimension(100, 20));
+        gainslider.setMaximumSize(new Dimension(120, 20));
 
-	public void mouseExited(MouseEvent e)
-	{
-	}
-	public void mousePressed(MouseEvent e)
-	{
-	}
+        panslider.setEnabled(false);
+        gainslider.setEnabled(false);
 
-	public void mouseClicked(MouseEvent e)
-	{
-	}
+        // this.setLayout(new GridLayout(0, 2));
+        // this.add(gainLB);
+        // this.add(panLB);
+        Box b = Box.createVerticalBox();
+        b.add(gainslider);
+        b.add(Box.createRigidArea(new Dimension(20, 20)));
+        b.add(panslider);
+        this.add(b);
+    }
 
-	public void mouseReleased(MouseEvent e)
-	{
-          System.out.println("mouse released");
-          if (panslider.isEnabled() && gainslider.isEnabled()){
-		try
-		{
-			if (e.getSource()==panslider)
-			{
-				double pan = panmodel.getValue()*1.0/scale*1.0;
-				controller.setPan(pan);
-                                System.out.println("controller .setpan");
-			}
-			else if (e.getSource()==gainslider)
-			{
-				double gain =  gainmodel.getValue()*1.0/scale*1.0;
-				controller.setGain(gain);
-                                System.out.println("controller.setgain");
-			}
-		}
-		catch (BasicPlayerException ex)
-		{
-			ex.printStackTrace();
-		}
-          }
-	}
+    public void setController(BasicController controller) {
+        this.controller = controller;
+    }
 
+    public void opened(Object stream, Map properties) {
+        panslider.setEnabled(true);
+        gainslider.setEnabled(true);
+    }
 
-         public String getName(){
-             return "Pan Gain";
-           }
+    public void stateUpdated(BasicPlayerEvent event) {}
 
+    public void progress(int bytesread, long microseconds, byte[] pcmdata, Map properties) {}
 
+    public void mouseEntered(MouseEvent e) {}
 
-  /**
-   * getPlugin
-   *
-   * @return BasicPlayerListener
-   */
-  public BasicPlayerListener getPlugin() {
-    return this;
-  }
+    public void mouseExited(MouseEvent e) {}
 
-  /**
-   * mouseDragged
-   *
-   * @param e MouseEvent
-   */
-  public void mouseDragged(MouseEvent e) {
-    if (panslider.isEnabled() && gainslider.isEnabled()){
+    public void mousePressed(MouseEvent e) {}
 
-         if (e.getSource()==panslider)
-         {
-           int pan = panmodel.getValue();
-           if (pan < 0){
-             System.out.println("LEFT: " + -pan + "%");
-           }
-           else if (pan > 0){
-             System.out.println("RIGHT : " + pan + "%");
-           }
-           else{
-             System.out.println("CENTER");
-           }
-         }
-         else if (e.getSource()==gainslider)
-         {
-           int gain =  gainmodel.getValue();
-           System.out.println("Volume : " + gain + "%");
-         }
+    public void mouseClicked(MouseEvent e) {}
 
-      }
+    public void mouseReleased(MouseEvent e) {
+        System.out.println("mouse released");
+        if (panslider.isEnabled() && gainslider.isEnabled()) {
+            try {
+                if (e.getSource() == panslider) {
+                    double pan = panmodel.getValue() * 1.0 / scale * 1.0;
+                    controller.setPan(pan);
+                    System.out.println("controller .setpan");
+                }
+                else if (e.getSource() == gainslider) {
+                    double gain = gainmodel.getValue() * 1.0 / scale * 1.0;
+                    controller.setGain(gain);
+                    System.out.println("controller.setgain");
+                }
+            }
+            catch (BasicPlayerException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
 
-  }
+    public String getName() {
+        return "Pan Gain";
+    }
 
-  /**
-   * mouseMoved
-   *
-   * @param e MouseEvent
-   */
-  public void mouseMoved(MouseEvent e) {
-  }
+    /**
+     * getPlugin
+     * 
+     * @return BasicPlayerListener
+     */
+    public BasicPlayerListener getPlugin() {
+        return this;
+    }
 
-  public String getVersion() {
-    return "1.0";
-  }
+    /**
+     * mouseDragged
+     * 
+     * @param e
+     *        MouseEvent
+     */
+    public void mouseDragged(MouseEvent e) {
+        if (panslider.isEnabled() && gainslider.isEnabled()) {
+
+            if (e.getSource() == panslider) {
+                int pan = panmodel.getValue();
+                if (pan < 0) {
+                    System.out.println("LEFT: " + -pan + "%");
+                }
+                else if (pan > 0) {
+                    System.out.println("RIGHT : " + pan + "%");
+                }
+                else {
+                    System.out.println("CENTER");
+                }
+            }
+            else if (e.getSource() == gainslider) {
+                int gain = gainmodel.getValue();
+                System.out.println("Volume : " + gain + "%");
+            }
+
+        }
+
+    }
+
+    /**
+     * mouseMoved
+     * 
+     * @param e
+     *        MouseEvent
+     */
+    public void mouseMoved(MouseEvent e) {}
+
+    public String getVersion() {
+        return "1.0";
+    }
 
 }

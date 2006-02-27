@@ -1,4 +1,3 @@
-
 /* -*- Mode: C; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 2 -*-
  *
  * The contents of this file are subject to the Netscape Public
@@ -21,12 +20,9 @@
  * Contributor(s):
  */
 
-package org.mozilla.intl.chardet ;
-
-import java.lang.* ;
+package org.mozilla.intl.chardet;
 
 public interface nsICharsetDetectionObserver {
 
-	public void Notify(String charset) ;
+    public void Notify(String charset);
 }
-

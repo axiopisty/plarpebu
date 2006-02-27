@@ -45,7 +45,7 @@ public class ZipUtil {
                 return null;
             }
 
-            //Get mp3g temp cache dir
+            // Get mp3g temp cache dir
             File tempDir = CacheUtil.getMP3GCacheDir();
 
             // Delete any preexisting mp3g temp files

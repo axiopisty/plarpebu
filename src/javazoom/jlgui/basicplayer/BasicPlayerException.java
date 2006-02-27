@@ -29,75 +29,61 @@ import java.io.PrintWriter;
 /**
  * This class implements custom exception for basicplayer.
  */
-public class BasicPlayerException extends Exception
-{
-	private Throwable cause = null;
-	
-	public BasicPlayerException()
-	{
-		super();
-	}
+public class BasicPlayerException extends Exception {
+    private Throwable cause = null;
 
-	public BasicPlayerException(String msg)
-	{
-		super(msg);
-	}
+    public BasicPlayerException() {
+        super();
+    }
 
-	public BasicPlayerException(Throwable cause)
-	{
-		super();
-		this.cause = cause;
-	}
+    public BasicPlayerException(String msg) {
+        super(msg);
+    }
 
-	public BasicPlayerException(String msg, Throwable cause)
-	{
-		super(msg);
-		this.cause=cause;
-	}
-	
-	public Throwable getCause()
-	{
-		return cause;
-	}
-	
-	/**
-	 * Returns the detail message string of this throwable. If it was
-	 * created with a null message, returns the following:
-	 * (cause==null ? null : cause.toString()).
-	 */
-	public String getMessage() 
-	{
-		if (super.getMessage() != null) 
-		{
-			return super.getMessage();
-		} 
-		else if (cause != null) 
-		{
-			return cause.toString();
-		} 
-		else 
-		{
-			return null;
-		}
-	}
+    public BasicPlayerException(Throwable cause) {
+        super();
+        this.cause = cause;
+    }
 
-	public void printStackTrace() 
-	{
-		printStackTrace(System.err);
-	}
+    public BasicPlayerException(String msg, Throwable cause) {
+        super(msg);
+        this.cause = cause;
+    }
 
-	public void printStackTrace(PrintStream out) 
-	{
-		synchronized (out) 
-		{
-			PrintWriter pw = new PrintWriter(out, false);
-			printStackTrace(pw);
-			pw.flush();
-		}
-	}
+    public Throwable getCause() {
+        return cause;
+    }
 
-	public void printStackTrace(PrintWriter out) 
-	{
-		if (cause != null) cause.printStackTrace(out);
-	}
+    /**
+     * Returns the detail message string of this throwable. If it was created
+     * with a null message, returns the following: (cause==null ? null :
+     * cause.toString()).
+     */
+    public String getMessage() {
+        if (super.getMessage() != null) {
+            return super.getMessage();
+        }
+        else if (cause != null) {
+            return cause.toString();
+        }
+        else {
+            return null;
+        }
+    }
+
+    public void printStackTrace() {
+        printStackTrace(System.err);
+    }
+
+    public void printStackTrace(PrintStream out) {
+        synchronized (out) {
+            PrintWriter pw = new PrintWriter(out, false);
+            printStackTrace(pw);
+            pw.flush();
+        }
+    }
+
+    public void printStackTrace(PrintWriter out) {
+        if (cause != null) cause.printStackTrace(out);
+    }
 }

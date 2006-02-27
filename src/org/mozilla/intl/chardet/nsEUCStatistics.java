@@ -20,22 +20,26 @@
  * Contributor(s):
  */
 
-package org.mozilla.intl.chardet ;
-
-import java.lang.*;
+package org.mozilla.intl.chardet;
 
 public abstract class nsEUCStatistics {
 
-     public abstract float[] mFirstByteFreq() ;
-     public abstract float   mFirstByteStdDev();
-     public abstract float   mFirstByteMean();
-     public abstract float   mFirstByteWeight();
-     public abstract float[] mSecondByteFreq();
-     public abstract float   mSecondByteStdDev();
-     public abstract float   mSecondByteMean();
-     public abstract float   mSecondByteWeight();
+    public abstract float[] mFirstByteFreq();
 
-     public nsEUCStatistics() {
-     }
+    public abstract float mFirstByteStdDev();
+
+    public abstract float mFirstByteMean();
+
+    public abstract float mFirstByteWeight();
+
+    public abstract float[] mSecondByteFreq();
+
+    public abstract float mSecondByteStdDev();
+
+    public abstract float mSecondByteMean();
+
+    public abstract float mSecondByteWeight();
+
+    public nsEUCStatistics() {}
 
 }

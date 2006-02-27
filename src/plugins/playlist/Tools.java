@@ -132,7 +132,7 @@ public class Tools extends JFrame implements ActionListener, ItemListener, Prope
 
         cb3 = new JCheckBox("Single Song Mode", false);
         cb3.addItemListener(this);
-        
+
         cbPanel = new JPanel(new GridLayout(4, 0));
         cbPanel.add(cb1);
         cbPanel.add(cb2);
@@ -239,8 +239,8 @@ public class Tools extends JFrame implements ActionListener, ItemListener, Prope
             else
                 (playlist.getStatusPanel()).setVisible(false);
         }
-        
-        //Single Song Mode changed, update playlist prefs
+
+        // Single Song Mode changed, update playlist prefs
         if (list == cb3) {
             if (e.getStateChange() == ItemEvent.SELECTED)
                 playlist.getPreferences().setProperty("singleSongMode", "true");

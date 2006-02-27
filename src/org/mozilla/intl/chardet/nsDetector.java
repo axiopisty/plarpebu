@@ -20,56 +20,51 @@
  * Contributor(s):
  */
 
-package org.mozilla.intl.chardet ;
+package org.mozilla.intl.chardet;
 
-import java.lang.* ;
+public class nsDetector extends nsPSMDetector implements nsICharsetDetector {
 
-public class nsDetector extends nsPSMDetector 
-			implements nsICharsetDetector {
+    nsICharsetDetectionObserver mObserver = null;
 
-	nsICharsetDetectionObserver mObserver = null ;
+    public nsDetector() {
+        super();
+    }
 
-	public nsDetector() {
-		super() ;
-	}
+    public nsDetector(int langFlag) {
+        super(langFlag);
+    }
 
-	public nsDetector(int langFlag) {
-		super(langFlag) ;
-	}
+    public void Init(nsICharsetDetectionObserver aObserver) {
 
-	public void Init(nsICharsetDetectionObserver aObserver) {
+        mObserver = aObserver;
+        return;
 
-	  	mObserver = aObserver ;
-		return ;
+    }
 
-	}
+    public boolean DoIt(byte[] aBuf, int aLen, boolean oDontFeedMe) {
 
-	public boolean DoIt(byte[] aBuf, int aLen, boolean oDontFeedMe) {
+        if (aBuf == null || oDontFeedMe) return false;
 
-		if (aBuf == null || oDontFeedMe )
-		    return false ;
+        this.HandleData(aBuf, aLen);
+        return mDone;
+    }
 
-		this.HandleData(aBuf, aLen) ;	
-		return mDone ;
-	}
+    public void Done() {
+        this.DataEnd();
+        return;
+    }
 
-	public void Done() {
-		this.DataEnd() ;
-		return ;
-	}
+    public void Report(String charset) {
+        if (mObserver != null) mObserver.Notify(charset);
+    }
 
-	public void Report(String charset) {
-		if (mObserver != null)
-		    mObserver.Notify(charset)  ;
-	}
+    public boolean isAscii(byte[] aBuf, int aLen) {
 
-	public boolean isAscii(byte[] aBuf, int aLen) {
-
-                for(int i=0; i<aLen; i++) {
-                   if ((0x0080 & aBuf[i]) != 0) {
-                      return false ;
-                   }
-                }
-		return true ;
-	}
+        for (int i = 0; i < aLen; i++) {
+            if ((0x0080 & aBuf[i]) != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

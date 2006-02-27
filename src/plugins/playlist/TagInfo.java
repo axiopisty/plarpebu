@@ -1,4 +1,5 @@
 package plugins.playlist;
+
 /**
  * TagInfo.
  *-----------------------------------------------------------------------
@@ -18,71 +19,80 @@ package plugins.playlist;
  *----------------------------------------------------------------------
  */
 
-import java.util.*;
+import java.util.Vector;
 
 /**
- * This interface define needed features for song information.
- * Adapted from Scott Pennell interface.
+ * This interface define needed features for song information. Adapted from
+ * Scott Pennell interface.
  */
-public interface TagInfo
-{
-  /**
-   * Get Sampling Rate
-   * @return
-   */
-  public int getSamplingRate();
+public interface TagInfo {
+    /**
+     * Get Sampling Rate
+     * 
+     * @return
+     */
+    public int getSamplingRate();
 
-  /**
-   * Get Nominal Bitrate
-   * @return bitrate in bps
-   */
-  public int getBitRate();
+    /**
+     * Get Nominal Bitrate
+     * 
+     * @return bitrate in bps
+     */
+    public int getBitRate();
 
-  /**
-   * Get play time in seconds.
-   * @return
-   */
-  public long getPlayTime();
+    /**
+     * Get play time in seconds.
+     * 
+     * @return
+     */
+    public long getPlayTime();
 
-  /**
-   * Get the title of the song.
-   * @return the title of the song
-   */
-  public String getTitle();
+    /**
+     * Get the title of the song.
+     * 
+     * @return the title of the song
+     */
+    public String getTitle();
 
-  /**
-   * Get the artist that performed the song
-   * @return the artist that performed the song
-   */
-  public String getArtist();
+    /**
+     * Get the artist that performed the song
+     * 
+     * @return the artist that performed the song
+     */
+    public String getArtist();
 
-  /**
-   * Get the name of the album upon which the song resides
-   * @return the album name
-   */
-  public String getAlbum();
+    /**
+     * Get the name of the album upon which the song resides
+     * 
+     * @return the album name
+     */
+    public String getAlbum();
 
-  /**
-   * Get the track number of this track on the album
-   * @return the track number
-   */
-  public int getTrack();
+    /**
+     * Get the track number of this track on the album
+     * 
+     * @return the track number
+     */
+    public int getTrack();
 
-  /**
-   * Get the genre string of the music
-   * @return the genre string
-   */
-  public String getGenre();
+    /**
+     * Get the genre string of the music
+     * 
+     * @return the genre string
+     */
+    public String getGenre();
 
-  /**
-   * Get the year the track was released
-   * @return the year the track was released
-   */
-  public String getYear();
+    /**
+     * Get the year the track was released
+     * 
+     * @return the year the track was released
+     */
+    public String getYear();
 
-  /**
-   * Get any comments provided about the song
-   * @return the comments
-   */
-  public Vector getComment();
+    /**
+     * Get any comments provided about the song
+     * 
+     * @return the comments
+     */
+    public Vector getComment();
 }
