@@ -3,10 +3,6 @@ package plugins.karaoke.cdg.instructions;
 import java.awt.Rectangle;
 
 /**
- * <p>
- * Title:
- * </p>
- * <p>
  * Description: These commands load a 12 x 6 tile of pixels from the
  * subCode.data area. I recall that in the original CD+G spec, the tile is
  * refered to as a "font", but I think the word tile is more appropriate,
@@ -32,26 +28,14 @@ import java.awt.Rectangle;
  * 16 colors, we are XORing the pixel values (0-15) themselves, which correspond
  * to indexes into a color lookup table. We are not XORing the actual R,G,B
  * values.
- * </p>
- * <p>
- * Copyright: Copyright (c) 2003
- * </p>
- * <p>
- * Company:
- * </p>
  * 
  * @author Michel Buffa (buffa@unice.fr)
  * @version $Id
  */
-
 public class CdgTileBlock {
     private static byte color0;
 
     private static byte color1;
-
-    private static byte row;
-
-    private static byte column;
 
     private static byte[] tilePixels = new byte[12];
 
