@@ -25,7 +25,7 @@ import pluginsSDK.PanelPlugin;
 import test.LabelClock;
 
 /**
- *
+ * Info plugin
  */
 public class InfoPlugin extends PanelPlugin implements BasicPlayerListener, Runnable {
     private JTextField sourceTF = null;
@@ -40,8 +40,6 @@ public class InfoPlugin extends PanelPlugin implements BasicPlayerListener, Runn
 
     private DefilPanel dp = null;
 
-    private Thread processus = null; // le processus
-
     private int speed = 100; // temps de pause
 
     private BasicController controller = null;
@@ -52,31 +50,31 @@ public class InfoPlugin extends PanelPlugin implements BasicPlayerListener, Runn
 
     private int milliseconds = -1;
 
-    private String songName = null;
-
-    public InfoPlugin() throws HeadlessException {
-
-        initUI();
-
-    }
-
     static {
         CompoundBorder compoundborder = new CompoundBorder(new LineBorder(Color.lightGray, 2), new BevelBorder(1,
         Color.white, Color.darkGray));
         DefaultBorder = new CompoundBorder(new BevelBorder(0, Color.white, Color.darkGray), compoundborder);
     }
 
+    /**
+     * Constructor
+     * 
+     * @throws HeadlessException
+     */
+    public InfoPlugin() throws HeadlessException {
+
+        initUI();
+    }
+
+    /**
+     * Initialize UI
+     */
     public void initUI() {
 
-        // time = new JLabel("00:00:00");
-        // time.setFont(font);
-        // time.setForeground(new Color(225, 105, 105));
-        time = new LabelClock();
         // time = new SevenSegClockPanel();
+        time = new LabelClock();
         title = new JLabel(" ");
         title.setFont(new Font("BankGothic Md BT", 0, 16));
-
-        // time = new SevenSegClockPanel();
 
         Box b2 = Box.createVerticalBox();
         b2.setAlignmentX(LEFT_ALIGNMENT);
@@ -97,7 +95,6 @@ public class InfoPlugin extends PanelPlugin implements BasicPlayerListener, Runn
         b3.validate();
 
         this.add(b3);
-
     }
 
     public void opened(Object stream, Map properties) {
@@ -113,18 +110,12 @@ public class InfoPlugin extends PanelPlugin implements BasicPlayerListener, Runn
             System.out.println("stream != null");
             if (stream instanceof File) {
                 dp.setString(((File) stream).getName());
-                songName = ((File) stream).getName();
                 System.out.println("dp.setString(" + ((File) stream).getName());
             }
             else if (stream instanceof URL) {
                 sourceTF.setText(((URL) stream).toString());
             }
         }
-        Iterator it = properties.keySet().iterator();
-        StringBuffer jsSB = new StringBuffer();
-        StringBuffer extjsSB = new StringBuffer();
-        StringBuffer spiSB = new StringBuffer();
-
     }
 
     public void stateUpdated(BasicPlayerEvent event) {}
@@ -145,7 +136,6 @@ public class InfoPlugin extends PanelPlugin implements BasicPlayerListener, Runn
                 dynspiSB.append(key + "=" + value + "\n");
             }
         }
-
     }
 
     public String getName() {
@@ -163,12 +153,10 @@ public class InfoPlugin extends PanelPlugin implements BasicPlayerListener, Runn
             dp.repaint();
 
             try {
-                processus.sleep(speed);
+                Thread.sleep(speed);
             }
             catch (InterruptedException e) {}
         }
-        // processus = null;
-
     }
 
     private String millisec_to_time(long time_ms) {
@@ -209,7 +197,6 @@ public class InfoPlugin extends PanelPlugin implements BasicPlayerListener, Runn
      */
     public void setController(BasicController controller) {
         this.controller = controller;
-
     }
 
     public String getVersion() {
