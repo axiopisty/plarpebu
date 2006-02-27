@@ -1,11 +1,7 @@
 package plugins.karaoke.cdg.instructions;
 
 /**
- * <p>
- * Title:
- * </p>
- * <p>
- * Description: Scroll Preset (subCode.instruction==20) and Scroll Copy
+ * Scroll Preset (subCode.instruction==20) and Scroll Copy
  * (subCode.instruction==24) In these instruction, the 16 byte data field is
  * interepreted as follows. byte color; // Only lower 4 bits are used, mask with
  * 0x0F byte hScroll; // Only lower 6 bits are used, mask with 0x3F byte
@@ -29,18 +25,18 @@ package plugins.karaoke.cdg.instructions;
  * graphic display by amounts less than 12 pixels. It can assume values from 0
  * to 11. You can create the effect of an infinite panorama by continually
  * loading in new tiles into the border area and scrolling them into view.
- * </p>
  */
-// ---------------------------------------------------------------------------
-// return true if a scroll is done, false if only an offset is done
 public class CdgScrollCopy {
     public static final int WIDTH = 300;
 
     public static final int HEIGHT = 216;
 
+    /**
+     * @return true if a scroll is done, false if only an offset is done
+     */
     public static boolean scroll(byte data[], byte pixels[]) {
         byte[] trash = new byte[12 * WIDTH]; // max size
-        byte color;
+        //byte color;
         byte hcmd;
         byte vcmd;
         byte hOffset;
@@ -49,7 +45,8 @@ public class CdgScrollCopy {
         boolean ret = false;
 
         // Only 4 lower bits are used
-        color = (byte) ((data[0] & 0x0F) + 2);
+        //color = (byte) ((data[0] & 0x0F) + 2);
+        
         // Only lower 6 bits are used
         hcmd = (byte) ((data[1] & 0x30) >> 4);
         vcmd = (byte) ((data[2] & 0x30) >> 4);
