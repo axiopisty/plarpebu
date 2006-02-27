@@ -2,7 +2,6 @@ package plugins.audio_visualization;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.DisplayMode;
 import java.awt.Graphics;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
@@ -23,23 +22,11 @@ import javazoom.jlgui.basicplayer.BasicPlayerListener;
 import pluginsSDK.FramePlugin;
 
 /**
- * <p>
- * Title:
- * </p>
- * <p>
- * Description:
- * </p>
- * <p>
- * Copyright: Copyright (c) 2004
- * </p>
- * <p>
- * Company:
- * </p>
+ * Visualizer
  * 
  * @author not attributable
  * @version 1.0
  */
-
 public class Visu extends FramePlugin implements BasicPlayerListener, Runnable, ImageObserver {
 
     private BorderLayout borderLayout1 = new BorderLayout();
@@ -61,6 +48,7 @@ public class Visu extends FramePlugin implements BasicPlayerListener, Runnable, 
     private MemoryImageSource source;
 
     private static Thread thread;
+    private static boolean stopThread = false;
 
     GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
 
@@ -68,8 +56,8 @@ public class Visu extends FramePlugin implements BasicPlayerListener, Runnable, 
 
     GraphicsConfiguration gc = device.getDefaultConfiguration();
 
-    private static DisplayMode[] BEST_DISPLAY_MODES = new DisplayMode[] { new DisplayMode(640, 480, 32, 0),
-    new DisplayMode(640, 480, 16, 0), new DisplayMode(640, 480, 8, 0) };
+    //private static DisplayMode[] BEST_DISPLAY_MODES = new DisplayMode[] { new DisplayMode(640, 480, 32, 0),
+    //new DisplayMode(640, 480, 16, 0), new DisplayMode(640, 480, 8, 0) };
 
     public Visu() {
         try {
@@ -108,14 +96,12 @@ public class Visu extends FramePlugin implements BasicPlayerListener, Runnable, 
             blues[i + 192] = (byte) (i * 4);
         }
 
-        pixels = new byte[size().width * size().height];
+        pixels = new byte[getWidth() * getHeight()];
         IndexColorModel icm = new IndexColorModel(8, 256, reds, greens, blues);
-        source = new MemoryImageSource(size().width, size().height, icm, pixels, 0, size().width);
+        source = new MemoryImageSource(getWidth(), getHeight(), icm, pixels, 0, getWidth());
         source.setAnimated(true);
         img = createImage(source);
         prepareImage(img, this);
-        thread = new Thread(this);
-
     }
 
     public void setController(BasicController controller) {}
@@ -144,17 +130,19 @@ public class Visu extends FramePlugin implements BasicPlayerListener, Runnable, 
     }
 
     public void start() {
+        //Must create a new thread each time, cannot restart a dead thread.
+        thread = new Thread(this);
+        stopThread = false;
         thread.start();
     }
 
     public void stop() {
-        thread.stop();
+        stopThread = true;
     }
 
     public void run() {
         // Thread.currentThread().setPriority(10);
         do {
-
             sound[0] = rand(-height / 3, height / 3);
             for (int i = 1; i < width; i++) {
                 sound[i] = sound[i - 1] + rand(-10, 10);
@@ -166,8 +154,6 @@ public class Visu extends FramePlugin implements BasicPlayerListener, Runnable, 
                 }
             }
 
-            int w = 0;
-            int h = 0;
             int ib = (height - 1) * width;
             for (int i = 0; i < width; i++) {
                 pixels[i] = 0;
@@ -208,20 +194,24 @@ public class Visu extends FramePlugin implements BasicPlayerListener, Runnable, 
 
             for (int i = 0; i < width; i++) {
                 pixels[(height / 2 + sound[i] / 3) * width + i] = -1;
-
             }
+            
             source.newPixels();
+            
             try {
-                thread.sleep(50);
+                Thread.sleep(50);
             }
             catch (InterruptedException ex) {}
 
+            //If told to stop, kill the thread
+            if (stopThread)
+                break;
         }
         while (true);
     }
 
     static int rand(int low, int high) {
-        return (int) ((double) low + Math.random() * (double) (high - low));
+        return (int) (low + Math.random() * (high - low));
     }
 
     class MyMouseListener extends MouseAdapter {
@@ -241,7 +231,7 @@ public class Visu extends FramePlugin implements BasicPlayerListener, Runnable, 
      *        Map
      */
     public void opened(Object stream, Map properties) {
-    // thread.start();
+    // start();
     }
 
     /**
@@ -257,7 +247,6 @@ public class Visu extends FramePlugin implements BasicPlayerListener, Runnable, 
      *        Map
      */
     public void progress(int bytesread, long microseconds, byte[] pcmdata, Map properties) {
-
     }
 
     /**
@@ -268,11 +257,10 @@ public class Visu extends FramePlugin implements BasicPlayerListener, Runnable, 
      */
     public void stateUpdated(BasicPlayerEvent event) {
         if (event.getCode() == BasicPlayerEvent.STOPPED || event.getCode() == BasicPlayerEvent.EOM) {
-            // thread.resume();
-
+            stop();
         }
         if (event.getCode() == BasicPlayerEvent.PLAYING) {
-            thread.start();
+            start();
         }
     }
 
