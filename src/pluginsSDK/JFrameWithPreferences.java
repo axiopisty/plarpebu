@@ -12,24 +12,9 @@ import java.util.StringTokenizer;
 import javax.swing.JFrame;
 
 /**
- * <p>
- * Title:
- * </p>
- * <p>
- * Description:
- * </p>
- * <p>
- * Copyright: Copyright (c) 2004
- * </p>
- * <p>
- * Company:
- * </p>
- * 
- * @author not attributable
- * @version 1.0
+ * Plugins can extends this class if they want to store preferences
  */
-
-public class JFrameWithPreferences extends JFrame implements SystemExitListener {
+public abstract class JFrameWithPreferences extends JFrame implements SystemExitListener {
     // For preferences
     protected Properties preferences = null;
 
@@ -65,9 +50,9 @@ public class JFrameWithPreferences extends JFrame implements SystemExitListener 
     public void readPreferences() {
         Properties defaultProps = new Properties();
         InputStream in = null;
+        
         // create and load default properties
         try {
-
             in = new FileInputStream(defaultPreferencesFilename);
             /*
              * System.out.println("On cherche la ressource " +
@@ -90,7 +75,6 @@ public class JFrameWithPreferences extends JFrame implements SystemExitListener 
             in = new FileInputStream(preferenceFileName);
             preferences.load(in);
             in.close();
-
         }
         catch (Exception e) {
             System.out.println("No preferences file found : " + preferenceFileName + " Creating an empty one...");
@@ -185,9 +169,9 @@ public class JFrameWithPreferences extends JFrame implements SystemExitListener 
 
     public Color StringToColor(String strColor) {
         StringTokenizer st = new StringTokenizer(strColor, ",");
-        int r = Integer.parseInt((String) st.nextToken());
-        int g = Integer.parseInt((String) st.nextToken());
-        int b = Integer.parseInt((String) st.nextToken());
+        int r = Integer.parseInt(st.nextToken());
+        int g = Integer.parseInt(st.nextToken());
+        int b = Integer.parseInt(st.nextToken());
         // System.out.println("r = " + r + " g = " + g + " b = " + b);
         return new Color(r, g, b);
     }

@@ -2,6 +2,7 @@ package fr.unice.buffa;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
@@ -25,7 +26,6 @@ import javax.swing.JPanel;
  * @author not attributable
  * @version 1.0
  */
-
 public class JPanelColorSelector extends JPanel {
     BorderLayout borderLayout1 = new BorderLayout();
 
@@ -44,10 +44,6 @@ public class JPanelColorSelector extends JPanel {
         this.setLayout(borderLayout1);
     }
 
-    public static void main(String[] args) {
-        JPanelColorSelector JPanelColorSelector1 = new JPanelColorSelector();
-    }
-
     void this_mouseClicked(MouseEvent e) {
         Color color = JColorChooser.showDialog(this, null, getBackground());
         setBackground(color);
@@ -55,7 +51,7 @@ public class JPanelColorSelector extends JPanel {
 
 }
 
-class JPanelColorSelector_this_mouseAdapter extends java.awt.event.MouseAdapter {
+class JPanelColorSelector_this_mouseAdapter extends MouseAdapter {
     JPanelColorSelector adaptee;
 
     JPanelColorSelector_this_mouseAdapter(JPanelColorSelector adaptee) {

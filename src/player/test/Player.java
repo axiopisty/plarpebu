@@ -53,7 +53,6 @@ import pluginsSDK.Iconifiable;
 import pluginsSDK.JFrameWithPreferences;
 import pluginsSDK.PanelPlugin;
 import pluginsSDK.playerPlugin;
-import basicplayer.BasicPlayer;
 import basicplayer.CompositePlayer;
 
 import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
@@ -62,23 +61,11 @@ import fr.unice.plugin.Plugin;
 import fr.unice.plugin.PluginManager;
 
 /**
- * <p>
- * Title:
- * </p>
- * <p>
- * Description:
- * </p>
- * <p>
- * Copyright: Copyright (c) 2004
- * </p>
- * <p>
- * Company:
- * </p>
+ * Main Player
  * 
  * @author Pepino, Arnaud
  * @version $Id
  */
-
 public class Player extends JFrameWithPreferences implements DropTargetListener, MouseMotionListener,
 ComponentListener, Iconifiable {
 
@@ -103,8 +90,6 @@ ComponentListener, Iconifiable {
     private PluginManager pluginManager;
 
     private playerPlugin[] plugins;
-
-    private BasicPlayer player;
 
     private PluginMenuItemFactory pluginMenuItemFactory;
 
@@ -178,14 +163,14 @@ ComponentListener, Iconifiable {
         /* on creer nos menus ici */
         buildPluginMenu(); // le menu nous indiquant les fonctionnalites
         buildChargementMenu(); // simple menu pour recharcher d'eventuels
-                                // nouveau plugins
+        // nouveau plugins
         buildSkinMenu(); // le menu pour changer de skins
 
         // Construction de l'interface a partir des plugins chargés
         buildUI();
 
         /** Drag and drop */
-        DropTarget dt = new DropTarget(this, DnDConstants.ACTION_COPY_OR_MOVE, this, true);
+        new DropTarget(this, DnDConstants.ACTION_COPY_OR_MOVE, this, true);
 
         // Remove splashScreen
         splashScreen.close();
@@ -279,7 +264,7 @@ ComponentListener, Iconifiable {
 
                 if (pp.getType().equals(FramePlugin.class)) {
                     ((FramePlugin) pp).setLocation(getX(), getY() + getHeight());
-                    ((FramePlugin) pp).show();
+                    ((FramePlugin) pp).setVisible(true);
                 }
                 else if (pp.getType().equals(PanelPlugin.class)) {
                     pane.add((Component) pp);
@@ -345,7 +330,6 @@ ComponentListener, Iconifiable {
     public void changeSkin(String skinName) {
         try {
             SkinLookAndFeel.setSkin(SkinLookAndFeel.loadThemePack(skinName));
-            SkinLookAndFeel.enable();
             SwingUtilities.updateComponentTreeUI(getRootPane());
 
             // ArrayList listePlug = (ArrayList) pluginLoader.getPluginList();
@@ -435,7 +419,7 @@ ComponentListener, Iconifiable {
                     if (pp.getType().equals(FramePlugin.class)) {
                         // ( (FramePlugin) pp).setLocation(getX(), getY() +
                         // getHeight());
-                        ((FramePlugin) pp).show();
+                        ((FramePlugin) pp).setVisible(true);
                     }
                     else if (pp.getType().equals(PanelPlugin.class)) {
                         pane.add((Component) pp);
@@ -446,7 +430,7 @@ ComponentListener, Iconifiable {
                     // plugAffiche.remove(pp);
                     // System.out.println("Retrait ds plug affiche");
                     if (pp.getType().equals(FramePlugin.class)) {
-                        ((FramePlugin) pp).hide();
+                        ((FramePlugin) pp).setVisible(false);
                     }
                     else if (pp.getType().equals(PanelPlugin.class)) {
                         pane.remove((Component) pp);
@@ -513,7 +497,7 @@ ComponentListener, Iconifiable {
         InfoPlugin listenerInfo = (InfoPlugin) searchPlugin("Info");
         listenerInfo.setController(controller);
         bplayer.addBasicPlayerListener(listenerInfo.getPlugin());
-        pane.add((Component) listenerInfo);
+        pane.add(listenerInfo);
         pane.validate();
         Thread t = new Thread(listenerInfo);
         t.start();
@@ -527,8 +511,8 @@ ComponentListener, Iconifiable {
         listenerPG.setController(controller);
         bplayer.addBasicPlayerListener(listenerPG.getPlugin());
 
-        panelUI.add((Component) listenerSPS);
-        panelUI.add((Component) listenerPG);
+        panelUI.add(listenerSPS);
+        panelUI.add(listenerPG);
 
         pane.add(panelUI);
 
@@ -710,13 +694,11 @@ ComponentListener, Iconifiable {
             if ((e.getSourceActions() & DnDConstants.ACTION_COPY_OR_MOVE) != 0) {
                 return true;
             }
-            else {
-                return false;
-            }
-        }
-        else {
+
             return false;
         }
+
+        return false;
     }
 
     /**
@@ -742,10 +724,10 @@ ComponentListener, Iconifiable {
      *        ComponentEvent
      */
     public void componentResized(ComponentEvent e) {
-        double hauteur = this.getSize().getHeight();
-        double largeur = this.getSize().getWidth();
-        // System.out.println(" hauteur : " + hauteur + ", largeur : " +
-        // largeur);
+    // double hauteur = this.getSize().getHeight();
+    // double largeur = this.getSize().getWidth();
+    // System.out.println(" hauteur : " + hauteur + ", largeur : " +
+    // largeur);
     }
 
     /**
@@ -766,58 +748,49 @@ ComponentListener, Iconifiable {
     public static void main(String[] args) throws MalformedURLException {
 
         try {
-
             SkinLookAndFeel.setSkin(SkinLookAndFeel.loadThemePack(getSkinFromPreferences()));
-            SkinLookAndFeel.enable();
             setDefaultLookAndFeelDecorated(true);
         }
-
-        catch (Exception ex)
-
-        {
+        catch (Exception ex) {
             ex.printStackTrace();
         }
 
         Player player = new Player();
-        player.show();
-
+        player.setVisible(true);
     }
 
     public void minimize() {
         System.out.println("---hide()---");
-        hide();
+        setVisible(false);
 
         // For the playlist plugin also (progess bar is seen through the kar cdg
         // windows)
-
         if (playlist != null) {
             System.out.println("We hide the playlist");
 
-            playlist.hide();
+            playlist.setVisible(false);
         }
     }
 
     public void setToOriginalSize() {
         System.out.println("---show()---");
-        show();
+        setVisible(true);
         // For the playlist plugin also (progess bar is seen through the kar cdg
         // windows)
-        if (playlist != null) playlist.show();
-
+        if (playlist != null) playlist.setVisible(true);
     }
 
     /**
      * this method is requiered because when we try to load skins from the
      * constructor, the main window is badly decorated. A bug in skinLF ?
      */
-
     private static String getSkinFromPreferences() {
         Properties defaultProps = new Properties();
         Properties preferences = null;
         InputStream in = null;
+
         // create and load default properties
         try {
-
             in = new FileInputStream("preferences" + File.separator + "defaultPlaperbu.properties");
             /*
              * System.out.println("On cherche la ressource " +
@@ -838,7 +811,6 @@ ComponentListener, Iconifiable {
             in = new FileInputStream("preferences" + File.separator + "Plaperbu.properties");
             preferences.load(in);
             in.close();
-
         }
         catch (Exception e) {
             System.out.println("No preferences file found : ");
