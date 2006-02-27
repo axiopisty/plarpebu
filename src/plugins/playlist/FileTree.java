@@ -324,9 +324,8 @@ public class FileTree extends JPanel implements ActionListener {
         if (obj instanceof FileNode) {
             return (FileNode) obj;
         }
-        else {
-            return null;
-        }
+
+        return null;
     }
 
     /**
@@ -646,10 +645,9 @@ class FileNode {
             return null;
         }
         try {
-            if (filefilter == null || filefilter.getExtension().equals(""))
-                return m_file.listFiles();
-            else
-                return m_file.listFiles(filefilter);
+            if (filefilter == null || filefilter.getExtension().equals("")) return m_file.listFiles();
+
+            return m_file.listFiles(filefilter);
         }
         catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error reading directory " + m_file.getAbsolutePath(), "Warning",
