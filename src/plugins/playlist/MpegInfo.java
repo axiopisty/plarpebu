@@ -52,8 +52,6 @@ public class MpegInfo implements TagInfo {
 
     private long total = 0;
 
-    private String vendor = null;
-
     private String location = null;
 
     private long size = 0;
@@ -63,8 +61,6 @@ public class MpegInfo implements TagInfo {
     private boolean crc = false;
 
     private boolean original = false;
-
-    private boolean priv = false;
 
     private boolean vbr = false;
 
@@ -108,11 +104,13 @@ public class MpegInfo implements TagInfo {
      */
     private void checkAudioFormat(InputStream s) throws JavaLayerException {
         try {
-            String[][] sm_aEncodings = { { "MpegEncoding.MPEG2L1", "MpegEncoding.MPEG2L2", "MpegEncoding.MPEG2L3" },
-            { "MpegEncoding.MPEG1L1", "MpegEncoding.MPEG1L2", "MpegEncoding.MPEG1L3" },
-            { "MpegEncoding.MPEG2DOT5L1", "MpegEncoding.MPEG2DOT5L2", "MpegEncoding.MPEG2DOT5L3" },
-
-            };
+            // String[][] sm_aEncodings = { { "MpegEncoding.MPEG2L1",
+            // "MpegEncoding.MPEG2L2", "MpegEncoding.MPEG2L3" },
+            // { "MpegEncoding.MPEG1L1", "MpegEncoding.MPEG1L2",
+            // "MpegEncoding.MPEG1L3" },
+            // { "MpegEncoding.MPEG2DOT5L1", "MpegEncoding.MPEG2DOT5L2",
+            // "MpegEncoding.MPEG2DOT5L3" },
+            // };
 
             Bitstream m_bitstream = new Bitstream(s);
             Header m_header = m_bitstream.readFrame();
@@ -121,17 +119,14 @@ public class MpegInfo implements TagInfo {
             int nVersion = m_header.version();
             int nLayer = m_header.layer();
             nLayer = m_header.layer();
-            int nSFIndex = m_header.sample_frequency();
-            int nMode = m_header.mode();
             int FrameLength = m_header.calculate_framesize();
             if (FrameLength < 0) throw new JavaLayerException("not a MPEG stream: invalid framelength");
-            int nFrequency = m_header.frequency();
             float FrameRate = (float) ((1.0 / (m_header.ms_per_frame())) * 1000.0);
             if (FrameRate < 0) throw new JavaLayerException("not a MPEG stream: invalid framerate");
             int BitRate = Header.bitrates[nVersion][nLayer - 1][m_header.bitrate_index()];
             if (BitRate <= 0) throw new JavaLayerException("not a MPEG stream: invalid bitrate");
             int nHeader = m_header.getSyncHeader();
-            String encoding = sm_aEncodings[nVersion][nLayer - 1];
+            // String encoding = sm_aEncodings[nVersion][nLayer - 1];
             int cVersion = (nHeader >> 19) & 0x3;
             if (cVersion == 1) throw new JavaLayerException("not a MPEG stream: wrong version");
             int cSFIndex = (nHeader >> 10) & 0x3;
