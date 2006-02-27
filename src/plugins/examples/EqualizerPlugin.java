@@ -10,8 +10,6 @@ import java.util.Map;
 
 import javax.swing.DefaultBoundedRangeModel;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 
 import javazoom.jlgui.basicplayer.BasicController;
@@ -20,9 +18,8 @@ import javazoom.jlgui.basicplayer.BasicPlayerListener;
 import pluginsSDK.FramePlugin;
 
 /**
- *
+ * Equalizer
  */
-
 public class EqualizerPlugin extends FramePlugin implements BasicPlayerListener, MouseListener {
 
     private JSlider[] sliders = null;
@@ -37,21 +34,25 @@ public class EqualizerPlugin extends FramePlugin implements BasicPlayerListener,
 
     private Container pane = null;
 
-    private JScrollPane scrollPane;
-
-    private JScrollBar scrollBar;
-
     private JPanel north = null;
 
     private JPanel south = null;
 
     private BasicController controller = null;
 
+    /**
+     * Constructor
+     * 
+     * @throws HeadlessException
+     */
     public EqualizerPlugin() throws HeadlessException {
         super();
         initUI();
     }
 
+    /**
+     * Initialize UI
+     */
     public void initUI() {
 
         pane = this.getContentPane();
