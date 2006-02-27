@@ -3,7 +3,6 @@ package plugins.karaoke.cdg.lyricspanel;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -15,27 +14,15 @@ import java.util.Arrays;
 import javax.swing.JPanel;
 
 /**
- * <p>
- * Title:
- * </p>
- * <p>
- * Description: In the CD+G system, 16 color graphics are displayed on a raster
+ * In the CD+G system, 16 color graphics are displayed on a raster
  * field which is 300 x 216 pixels in size. The middle 294 x 204 area is within
  * the TV's "safe area", and that is where the graphics are displayed. The outer
  * border is set to a solid color. The colors are stored in a 16 entry color
  * lookup table.
- * </p>
- * <p>
- * Copyright: Copyright (c) 2003
- * </p>
- * <p>
- * Company:
- * </p>
  * 
  * @author Michel Buffa (buffa@unice.fr)
  * @version $Id
  */
-
 public class CdgGraphicBufferedImage extends JPanel {
 
     // Colors that composes the indexed color model. 16 colors...
@@ -50,8 +37,6 @@ public class CdgGraphicBufferedImage extends JPanel {
     private BufferedImage img;
 
     private WritableRaster raster;
-
-    private Graphics g;
 
     private int width = 300, height = 216;
 
@@ -204,20 +189,6 @@ public class CdgGraphicBufferedImage extends JPanel {
     }
 
     public void paintComponent(Graphics g) {
-        /*
-         * Graphics2D g2d = (Graphics2D) g; g2d.scale(sx, sy); g2d.setClip(r.x,
-         * r.y, r.width, r.height);
-         */
-
-        Graphics2D g2 = (Graphics2D) g;
-
-        /*
-         * if(bilinearInterpolation) {
-         * g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-         * RenderingHints.VALUE_INTERPOLATION_BILINEAR); } else {
-         * g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-         * RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR); }
-         */
         if (fromPartialRedraw) {
             g.drawImage(img, rDestination.x, rDestination.y, rDestination.x + rDestination.width, rDestination.y
             + rDestination.height, r.x, r.y, r.x + r.width, r.y + r.height, this);
@@ -227,10 +198,6 @@ public class CdgGraphicBufferedImage extends JPanel {
             g.drawImage(img, 0, 0, getWidth(), getHeight(), this);
         }
 
-        // g2d.drawImage()
-
-        // g2d.drawImage(img, 0, 0, null);
-
         fromPartialRedraw = false;
     }
 
@@ -239,12 +206,10 @@ public class CdgGraphicBufferedImage extends JPanel {
     }
 
     public void savePixels() {
-        // memcpy(pixelsSaved,pixels,WIDTH*HEIGHT);
         System.arraycopy(pixels, 0, savedPixels, 0, 300 * 216);
     }
 
     public void restorePixels() {
-        // memcpy(pixels,pixelsSaved,WIDTH*HEIGHT );
         System.arraycopy(savedPixels, 0, pixels, 0, 300 * 216);
     }
 
