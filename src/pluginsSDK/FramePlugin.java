@@ -56,7 +56,7 @@ abstract public class FramePlugin extends JFrameWithPreferences implements playe
     }
 
     public String getVersion() {
-        return "1.0";
+        return "v1.0";
     }
 
 }

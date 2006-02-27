@@ -79,7 +79,7 @@ public class Visu extends FramePlugin implements BasicPlayerListener, Runnable, 
         height = 200;
 
         setSize(width, height);
-        setTitle("Visualisateur de la Balle");
+        setTitle("Visualizer " + getVersion());
 
         sound = new int[width];
 
@@ -265,7 +265,7 @@ public class Visu extends FramePlugin implements BasicPlayerListener, Runnable, 
     }
 
     public String getVersion() {
-        return "1.0";
+        return "v1.0";
     }
 
 }

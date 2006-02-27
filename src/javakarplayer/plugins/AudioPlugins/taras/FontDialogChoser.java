@@ -28,7 +28,6 @@ import com.l2fprod.common.swing.JFontChooser;
  * @author not attributable
  * @version 1.0
  */
-
 public class FontDialogChoser extends JDialog {
     JPanel panel1 = new JPanel();
 
@@ -59,7 +58,7 @@ public class FontDialogChoser extends JDialog {
     private void jbInit() throws Exception {
         panel1.setLayout(borderLayout1);
         this.setModal(true);
-        this.setTitle("Please select font");
+        this.setTitle("Please Select Font");
         jButton1.setText("Ok");
         jButton1.addActionListener(new FontDialogChoser_jButton1_actionAdapter(this));
         getContentPane().add(panel1);

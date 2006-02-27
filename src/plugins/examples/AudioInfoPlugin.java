@@ -185,7 +185,7 @@ public class AudioInfoPlugin extends FramePlugin implements BasicPlayerListener 
     }
 
     public String getVersion() {
-        return "V1.0";
+        return "v1.0";
     }
 
 }

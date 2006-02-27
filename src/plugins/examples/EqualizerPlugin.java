@@ -155,7 +155,7 @@ public class EqualizerPlugin extends FramePlugin implements BasicPlayerListener,
      */
 
     public String getVersion() {
-        return "V0.9";
+        return "v0.9";
     }
 
 }

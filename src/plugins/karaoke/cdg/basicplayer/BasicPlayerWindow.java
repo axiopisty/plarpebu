@@ -136,7 +136,7 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
     JCheckBoxMenuItem jCheckBoxMenuItem2 = new JCheckBoxMenuItem();
 
     public BasicPlayerWindow() {
-        setTitle("mp3+cdg lyrics display. Try popup menu !" + " " + getVersion());
+        setTitle("CDG Lyrics Display " + getVersion());
         // the mp3 player
         setUndecorated(true);
         // setIgnoreRepaint(true);

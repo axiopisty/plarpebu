@@ -103,7 +103,7 @@ public class ChooseFullScreenModeDIalog extends JDialog {
 
     private void jbInit() throws Exception {
         this.setModal(true);
-        this.setTitle("Choose fullscreen mode");
+        this.setTitle("Choose Fullscreen Mode");
         jButtonOk.setText("Ok");
         jButtonOk.addActionListener(new ChooseFullScreenModeDIalog_jButtonOk_actionAdapter(this));
         this.getContentPane().add(jPanel1, BorderLayout.SOUTH);

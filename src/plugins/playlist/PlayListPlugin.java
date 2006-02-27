@@ -419,7 +419,7 @@ MouseMotionListener, DropTargetListener {
     }
 
     public String getVersion() {
-        return "V1.0";
+        return "v1.0";
     }
 
     public void setPlayListFont(String fontName, int fontSize, int fontStyle) {

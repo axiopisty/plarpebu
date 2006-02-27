@@ -69,7 +69,7 @@ public class ProgressBarPlugin extends FramePlugin implements BasicPlayerListene
     public ProgressBarPlugin(/* String title */) throws HeadlessException {
         // super(title);
         initUI();
-        setTitle("Progress Bar, Version " + getVersion());
+        setTitle("Progress Bar " + getVersion());
     }
 
     public void initUI() {

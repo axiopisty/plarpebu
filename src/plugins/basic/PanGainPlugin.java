@@ -172,7 +172,7 @@ public class PanGainPlugin extends PanelPlugin implements BasicPlayerListener, M
     public void mouseMoved(MouseEvent e) {}
 
     public String getVersion() {
-        return "1.0";
+        return "v1.0";
     }
 
 }

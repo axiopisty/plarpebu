@@ -44,23 +44,11 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 /**
- * <p>
- * Title:
- * </p>
- * <p>
- * Description:
- * </p>
- * <p>
- * Copyright: Copyright (c) 2004
- * </p>
- * <p>
- * Company:
- * </p>
+ * Playlist Manager
  * 
  * @author not attributable
  * @version 1.0
  */
-
 public class PlayListManager extends JFrame implements ActionListener, KeyListener, DropTargetListener {
 
     private Container pane = null;
@@ -103,13 +91,16 @@ public class PlayListManager extends JFrame implements ActionListener, KeyListen
 
     private PopupListener popupListener;
 
-    private static final int MAXDEPTH = 4;
-
+    /**
+     * Constructor
+     * 
+     * @param pl
+     */
     public PlayListManager(DefaultListModel pl) {
         Playlm = pl;
         try {
             jbInit();
-            setTitle("Playlist Manager V 1.0");
+            setTitle("Playlist Manager");
         }
         catch (Exception ex) {
             ex.printStackTrace();
@@ -215,7 +206,7 @@ public class PlayListManager extends JFrame implements ActionListener, KeyListen
         PlayList.setCellRenderer(new MyCellRenderer());
 
         // Drag and Drop between the 2 JList
-        DropTarget dt = new DropTarget(PlayList, DnDConstants.ACTION_COPY_OR_MOVE, this, true);
+        new DropTarget(PlayList, DnDConstants.ACTION_COPY_OR_MOVE, this, true);
 
         PlayList.setForeground(fg1);
         PlayList.setBackground(bg2);
@@ -626,13 +617,11 @@ public class PlayListManager extends JFrame implements ActionListener, KeyListen
             if ((e.getSourceActions() & DnDConstants.ACTION_COPY_OR_MOVE) != 0) {
                 return true;
             }
-            else {
-                return false;
-            }
-        }
-        else {
+
             return false;
         }
+
+        return false;
     }
 
     public void setSupportedFileFormats(String[] exts) {

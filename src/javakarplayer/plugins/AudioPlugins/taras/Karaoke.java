@@ -419,7 +419,7 @@ public class Karaoke extends FramePluginWithFullScreenSupport implements MetaEve
     private void jbInit() throws Exception {
         this.getContentPane().setLayout(borderLayout1);
         this.getContentPane().setBackground(UIManager.getColor("Tree.selectionBorderColor"));
-        this.setTitle("Kar midi lyrics player V0.99");
+        this.setTitle("Kar Midi Lyrics Player");
         tempoSlider.setMaximum(10);
         tempoSlider.setMinimum(1);
         tempoSlider.setOrientation(JScrollBar.HORIZONTAL);

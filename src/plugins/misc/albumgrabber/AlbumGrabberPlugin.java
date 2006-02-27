@@ -68,7 +68,7 @@ public class AlbumGrabberPlugin extends FramePlugin implements ActionListener, B
         mi.addActionListener(this);
         popup.add(mi);
 
-        setTitle(getName() + " " + getVersion());
+        setTitle("Album Grabber " + getVersion());
         imageLabel = new JLabel();
 
         this.getContentPane().add(imageLabel);
@@ -157,7 +157,7 @@ public class AlbumGrabberPlugin extends FramePlugin implements ActionListener, B
     }
 
     public String getVersion() {
-        return "1.2";
+        return "v1.2";
     }
 
     private class RechercheThread extends Thread {

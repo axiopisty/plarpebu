@@ -200,7 +200,7 @@ public class InfoPlugin extends PanelPlugin implements BasicPlayerListener, Runn
     }
 
     public String getVersion() {
-        return "1.0";
+        return "v1.0";
     }
 
 }

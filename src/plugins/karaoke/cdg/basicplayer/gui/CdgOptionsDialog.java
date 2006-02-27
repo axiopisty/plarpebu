@@ -117,7 +117,7 @@ public class CdgOptionsDialog extends JDialog {
         border2 = BorderFactory.createLineBorder(SystemColor.controlText, 1);
         panel1.setLayout(borderLayout1);
         this.setResizable(false);
-        this.setTitle("Cdg Options");
+        this.setTitle("CDG Options");
         jPanel1.setLayout(gridBagLayout1);
         jPanel2.setBorder(titledBorder1);
         jPanel2.setLayout(gridLayout1);
