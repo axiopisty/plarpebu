@@ -3,26 +3,15 @@ package segments_clock;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 /**
- * <p>
- * Title:
- * </p>
- * <p>
- * Description:
- * </p>
- * <p>
- * Copyright: Copyright (c) 2004
- * </p>
- * <p>
- * Company:
- * </p>
+ * Seven Segment Clock
  * 
  * @author not attributable
  * @version 1.0
  */
-
 public class SevenSegClockPanel extends JLabel implements Runnable {
     private SevenSegDigit sevenSegClock;
 
@@ -63,11 +52,16 @@ public class SevenSegClockPanel extends JLabel implements Runnable {
     }
 
     public static void main(String[] args) {
+        JFrame frame = new JFrame();
         SevenSegClockPanel sevenSegClock1 = new SevenSegClockPanel();
+        sevenSegClock1.setTimeToDisplay("00:01:02");
+        frame.add(sevenSegClock1);
+        frame.setTitle("Seven Seg Clock Test");
+        frame.setSize(400,200);
+        frame.setVisible(true);
     }
 
     public void setTimeToDisplay(String time) {
         sevenSegClock.setDisplayValue(time);
-
     }
 }
