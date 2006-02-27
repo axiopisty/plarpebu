@@ -1,14 +1,11 @@
 package segments_clock;
 
 /**
- * <p>Title: </p>
- * <p>Description: </p>
- * <p>Copyright: Copyright (c) 2004</p>
- * <p>Company: </p>
+ * Seven Segment Digit
+ * 
  * @author not attributable
  * @version 1.0
  */
-
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -183,23 +180,21 @@ public class SevenSegDigit {
     void CalcSegments(double d, int i, int j, double d1, int k) {
         double d2 = 0.0D;
         int j1 = GapSize;
-        double d4 = (double) k / 2D;
+        double d4 = k / 2D;
         d2 = d;
         double d3 = Math.tan((3.1415000000000002D * d2) / 180D);
         for (int l = 0; l < 7; l++) {
             for (int i1 = 0; i1 < SegmentPoints[l]; i1++) {
-                Segments[l][i1].x = (int) (((double) TempSegments[l][i1].x + (double) Thicks[l][i1].x * d4 + ((double) TempSegments[l][i1].y + (double) Thicks[l][i1].y
+                Segments[l][i1].x = (int) ((TempSegments[l][i1].x + Thicks[l][i1].x * d4 + (TempSegments[l][i1].y + Thicks[l][i1].y
                 * d4)
                 * d3)
-                * d1 + (double) i);
-                Segments[l][i1].y = (int) (((double) TempSegments[l][i1].y + (double) Thicks[l][i1].y * d4) * d1 + (double) j);
+                * d1 + i);
+                Segments[l][i1].y = (int) ((TempSegments[l][i1].y + Thicks[l][i1].y * d4) * d1 + j);
                 Segments[l][i1].x += j1 * Gaps[l][i1].x;
                 Segments[l][i1].y += j1 * Gaps[l][i1].y;
-                Segments[l][i1].y = (int) (200D * d1 + (double) (2 * j)) - Segments[l][i1].y;
+                Segments[l][i1].y = (int) (200D * d1 + (2 * j)) - Segments[l][i1].y;
             }
-
         }
-
     }
 
     public void PaintSevenSegDisplay(Graphics g, boolean flag, Component component) {
@@ -213,15 +208,15 @@ public class SevenSegDigit {
         PrevNumDigits = NumDigits;
         d2 = DigitAngle;
         double d4 = Math.tan((d2 * 3.1415000000000002D) / 180D);
-        double d3 = (double) NumDigits * 150D - 50D;
+        double d3 = NumDigits * 150D - 50D;
         if (Xsize < 50 || Ysize < 50) byte0 = 0;
         double d1 = (double) Ysize / (double) Xsize;
         if (d1 < 200D / (d3 + 200D * d4))
-            d = (double) (Ysize - byte0 * 2) / 200D;
+            d = (Ysize - byte0 * 2) / 200D;
         else
-            d = (double) (Xsize - byte0 * 2) / (d3 + 200D * d4);
-        int j1 = (int) ((double) Xsize - (d3 + 200D * d4) * d) / 2;
-        int k1 = (int) ((double) Ysize - 200D * d) / 2;
+            d = (Xsize - byte0 * 2) / (d3 + 200D * d4);
+        int j1 = (int) (Xsize - (d3 + 200D * d4) * d) / 2;
+        int k1 = (int) (Ysize - 200D * d) / 2;
         int i2 = (int) (150D * d);
         if (j1 < 0) j1 = byte0;
         if (!flag) {
@@ -240,10 +235,10 @@ public class SevenSegDigit {
                         point.y = (int) (150D * d);
                         if (!DP2[i]) continue;
                     }
-                    point.x = (int) ((double) j1 + (double) (150 * i + 125) * d + (double) point.y * d4);
+                    point.x = (int) (j1 + (150 * i + 125) * d + point.y * d4);
                     point.y += k1;
-                    point.y = (int) (200D * d + (double) (2 * k1)) - point.y;
-                    int j2 = (int) ((double) (DigitThickness / 2) * d);
+                    point.y = (int) (200D * d + (2 * k1)) - point.y;
+                    int j2 = (int) ((DigitThickness / 2) * d);
                     og.setColor(ForegroundColor);
                     if (j2 < 1) j2 = 1;
                     og.fillOval(point.x - j2, point.y - j2, j2 * 2, j2 * 2);
@@ -494,9 +489,9 @@ public class SevenSegDigit {
 
     public void setDisplayValue(String time) {
         StringTokenizer s = new StringTokenizer(time, ":");
-        int i = Integer.parseInt((String) s.nextToken());
-        int j = Integer.parseInt((String) s.nextToken());
-        int k = Integer.parseInt((String) s.nextToken());
+        int i = Integer.parseInt(s.nextToken());
+        int j = Integer.parseInt(s.nextToken());
+        int k = Integer.parseInt(s.nextToken());
 
         DisplayValue[0] = SegmentMap[i / 10];
         DisplayValue[1] = SegmentMap[i % 10];
@@ -504,6 +499,5 @@ public class SevenSegDigit {
         DisplayValue[3] = SegmentMap[j % 10];
         DisplayValue[4] = SegmentMap[k / 10];
         DisplayValue[5] = SegmentMap[k % 10];
-
     }
 }
