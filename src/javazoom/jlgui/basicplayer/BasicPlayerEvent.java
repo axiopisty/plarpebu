@@ -84,6 +84,15 @@ public class BasicPlayerEvent {
     }
 
     /**
+     * Return source of the event triggered.
+     * 
+     * @return
+     */
+    public Object getSource() {
+        return source;
+    } 
+    
+    /**
      * Return code of the event triggered.
      * 
      * @return
