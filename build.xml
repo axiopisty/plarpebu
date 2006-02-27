@@ -10,26 +10,24 @@ and the Ant output directory might be "classes.ant".-->
 	<property name="lib" value="lib" />
 	<property name="src" value="src" />
 
-
 	<path id="project.class.path">
 		<pathelement location="${dest}" />
+		<pathelement location="${lib}/albumgrabber.jar" />
+		<pathelement location="${lib}/chardet.jar" />
 		<pathelement location="${lib}/commons-logging.jar" />
 		<pathelement location="${lib}/commons-logging-api.jar" />
-		<pathelement location="${lib}/jl0.4.jar" />
-		<pathelement location="${lib}/MP3spi1.8andVorbissoi1.0.jar" />
-		<pathelement location="${lib}/tritonus_share.jar" />
-		<pathelement location="${lib}/skinlf.jar" />
-		<pathelement location="${lib}/albumgrabber.jar" />
 		<pathelement location="${lib}/jakarta-regexp-1.2.jar" />
+		<pathelement location="${lib}/jbcl.jar" />
 		<pathelement location="${lib}/jid3.jar" />
+		<pathelement location="${lib}/jl0.4.jar" />
+		<pathelement location="${lib}/jogg-0.0.5.jar" />
+		<pathelement location="${lib}/jorbis-0.0.12.jar" />
 		<pathelement location="${lib}/l2fprod-common-directorychooser.jar" />
 		<pathelement location="${lib}/l2fprod-common-fontchooser.jar" />
+		<pathelement location="${lib}/MP3spi1.8andVorbissoi1.0.jar" />
 		<pathelement location="${lib}/pluginLoaderAPI.jar" />
-		<pathelement location="${lib}/jorbis-0.0.12.jar" />
-		<pathelement location="${lib}/jogg-0.0.5.jar" />
-		<pathelement location="${lib}/buffa_utils.jar" />
-		<pathelement location="${lib}/chardet.jar" />
-		<pathelement location="${lib}/jbcl.jar" />
+		<pathelement location="${lib}/skinlf.jar" />
+		<pathelement location="${lib}/tritonus_share.jar" />
 	</path>
 
 	<!--Patternset to exclude files from the output directory:-->
@@ -60,13 +58,6 @@ and the Ant output directory might be "classes.ant".-->
 			</fileset>
 		</jar>
 
-		<jar compress="false" destfile="${lib}/buffa_utils.jar">
-			<fileset dir="${dest}">
-				<patternset refid="dest.exclude" />
-				<include name="fr/unice/buffa/*.*" />
-			</fileset>
-		</jar>
-
 		<jar compress="true" jarfile="player.jar" manifest="${src}/MANIFEST.mf">
 			<fileset dir="${dest}">
 				<patternset refid="dest.exclude" />
@@ -79,7 +70,6 @@ and the Ant output directory might be "classes.ant".-->
 			<zipfileset src="${lib}/skinlf.jar" />
 			<zipfileset src="${lib}/albumgrabber.jar" />
 			<zipfileset src="${lib}/jakarta-regexp-1.2.jar" />
-			<zipfileset src="${lib}/buffa_utils.jar" />
 			<zipfileset src="${lib}/jid3.jar" />
 			<zipfileset src="${lib}/l2fprod-common-directorychooser.jar" />
 			<zipfileset src="${lib}/l2fprod-common-fontchooser.jar" />
@@ -111,10 +101,10 @@ and the Ant output directory might be "classes.ant".-->
 			</fileset>
 		</jar>
 	</target>
+	
 	<target name="cleanup">
 		<delete file="plugins/albumGrabber.jar" />
 		<delete file="player.jar" />
-		<delete file="${lib}/buffa_utils.jar" />
 		<delete file="plugins/basicAndPlaylist.jar" />
 		<delete file="plugins/cdg.jar" />
 		<delete file="plugins/exemples.jar" />
@@ -122,6 +112,7 @@ and the Ant output directory might be "classes.ant".-->
 			<fileset dir="${dest}" />
 		</delete>
 	</target>
+	
 	<target name="resource">
 		<copy todir="${dest}">
 			<fileset dir="${src}">
@@ -138,18 +129,27 @@ and the Ant output directory might be "classes.ant".-->
 				<include name="**/*.aiff" />
 				<include name="**/*.properties" />
 			</fileset>
-
 		</copy>
 	</target>
+		
 	<target name="javadoc" />
+	
 	<target depends="cleanup" name="clean" />
+	
 	<target name="precompile" />
+	
 	<target depends="javacompile" name="compile" />
+	
 	<target name="postcompile" />
+	
 	<target depends="archive,javadoc,resource" name="package" />
+	
 	<target name="deploy" />
+	
 	<target depends="precompile,compile,postcompile,package,deploy" name="make" />
+	
 	<target depends="clean,make" name="rebuild" />
+	
 	<target name="init">
 		<mkdir dir="${dest}" />
 		<mkdir dir="${Generated.Source}" />
