@@ -776,7 +776,7 @@ MouseMotionListener, DropTargetListener {
             if (filename.equals("demoPlaylist.pls")) {
                 // This is a relative filename, add the current dir before the
                 // filename
-                absolutePlaylistFilename = currentDir + File.separator + "preferences" + File.separator + filename;
+                absolutePlaylistFilename = currentDir + File.separator + "demo" + File.separator + filename;
             }
         }
 
