@@ -35,7 +35,7 @@ public class CdgFileObject {
 
         // Allocate the array that will contain all the CdgDataChunks
         int fileLength = (int) file.length();
-        int nbOfCdgDataChunks = (int) (fileLength / 24);
+        int nbOfCdgDataChunks = fileLength / 24;
         // CdgDataChunk []cdgDataChunksArrayTmp = new
         // CdgDataChunk[nbOfCdgDataChunks];
         cdgDataChunksArray = new CdgDataChunk[nbOfCdgDataChunks];

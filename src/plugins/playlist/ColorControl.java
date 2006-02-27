@@ -15,19 +15,33 @@ import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
 
+/**
+ * Color control
+ * 
+ * @author unknown
+ */
 public class ColorControl extends JPanel {
 
     private Tools tool = null;
 
+    /**
+     * Constructor
+     * 
+     * @param t
+     */
     public ColorControl(Tools t) {
         setBorder(DefaultBorder);
         enableEvents(16L);
         setOpaque(true);
         setBackground(null);
         tool = t;
-
     }
 
+    /**
+     * Constructor
+     * 
+     * @param flag
+     */
     public ColorControl(boolean flag) {
         super();
         setAllowsGradient(flag);
@@ -58,10 +72,9 @@ public class ColorControl extends JPanel {
 
     public Color getBackground() {
         Paint paint = getBackgroundPaint();
-        if (paint instanceof Color)
-            return (Color) paint;
-        else
-            return super.getBackground();
+        if (paint instanceof Color) return (Color) paint;
+
+        return super.getBackground();
     }
 
     public Dimension getMaximumSize() {
@@ -97,8 +110,6 @@ public class ColorControl extends JPanel {
             int i = mouseevent.getID();
             switch (i) {
             case 501:
-                Paint paint = getBackgroundPaint();
-
                 Color color = JColorChooser.showDialog(this, null, getBackground());
                 if (color != null) {
                     tool.setChange(true);
