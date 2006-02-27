@@ -1,11 +1,7 @@
 package plugins.karaoke.cdg.instructions;
 
 /**
- * <p>
- * Title:
- * </p>
- * <p>
- * Description: Scroll Preset (subCode.instruction==20) and Scroll Copy
+ * Scroll Preset (subCode.instruction==20) and Scroll Copy
  * (subCode.instruction==24) In these instruction, the 16 byte data field is
  * interepreted as follows. byte color; // Only lower 4 bits are used, mask with
  * 0x0F byte hScroll; // Only lower 6 bits are used, mask with 0x3F byte
@@ -32,32 +28,24 @@ package plugins.karaoke.cdg.instructions;
  * to the left: SCmd HScroll === ======= 0 1 0 2 0 3 0 4 0 5 0 6 2 0 (repeat)
  * You can create the effect of an infinite panorama by continually loading in
  * new tiles into the border area and scrolling them into view.
- * </p>
- * <p>
- * Copyright: Copyright (c) 2003
- * </p>
- * <p>
- * Company:
- * </p>
  * 
  * @author Michel Buffa (buffa@unice.fr)
- * @version $Id
  */
-
 public class CdgScroll {
-    private byte color;
+    // private byte color;
 
-    private byte hScroll;
+    // private byte hScroll;
 
-    private byte vScroll;
+    // private byte vScroll;
 
     public CdgScroll(byte[] data) {
-        // data is the 16 bytes array of the cdg chunk.
+    // data is the 16 bytes array of the cdg chunk.
 
-        // Only 4 lower bits are used
-        color = (byte) (data[0] & 0x0F);
-        // Only lower 6 bits are used
-        hScroll = (byte) (data[1] & 0x3F);
-        vScroll = (byte) (data[2] & 0x3F);
+    // Only 4 lower bits are used
+    // color = (byte) (data[0] & 0x0F);
+
+    // Only lower 6 bits are used
+    // hScroll = (byte) (data[1] & 0x3F);
+    // vScroll = (byte) (data[2] & 0x3F);
     }
 }
