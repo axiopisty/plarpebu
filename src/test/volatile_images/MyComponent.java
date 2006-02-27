@@ -8,7 +8,9 @@ import java.awt.image.VolatileImage;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
-// Declare a component that draws a volatile image
+/**
+ * Declare a component that draws a volatile image
+ */
 class MyComponent extends JFrame {
     VolatileImage volImage;
 
@@ -27,7 +29,7 @@ class MyComponent extends JFrame {
     MyComponent() {
         // Get image to move into accelerated image memory
         origImage = new ImageIcon(test.volatile_images.MyComponent.class.getResource("splash.jpg")).getImage();
-        Ticker t = new Ticker();
+        new Ticker();
     }
 
     public void paint(Graphics g) {
@@ -43,8 +45,7 @@ class MyComponent extends JFrame {
 
         public void run() {
             while (true) {
-                Graphics2D gc = (Graphics2D) volImage.createGraphics();
-
+                volImage.createGraphics();
             }
         }
     }
@@ -90,7 +91,7 @@ class MyComponent extends JFrame {
             case VolatileImage.IMAGE_RESTORED:
                 System.out.println("RESTORED");
                 // Copy the original image to accelerated image memory
-                Graphics2D gc = (Graphics2D) img.createGraphics();
+                Graphics2D gc = img.createGraphics();
                 gc.drawImage(orig, 0, 0, null);
                 gc.dispose();
                 break;
