@@ -15,20 +15,21 @@ and the Ant output directory might be "classes.ant".-->
 		<pathelement location="${classes}" />
 		<pathelement location="${lib}/albumgrabber.jar" />
 		<pathelement location="${lib}/chardet.jar" />
-		<pathelement location="${lib}/commons-logging.jar" />
 		<pathelement location="${lib}/commons-logging-api.jar" />
 		<pathelement location="${lib}/jakarta-regexp-1.2.jar" />
 		<pathelement location="${lib}/jbcl.jar" />
 		<pathelement location="${lib}/jid3.jar" />
-		<pathelement location="${lib}/jl0.4.jar" />
-		<pathelement location="${lib}/jogg-0.0.5.jar" />
-		<pathelement location="${lib}/jorbis-0.0.12.jar" />
+		<pathelement location="${lib}/jl1.0.jar" />
+		<pathelement location="${lib}/jogg-0.0.7.jar" />
+		<pathelement location="${lib}/jorbis-0.0.13.jar" />
+		<pathelement location="${lib}/jspeex0.9.3.jar" />
 		<pathelement location="${lib}/l2fprod-common-directorychooser.jar" />
 		<pathelement location="${lib}/l2fprod-common-fontchooser.jar" />
-		<pathelement location="${lib}/MP3spi1.8andVorbissoi1.0.jar" />
+		<pathelement location="${lib}/mp3spi1.9.2.jar" />
 		<pathelement location="${lib}/pluginLoaderAPI.jar" />
 		<pathelement location="${lib}/skinlf.jar" />
 		<pathelement location="${lib}/tritonus_share.jar" />
+		<pathelement location="${lib}/vorbisspi1.0.1.jar" />
 	</path>
 
 	<!--Patternset to exclude files from the output directory:-->
@@ -68,7 +69,7 @@ and the Ant output directory might be "classes.ant".-->
 				<attribute name="Built-By" value="${user.name}" />
 				<attribute name="Main-Class" value="player.test.Player" />
 				<attribute name="Class-Path"
-				           value="${lib}/albumgrabber.jar ${lib}/chardet.jar ${lib}/commons-logging.jar ${lib}/commons-logging-api.jar ${lib}/jakarta-regexp-1.2.jar ${lib}/jbcl.jar ${lib}/jid3.jar ${lib}/jl0.4.jar ${lib}/jogg-0.0.5.jar ${lib}/jorbis-0.0.12.jar ${lib}/l2fprod-common-directorychooser.jar ${lib}/l2fprod-common-fontchooser.jar ${lib}/MP3spi1.8andVorbissoi1.0.jar ${lib}/pluginLoaderAPI.jar ${lib}/skinlf.jar ${lib}/tritonus_share.jar" />
+				           value="${lib}/albumgrabber.jar ${lib}/chardet.jar ${lib}/commons-logging-api.jar ${lib}/jakarta-regexp-1.2.jar ${lib}/jbcl.jar ${lib}/jid3.jar ${lib}/jl1.0.jar ${lib}/jogg-0.0.7.jar ${lib}/jorbis-0.0.13.jar ${lib}/jspeex0.9.3.jar ${lib}/l2fprod-common-directorychooser.jar ${lib}/l2fprod-common-fontchooser.jar ${lib}/mp3spi1.9.2.jar ${lib}/pluginLoaderAPI.jar ${lib}/skinlf.jar ${lib}/tritonus_share.jar ${lib}/vorbisspi1.0.1.jar" />
 			</manifest>
 		</jar>
 
