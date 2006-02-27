@@ -9,7 +9,6 @@ import java.util.Map;
 
 import javax.swing.Box;
 import javax.swing.DefaultBoundedRangeModel;
-import javax.swing.JLabel;
 import javax.swing.JSlider;
 
 import javazoom.jlgui.basicplayer.BasicController;
@@ -26,9 +25,9 @@ public class PanGainPlugin extends PanelPlugin implements BasicPlayerListener, M
 
     private JSlider gainslider = null;
 
-    private JLabel panLB = null;
+    //private JLabel panLB = null;
 
-    private JLabel gainLB = null;
+    //private JLabel gainLB = null;
 
     private DefaultBoundedRangeModel panmodel = null;
 
@@ -45,7 +44,7 @@ public class PanGainPlugin extends PanelPlugin implements BasicPlayerListener, M
 
     public void initUI() {
         panmodel = new DefaultBoundedRangeModel(0, 1, -scale, scale + 1);
-        gainmodel = new DefaultBoundedRangeModel((int) (scale * 80 / 100), 1, 0, scale + 1);
+        gainmodel = new DefaultBoundedRangeModel((scale * 80 / 100), 1, 0, scale + 1);
         // panLB = new JLabel("Pan : ");
         // gainLB = new JLabel("Gain : ");
         panslider = new JSlider(panmodel);
