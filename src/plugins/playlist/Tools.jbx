@@ -3,29 +3,21 @@ bgI,ColorControl,false,false, , ,false,<default>
 bgILabel,JLabel,false,false, , ,false,<default>
 bgS,ColorControl,false,false, , ,false,<default>
 bgSLabel,JLabel,false,false, , ,false,<default>
-borderLayout1,BorderLayout,false,false, , ,false,<default>
 cb1,JCheckBox,false,false, , ,false,<default>
 cb2,JCheckBox,false,false, , ,false,<default>
+cb3,JCheckBox,false,false, , ,false,<default>
 cbPanel,JPanel,false,false, , ,false,<default>
 change,boolean,false,false, , ,true,<default>
 fgI,ColorControl,false,false, , ,false,<default>
 fgILabel,JLabel,false,false, , ,false,<default>
 fgS,ColorControl,false,false, , ,false,<default>
 fgSLabel,JLabel,false,false, , ,false,<default>
-fontBox,JComboBox,false,false, , ,false,<default>
-fontChoice,String,false,false, , ,false,<default>
-fontLabel,JLabel,false,false, , ,false,<default>
 fontPanel,JPanel,false,false, , ,false,<default>
-fontSize,String,false,false, , ,false,<default>
 itemPanel,JPanel,false,false, , ,false,<default>
 itemPanel2,JPanel,false,false, , ,false,<default>
 pane,Container,false,false, , ,false,<default>
 playlist,PlayListPlugin,false,false, , ,false,<default>
 recursionDnd,boolean,false,false, , ,true,<default>
-sizeLabel,JLabel,false,false, , ,false,<default>
-sizes,JComboBox,false,false, , ,false,<default>
-styleLabel,JLabel,false,false, , ,false,<default>
-styles,JComboBox,false,false, , ,false,<default>
 bgColor,java.awt.Color,false,false,bgColor,bgColor,true,<default>
 fgColor,java.awt.Color,false,false,fgColor,fgColor,true,<default>
 selectionFgColor,java.awt.Color,false,false,selectionFgColor,selectionFgColor,true,<default>

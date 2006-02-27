@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Random;
 import java.util.StringTokenizer;
 
@@ -349,6 +350,22 @@ MouseMotionListener, DropTargetListener {
         loadPreferences();
     }
 
+    /**
+     * Get preferences. Currently the tools frame need access to the playlist
+     * preferences to set the "SingleSongMode" pref.
+     * 
+     * @return Properties
+     */
+    protected Properties getPreferences() {
+        return preferences;
+    }
+
+    /**
+     * Load preferences
+     * 
+     * @throws NumberFormatException
+     * @throws HeadlessException
+     */
     private void loadPreferences() throws NumberFormatException, HeadlessException {
         // inherited behavior
         readPreferences();
@@ -385,6 +402,12 @@ MouseMotionListener, DropTargetListener {
             c = StringToColor(preferences.getProperty("selectionBackgroundColor"));
             setPlayListSelectionBg(c);
             toolFrame.setSelectionBgColor(c);
+
+            // Load single song mode pref
+            if (preferences.getProperty("singleSongMode").equals("true"))
+                toolFrame.setSingleSongMode(true);
+            else
+                toolFrame.setSingleSongMode(false);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -1242,8 +1265,7 @@ MouseMotionListener, DropTargetListener {
 
         // If we are in single song mode, we dont need to test for playing the
         // next song.
-        // boolean singleSongMode = true;
-        // if (singleSongMode) return;
+        if (toolFrame.isSingleSongMode()) return;
 
         // If we are near to end of song (1.5 s)
         if (Math.abs(progressMilliseconds - milliseconds) <= 1000) {
