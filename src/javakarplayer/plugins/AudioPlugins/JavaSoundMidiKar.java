@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javakarplayer.plugins.AudioPlugins.taras.Karaoke;
-import javakarplayer.plugins.AudioPlugins.utils.JavaSoundLyricsListener;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MetaEventListener;
@@ -38,12 +37,9 @@ import pluginsSDK.Iconifiable;
  * @author Michel Buffa (buffa@unice.fr)
  * @version $Id
  */
-
 public class JavaSoundMidiKar implements MetaEventListener {
 
     private Sequencer sequencer;
-
-    private JavaSoundLyricsListener lyricsListener;
 
     private Karaoke visualKaraoke;
 
@@ -54,8 +50,6 @@ public class JavaSoundMidiKar implements MetaEventListener {
     public static final int FINISH_EVENT = 47;
 
     private long songLength;
-
-    private Ticker ticker;
 
     // TO BE CORRECTED
     private MidiListener player;
@@ -182,7 +176,7 @@ public class JavaSoundMidiKar implements MetaEventListener {
             if (playingKar) {
                 visualKaraoke.setVisible(true);
                 while (!visualKaraoke.isShowing());
-                ticker = new Ticker();
+                new Ticker();
             }
 
             sequencer.start();
@@ -223,7 +217,7 @@ public class JavaSoundMidiKar implements MetaEventListener {
         }
 
         public void run() {
-            double len = sequencer.getSequence().getTickLength();
+            sequencer.getSequence().getTickLength();
             while (sequencer.isRunning()) {
                 long pos = sequencer.getTickPosition();
                 visualKaraoke.pulse(pos);

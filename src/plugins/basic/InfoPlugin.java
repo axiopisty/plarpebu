@@ -42,8 +42,6 @@ public class InfoPlugin extends PanelPlugin implements BasicPlayerListener, Runn
 
     private int speed = 100; // temps de pause
 
-    private BasicController controller = null;
-
     static Border DefaultBorder;
 
     private int byteslength = -1;
@@ -196,7 +194,7 @@ public class InfoPlugin extends PanelPlugin implements BasicPlayerListener, Runn
      *        BasicController
      */
     public void setController(BasicController controller) {
-        this.controller = controller;
+        //this.controller = controller;
     }
 
     public String getVersion() {

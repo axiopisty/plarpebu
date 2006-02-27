@@ -57,8 +57,6 @@ class KaraokePane extends JPanel {
     // For rich text display
     private FontRenderContext frc;
 
-    private FontMetrics fontMetrics;
-
     private Shape sha = null;
 
     private TextLayout textlay = null;
@@ -277,8 +275,8 @@ class KaraokePane extends JPanel {
         props.height - fm.getHeight() / 2);
 
         /* pulsation ribbon */
-        double c = currentTick == -1 ? 0.6 : 0.6 * ((double) (frame.end - currentTick))
-        / ((double) (frame.end - frame.start));
+        double c = currentTick == -1 ? 0.6 : 0.6 * (frame.end - currentTick)
+        / (frame.end - frame.start);
         x = props.width / 5;
         y = (fm.getHeight() - props.ribbonWidth) >> 1;
         g.setColor(props.ribbonColor);
@@ -478,7 +476,7 @@ class KaraokePane extends JPanel {
         FontMetrics fm = g.getFontMetrics(font);
 
         int y = (fm.getHeight() - props.ribbonWidth) >> 1;
-        double c = 0.6 * ((double) (frame.end - currentTick)) / ((double) (frame.end - frame.start));
+        double c = 0.6 * (frame.end - currentTick) / (frame.end - frame.start);
         int x = (int) (c * props.width);
         int w = 4 * props.width / 5 - x;
         x += props.width / 5;

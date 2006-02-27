@@ -526,7 +526,7 @@ public class BasicMP3Player extends BasicPlayer implements BasicController, Runn
                         if (nBytesRead >= 0) {
                             byte[] pcm = new byte[nBytesRead];
                             System.arraycopy(abData, 0, pcm, 0, nBytesRead);
-                            int nBytesWritten = m_line.write(abData, 0, nBytesRead);
+                            m_line.write(abData, 0, nBytesRead);
                             // Compute position in bytes in encoded stream.
                             int nEncodedBytes = getEncodedStreamPosition();
                             // Notify listeners
@@ -697,9 +697,8 @@ public class BasicMP3Player extends BasicPlayer implements BasicController, Runn
         if (hasGainControl()) {
             return m_gainControl.getValue();
         }
-        else {
+
             return 0.0F;
-        }
     }
 
     /**
@@ -709,9 +708,8 @@ public class BasicMP3Player extends BasicPlayer implements BasicController, Runn
         if (hasGainControl()) {
             return m_gainControl.getMaximum();
         }
-        else {
+        
             return 0.0F;
-        }
     }
 
     /**
@@ -721,9 +719,8 @@ public class BasicMP3Player extends BasicPlayer implements BasicController, Runn
         if (hasGainControl()) {
             return m_gainControl.getMinimum();
         }
-        else {
+
             return 0.0F;
-        }
     }
 
     /**
@@ -740,9 +737,8 @@ public class BasicMP3Player extends BasicPlayer implements BasicController, Runn
         if (hasPanControl()) {
             return m_panControl.getPrecision();
         }
-        else {
-            return 0.0F;
-        }
+
+        return 0.0F;
     }
 
     /**
@@ -752,9 +748,8 @@ public class BasicMP3Player extends BasicPlayer implements BasicController, Runn
         if (hasPanControl()) {
             return m_panControl.getValue();
         }
-        else {
-            return 0.0F;
-        }
+
+        return 0.0F;
     }
 
     /**

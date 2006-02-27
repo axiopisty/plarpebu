@@ -79,8 +79,6 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
 
     private CdgGraphicBufferedImage panelLyrics = new CdgGraphicBufferedImage();
 
-    private int oldX, oldY;
-
     private boolean windowedMode = true;
 
     private boolean cdgFileLoaded = false;
@@ -104,8 +102,6 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
     private GraphicsDevice myDevice = env.getDefaultScreenDevice();
 
     private DisplayMode oldDisplayMode = myDevice.getDisplayMode();
-
-    private DisplayMode newDisplayMode;
 
     // private JLabel jLabel1 = new JLabel("Status area...");
     JPopupMenu jPopupMenu1 = new JPopupMenu();

@@ -55,8 +55,6 @@ public class ProgressBarPlugin extends FramePlugin implements BasicPlayerListene
 
     private int milliseconds = -1;
 
-    private BasicController controller = null;
-
     // Clock Thread
     private boolean paused = false;
 
@@ -118,7 +116,7 @@ public class ProgressBarPlugin extends FramePlugin implements BasicPlayerListene
     }
 
     public void setController(BasicController controller) {
-        this.controller = controller;
+        //this.controller = controller;
     }
 
     public String getName() {

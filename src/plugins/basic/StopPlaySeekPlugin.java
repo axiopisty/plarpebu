@@ -16,7 +16,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 
@@ -31,7 +30,6 @@ import pluginsSDK.PanelPlugin;
 /**
  *
  */
-
 public class StopPlaySeekPlugin extends PanelPlugin implements BasicPlayerListener, ActionListener, MouseListener {
 
     private JButton play = null;
@@ -48,7 +46,7 @@ public class StopPlaySeekPlugin extends PanelPlugin implements BasicPlayerListen
 
     private JSlider slider = null;
 
-    private JLabel seekLB = null;
+    // private JLabel seekLB = null;
 
     private DefaultBoundedRangeModel model = null;
 
@@ -72,7 +70,7 @@ public class StopPlaySeekPlugin extends PanelPlugin implements BasicPlayerListen
     public void initUI() {
 
         model = new DefaultBoundedRangeModel(0, 1, 0, modelscale);
-        seekLB = new JLabel("Seek : ");
+        // seekLB = new JLabel("Seek : ");
         slider = new JSlider(model);
         slider.setPreferredSize(new Dimension(50, 20));
         slider.setPaintTicks(true);

@@ -53,7 +53,7 @@ public class Karaoke extends FramePluginWithFullScreenSupport implements MetaEve
 
     private Sequencer sequencer = null;
 
-    private boolean paused = false;
+    //private boolean paused = false;
 
     private PreferencesDialog preferencesDialog = new PreferencesDialog();
 

@@ -38,8 +38,6 @@ public class EqualizerPlugin extends FramePlugin implements BasicPlayerListener,
 
     private JPanel south = null;
 
-    private BasicController controller = null;
-
     /**
      * Constructor
      * 
@@ -132,7 +130,7 @@ public class EqualizerPlugin extends FramePlugin implements BasicPlayerListener,
     }
 
     public void setController(BasicController controller) {
-        this.controller = controller;
+        //this.controller = controller;
     }
 
     public String getName() {
