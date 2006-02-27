@@ -9,24 +9,12 @@ import java.awt.event.MouseEvent;
 import javax.swing.JRootPane;
 
 /**
- * <p>
- * Title:
- * </p>
- * <p>
- * Description: This class adds to the FramePlugin class support for hardware
- * fullscreen mode. This mode can be entered by double clicking on the Jframe
- * </p>
- * <p>
- * Copyright: Copyright (c) 2004
- * </p>
- * <p>
- * Company:
- * </p>
+ * This class adds to the FramePlugin class support for hardware
+ * fullscreen mode. This mode can be entered by double clicking on the Jframe.
  * 
  * @author not attributable
  * @version 1.0
  */
-
 abstract public class FramePluginWithFullScreenSupport extends JFrameWithPreferences {
     private boolean windowedMode = true;
 
@@ -51,14 +39,14 @@ abstract public class FramePluginWithFullScreenSupport extends JFrameWithPrefere
 
     private DisplayMode oldDisplayMode = myDevice.getDisplayMode();
 
-    private DisplayMode newDisplayMode;
-
     private int oldWindowDecorationStyle;
 
+    /**
+     * Constructor
+     */
     public FramePluginWithFullScreenSupport() {
         // Mouse listener for double click detection
         addMouseListener(new MyMouseListener());
-
     }
 
     public class MyMouseListener extends MouseAdapter {
