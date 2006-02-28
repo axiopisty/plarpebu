@@ -51,6 +51,8 @@ public class Tools extends JFrame implements ActionListener, ItemListener, Prope
 
     private JCheckBox cb3;
 
+    private JCheckBox cb4;
+
     private ColorControl fgI = null;
 
     private ColorControl bgI = null;
@@ -81,7 +83,7 @@ public class Tools extends JFrame implements ActionListener, ItemListener, Prope
      * @param pl
      */
     public Tools(PlayListPlugin pl) {
-        super("PlayList configuration");
+        super("Playlist Configuration");
         playlist = pl;
         try {
             jbInit();
@@ -92,19 +94,20 @@ public class Tools extends JFrame implements ActionListener, ItemListener, Prope
     }
 
     /**
-     * Set visible. The window will appear centered.
+     * Center a frame TODO: Move this to a UI util class
+     * 
+     * @param frame
      */
-    public void setVisible(boolean flag) {
+    public static void centerFrame(JFrame frame) {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        Dimension frameSize = getSize();
+        Dimension frameSize = frame.getSize();
         if (frameSize.height > screenSize.height) {
             frameSize.height = screenSize.height;
         }
         if (frameSize.width > screenSize.width) {
             frameSize.width = screenSize.width;
         }
-        setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
-        super.setVisible(flag);
+        frame.setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
     }
 
     /**
@@ -126,17 +129,26 @@ public class Tools extends JFrame implements ActionListener, ItemListener, Prope
         fontPanel.add(chooseFontButton);
 
         cb1 = new JCheckBox("Include SubFolders for Drag and Drop", true);
-
+        cb1.addItemListener(this);
+        cb1.setSelected(playlist.isIncludeSubFolderForDragAndDrop());
+        
         cb2 = new JCheckBox("Show Player Buttons in StatusBar", true);
         cb2.addItemListener(this);
-
+        cb2.setSelected(playlist.isShowPlayerButtonsInStatusBar());
+        
         cb3 = new JCheckBox("Single Song Mode", false);
         cb3.addItemListener(this);
-
+        cb3.setSelected(playlist.isSingleSongMode());
+        
+        cb4 = new JCheckBox("Show Line Numbers in PlayList", false);
+        cb4.addItemListener(this);
+        cb4.setSelected(playlist.isShowLineNumbersInPlayList());
+        
         cbPanel = new JPanel(new GridLayout(4, 0));
         cbPanel.add(cb1);
         cbPanel.add(cb2);
         cbPanel.add(cb3);
+        cbPanel.add(cb4);
 
         itemPanel = new JPanel(new GridLayout(2, 2));
         itemPanel.setBorder(BorderFactory.createTitledBorder("All Items Style"));
@@ -178,6 +190,7 @@ public class Tools extends JFrame implements ActionListener, ItemListener, Prope
         pane.add(itemPanel);
         pane.add(itemPanel2);
         this.setSize(300, 400);
+        centerFrame(this);
     }
 
     /**
@@ -198,33 +211,6 @@ public class Tools extends JFrame implements ActionListener, ItemListener, Prope
     }
 
     /**
-     * Include SubFolders for Drag and Drop
-     * 
-     * @return
-     */
-    public boolean getRecursionDnd() {
-        return cb1.isSelected();
-    }
-
-    /**
-     * Is Single Song Mode
-     * 
-     * @return True if single song mode is active
-     */
-    public boolean isSingleSongMode() {
-        return cb3.isSelected();
-    }
-
-    /**
-     * Set Single Song Mode
-     * 
-     * @return True if single song mode is active
-     */
-    public void setSingleSongMode(boolean b) {
-        cb3.setSelected(b);
-    }
-
-    /**
      * itemStateChanged
      * 
      * @param e
@@ -233,19 +219,21 @@ public class Tools extends JFrame implements ActionListener, ItemListener, Prope
     public void itemStateChanged(ItemEvent e) {
         Object list = e.getSource();
 
-        if (list == cb2) {
-            if (e.getStateChange() == ItemEvent.SELECTED)
-                (playlist.getStatusPanel()).setVisible(true);
-            else
-                (playlist.getStatusPanel()).setVisible(false);
+        // Include SubFolders for Drag and Drop
+        if (list == cb1) {
+            playlist.setIncludeSubFolderForDragAndDrop(cb1.isSelected());
         }
-
+        // Show Player Buttons in StatusBar
+        else if (list == cb2) {
+            playlist.setShowPlayerButtonsInStatusBar(cb2.isSelected());
+        }
         // Single Song Mode changed, update playlist prefs
-        if (list == cb3) {
-            if (e.getStateChange() == ItemEvent.SELECTED)
-                playlist.getPreferences().setProperty("singleSongMode", "true");
-            else
-                playlist.getPreferences().setProperty("singleSongMode", "false");
+        else if (list == cb3) {
+            playlist.setSingleSongMode(cb3.isSelected());
+        }
+        // Show Line Numbers in PlayList
+        else if (list == cb4) {
+            playlist.setShowLineNumbersInPlayList(cb4.isSelected());
         }
     }
 
@@ -302,12 +290,5 @@ public class Tools extends JFrame implements ActionListener, ItemListener, Prope
     public void setSelectionBgColor(Color selectionBgColor) {
         this.selectionBgColor = selectionBgColor;
         bgS.setBackground(selectionBgColor);
-    }
-
-    public void setPlaylistFont(String font, int size, int style) {
-    // Select font and style by default...
-
-    // select style. plain = 0, bold = 1, italic = 2, bold & italic = 3
-    // styles.setSelectedIndex(style);
     }
 }

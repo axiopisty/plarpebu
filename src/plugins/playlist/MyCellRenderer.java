@@ -9,6 +9,8 @@ import javax.swing.ListCellRenderer;
 
 public class MyCellRenderer extends JLabel implements ListCellRenderer {
 
+    private boolean showLineNumbers = true;
+    
     public Component getListCellRendererComponent(JList list, Object value, // value
                                                                             // to
                                                                             // display
@@ -17,8 +19,11 @@ public class MyCellRenderer extends JLabel implements ListCellRenderer {
     boolean cellHasFocus) { // the list and the cell have the focus
 
         String s = ((File) value).getName();
-        setText((index + 1) + ". " + s);
-
+        if (showLineNumbers)
+            setText((index + 1) + ". " + s);
+        else
+            setText(s);
+        
         if (isSelected) {
             setBackground(list.getSelectionBackground());
             setForeground(list.getSelectionForeground());
@@ -27,9 +32,19 @@ public class MyCellRenderer extends JLabel implements ListCellRenderer {
             setBackground(list.getBackground());
             setForeground(list.getForeground());
         }
+        
         setEnabled(list.isEnabled());
         setFont(list.getFont());
         setOpaque(true);
+        
         return this;
+    }
+
+    public boolean isShowLineNumbers() {
+        return showLineNumbers;
+    }
+
+    public void setShowLineNumbers(boolean showLineNumbers) {
+        this.showLineNumbers = showLineNumbers;
     }
 }

@@ -34,7 +34,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ListIterator;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Random;
 import java.util.StringTokenizer;
 
@@ -161,8 +160,14 @@ MouseMotionListener, DropTargetListener {
     // Playlist
     private String currentPlaylistFilename;
 
-    /** Constructeur de la classe PlayList * */
+    private MyCellRenderer myCellRenderer = new MyCellRenderer();
+
+    /**
+     * Constructeur de la classe PlayList
+     */
     public PlayListPlugin() {
+        // Read preferences
+        readPreferences();
 
         // Quelques couleurs
         Color fg1 = new Color(255, 255, 255);
@@ -175,12 +180,12 @@ MouseMotionListener, DropTargetListener {
 
         listModel = new DefaultListModel();
         lstPlayList = new JList(listModel);
-        lstPlayList.setCellRenderer(new MyCellRenderer());
+        lstPlayList.setCellRenderer(myCellRenderer);
         lstPlayList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         lstPlayList.setSelectedIndex(0);
         lstPlayList.setDragEnabled(true);
 
-        /** Drag and drop */
+        // Drag and drop
         new DropTarget(lstPlayList, DnDConstants.ACTION_COPY_OR_MOVE, this, true);
 
         lstPlayList.setForeground(fg2);
@@ -249,8 +254,6 @@ MouseMotionListener, DropTargetListener {
         mi.setActionCommand("fileinfo");
         mi.addActionListener(this);
         popup.add(mi);
-
-        // pane.add(p, BorderLayout.NORTH);
 
         pane.add(listScrollPane, BorderLayout.CENTER);
         pane.add(pnl, BorderLayout.SOUTH);
@@ -346,18 +349,8 @@ MouseMotionListener, DropTargetListener {
         this.setSize(350, 230);
         this.setTitle("PlayList " + getVersion());
 
-        // Read preferences
+        // Load preferences
         loadPreferences();
-    }
-
-    /**
-     * Get preferences. Currently the tools frame need access to the playlist
-     * preferences to set the "SingleSongMode" pref.
-     * 
-     * @return Properties
-     */
-    protected Properties getPreferences() {
-        return preferences;
     }
 
     /**
@@ -367,9 +360,6 @@ MouseMotionListener, DropTargetListener {
      * @throws HeadlessException
      */
     private void loadPreferences() throws NumberFormatException, HeadlessException {
-        // inherited behavior
-        readPreferences();
-
         try {
             // Look for the currentPlaylist
             currentPlaylistFilename = preferences.getProperty("currentPlaylist");
@@ -382,8 +372,6 @@ MouseMotionListener, DropTargetListener {
             int size = Integer.parseInt(preferences.getProperty("fontSize"));
             int style = Integer.parseInt(preferences.getProperty("fontStyle"));
             setPlayListFont(font, size, style);
-
-            toolFrame.setPlaylistFont(font, size, style);
 
             // Look for text colors
             Color c = StringToColor(preferences.getProperty("foregroundColor"));
@@ -403,11 +391,26 @@ MouseMotionListener, DropTargetListener {
             setPlayListSelectionBg(c);
             toolFrame.setSelectionBgColor(c);
 
-            // Load single song mode pref
-            if (preferences.getProperty("singleSongMode").equals("true"))
-                toolFrame.setSingleSongMode(true);
+            // Load tool prefs
+            if (preferences.getProperty("includeSubFolderForDragAndDrop").equals("true"))
+                setIncludeSubFolderForDragAndDrop(true);
             else
-                toolFrame.setSingleSongMode(false);
+                setIncludeSubFolderForDragAndDrop(false);
+
+            if (preferences.getProperty("showPlayerButtonsInStatusBar").equals("true"))
+                setShowPlayerButtonsInStatusBar(true);
+            else
+                setShowPlayerButtonsInStatusBar(false);
+
+            if (preferences.getProperty("singleSongMode").equals("true"))
+                setSingleSongMode(true);
+            else
+                setSingleSongMode(false);
+
+            if (preferences.getProperty("showLineNumbersInPlayList").equals("true"))
+                setShowLineNumbersInPlayList(true);
+            else
+                setShowLineNumbersInPlayList(false);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -420,6 +423,86 @@ MouseMotionListener, DropTargetListener {
 
     public String getVersion() {
         return "v1.0";
+    }
+
+    /**
+     * Include SubFolders for Drag and Drop
+     * 
+     * @return
+     */
+    public boolean isIncludeSubFolderForDragAndDrop() {
+        return preferences.getProperty("includeSubFolderForDragAndDrop").equals("true");
+    }
+
+    /**
+     * Set include SubFolders for Drag and Drop
+     */
+    public void setIncludeSubFolderForDragAndDrop(boolean b) {
+        if (b)
+            preferences.setProperty("includeSubFolderForDragAndDrop", "true");
+        else
+            preferences.setProperty("includeSubFolderForDragAndDrop", "false");
+    }
+
+    /**
+     * Is Show player Buttons In Status Bar
+     * 
+     * @return True if showing player buttons
+     */
+    public boolean isShowPlayerButtonsInStatusBar() {
+        return preferences.getProperty("showPlayerButtonsInStatusBar").equals("true");
+    }
+
+    /**
+     * Set Show player Buttons In Status Bar
+     */
+    public void setShowPlayerButtonsInStatusBar(boolean b) {
+        if (b)
+            preferences.setProperty("showPlayerButtonsInStatusBar", "true");
+        else
+            preferences.setProperty("showPlayerButtonsInStatusBar", "false");
+
+        getStatusPanel().setVisible(b);
+    }
+
+    /**
+     * Is Single Song Mode
+     * 
+     * @return True if single song mode is active
+     */
+    public boolean isSingleSongMode() {
+        return preferences.getProperty("singleSongMode").equals("true");
+    }
+
+    /**
+     * Set Single Song Mode
+     */
+    public void setSingleSongMode(boolean b) {
+        if (b)
+            preferences.setProperty("singleSongMode", "true");
+        else
+            preferences.setProperty("singleSongMode", "false");
+    }
+
+    /**
+     * Is Show Line Numbers in Playlist
+     * 
+     * @return True if showing line numbers in playlist
+     */
+    public boolean isShowLineNumbersInPlayList() {
+        return preferences.getProperty("showLineNumbersInPlayList").equals("true");
+    }
+
+    /**
+     * Set Show Line Numbers in Playlist
+     */
+    public void setShowLineNumbersInPlayList(boolean b) {
+        if (b)
+            preferences.setProperty("showLineNumbersInPlayList", "true");
+        else
+            preferences.setProperty("showLineNumbersInPlayList", "false");
+
+        myCellRenderer.setShowLineNumbers(b);
     }
 
     public void setPlayListFont(String fontName, int fontSize, int fontStyle) {
@@ -866,7 +949,6 @@ MouseMotionListener, DropTargetListener {
      * @param e
      *        L'action event
      **************************************************************************/
-
     public void actionPerformed(ActionEvent e) {
         String c = e.getActionCommand();
 
@@ -919,7 +1001,6 @@ MouseMotionListener, DropTargetListener {
                 }
 
                 // parcoursRecursif(file, recursion);
-
             }
 
             // Suppression de la selection courante à partir du
@@ -1121,7 +1202,6 @@ MouseMotionListener, DropTargetListener {
 
         public void mousePressed(MouseEvent e) {
             maybeShowPopup(e);
-
         }
 
         public void mouseReleased(MouseEvent e) {
@@ -1265,7 +1345,7 @@ MouseMotionListener, DropTargetListener {
 
         // If we are in single song mode, we dont need to test for playing the
         // next song.
-        if (toolFrame.isSingleSongMode()) return;
+        if (isSingleSongMode()) return;
 
         // If we are near to end of song (1.5 s)
         if (Math.abs(progressMilliseconds - milliseconds) <= 1000) {
@@ -1337,9 +1417,7 @@ MouseMotionListener, DropTargetListener {
                 lstPlayList.setSelectedIndex(index);
                 indexSelected = index;
             }
-
         }
-
     }
 
     /**
@@ -1348,9 +1426,7 @@ MouseMotionListener, DropTargetListener {
      * @param e
      *        MouseEvent
      */
-    public void mouseMoved(MouseEvent e) {
-
-    }
+    public void mouseMoved(MouseEvent e) {}
 
     /**
      * getPlugin
@@ -1459,7 +1535,7 @@ MouseMotionListener, DropTargetListener {
                                 }
                             }
                             else if (file.isDirectory()) {
-                                parcoursRecursif(file, toolFrame.getRecursionDnd(), 0);
+                                parcoursRecursif(file, isIncludeSubFolderForDragAndDrop(), 0);
                             }
                         }
                     }
