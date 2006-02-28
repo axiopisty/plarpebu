@@ -19,7 +19,7 @@ import javazoom.jlgui.basicplayer.BasicPlayerListener;
 import pluginsSDK.FramePlugin;
 
 /**
- *
+ * Audio Info
  */
 public class AudioInfoPlugin extends FramePlugin implements BasicPlayerListener {
     private JTextField sourceTF = null;
@@ -140,7 +140,6 @@ public class AudioInfoPlugin extends FramePlugin implements BasicPlayerListener 
         jsInfoTA.setText(jsSB.toString());
         extjsInfoTA.setText(extjsSB.toString());
         spiInfoTA.setText(spiSB.toString());
-
     }
 
     public void stateUpdated(BasicPlayerEvent event) {}
@@ -158,7 +157,6 @@ public class AudioInfoPlugin extends FramePlugin implements BasicPlayerListener 
             }
         }
         dynspiInfoTA.setText(dynspiSB.toString());
-
     }
 
     public String getName() {
@@ -181,7 +179,6 @@ public class AudioInfoPlugin extends FramePlugin implements BasicPlayerListener 
      *        BasicController
      */
     public void setController(BasicController controller) {
-
     }
 
     public String getVersion() {
