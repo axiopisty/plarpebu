@@ -116,7 +116,7 @@ public class BasicMidiPlayer extends BasicPlayer implements MidiListener {
      * 
      * @throws BasicPlayerException
      */
-    private void initAudioInputStream() throws BasicPlayerException {
+    private void initAudioInputStream() {
 
         reset();
         notifyEvent(BasicPlayerEvent.OPENING, getEncodedStreamPosition(), -1, m_dataSource);
@@ -230,7 +230,7 @@ public class BasicMidiPlayer extends BasicPlayer implements MidiListener {
     /**
      * Starts playback.
      */
-    protected void startPlayback() throws BasicPlayerException {
+    protected void startPlayback() {
         midiKarPlayer.play();
         m_status = PLAYING;
         notifyEvent(BasicPlayerEvent.PLAYING, getEncodedStreamPosition(), -1, null);
