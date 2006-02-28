@@ -1,38 +1,19 @@
 package plugins.playlist;
 
-/**
- * MpegInfo.
- *-----------------------------------------------------------------------
- *   This program is free software; you can redistribute it and/or modify
- *   it under the terms of the GNU Library General Public License as published
- *   by the Free Software Foundation; either version 2 of the License, or
- *   (at your option) any later version.
- *
- *   This program is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU Library General Public License for more details.
- *
- *   You should have received a copy of the GNU Library General Public
- *   License along with this program; if not, write to the Free Software
- *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *----------------------------------------------------------------------
- */
-
-import helliker.id3.ID3Exception;
-import helliker.id3.ID3v2FormatException;
-import helliker.id3.MP3File;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.RandomAccessFile;
 import java.util.Vector;
 
 import javazoom.jl.decoder.Bitstream;
 import javazoom.jl.decoder.BitstreamException;
 import javazoom.jl.decoder.Header;
 import javazoom.jl.decoder.JavaLayerException;
+import de.ueberdosis.mp3info.ExtendedID3Tag;
+import de.ueberdosis.mp3info.ID3Reader;
+import de.ueberdosis.mp3info.ID3TagException;
 
 /**
  * This class gives information (audio format and comments) about MPEG file.
@@ -84,16 +65,14 @@ public class MpegInfo implements TagInfo {
      * @param input
      * @throws IOException
      */
-    public MpegInfo(String input) throws JavaLayerException, IOException, ID3Exception {
-        MP3File mp3file = null;
+    public MpegInfo(String input) throws JavaLayerException, IOException, ID3TagException {
         File file = new File(input);
         size = file.length();
         location = input;
         FileInputStream fis = new FileInputStream(input);
         checkAudioFormat(fis);
         fis.close();
-        mp3file = new MP3File(input);
-        this.loadInfo(mp3file);
+        this.loadInfo(input, file);
     }
 
     /**
@@ -143,26 +122,32 @@ public class MpegInfo implements TagInfo {
      * @param mp3file
      * @throws ID3v2FormatException
      */
-    private void loadInfo(MP3File mp3file) throws ID3v2FormatException {
-        rate = mp3file.getSampleRate();
-        nominalbitrate = mp3file.getBitRate() * 1000;
-        version = mp3file.getMPEGVersion();
-        layer = mp3file.getMPEGLayer();
-        copyright = mp3file.isMPEGCopyrighted();
-        crc = mp3file.isMPEGProtected();
-        original = mp3file.isMPEGOriginal();
-        emphasis = mp3file.getMPEGEmphasis();
-        channels = mp3file.getMPEGChannelMode();
-        total = mp3file.getPlayingTime();
-        vbr = mp3file.isVBR();
-        album = mp3file.getAlbum();
-        artist = mp3file.getArtist();
-        title = mp3file.getTitle();
-        genre = mp3file.getGenre();
-        year = mp3file.getYear();
-        track = mp3file.getTrack();
+    private void loadInfo(String input, File file) throws ID3TagException, IOException {
+
+        RandomAccessFile raf = new RandomAccessFile(file, "r");
+        ExtendedID3Tag extTag = ID3Reader.readExtendedTag(raf);
+
+        rate = extTag.getFrequencyI();
+        nominalbitrate = extTag.getBitrate2I() * 1000;
+        version = extTag.getMpegIDS();
+        layer = extTag.getLayerS();
+        copyright = extTag.getCopyright();
+        crc = extTag.getCrc();
+        original = extTag.getOriginal();
+        emphasis = extTag.getEmphasisS();
+        channels = extTag.getChannelModeS();
+        total = extTag.getRuntime();
+        album = extTag.getAlbum();
+        artist = extTag.getArtist();
+        title = extTag.getTitle();
+        genre = extTag.getGenreS();
+        year = String.valueOf(extTag.getYear());
+        track = extTag.getTrack();
         comments = new Vector();
-        comments.add(mp3file.getComment());
+        comments.add(extTag.getComment());
+
+        ID3Reader id3reader = new ID3Reader(input);
+        vbr = id3reader.checkVBR(raf);
     }
 
     public boolean getVBR() {
