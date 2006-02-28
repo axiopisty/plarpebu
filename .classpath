@@ -18,6 +18,5 @@
 	<classpathentry kind="lib" path="lib/jspeex0.9.3.jar"/>
 	<classpathentry kind="lib" path="lib/mp3spi1.9.2.jar"/>
 	<classpathentry kind="lib" path="lib/vorbisspi1.0.1.jar"/>
-	<classpathentry kind="lib" path="lib/id3-1.6.0d8.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
