@@ -310,21 +310,14 @@ ComponentListener, Iconifiable {
         JMenu menuSkins = null;
 
         try {
-
             menuSkins = loadThemes();
-
         }
-        catch (IOException io) {
-            io.printStackTrace();
+        catch (Exception ex) {
+            ex.printStackTrace();
             System.out.println("erreur io");
-        }
-        catch (ClassNotFoundException cl) {
-            cl.printStackTrace();
-            System.out.println("error class not found");
         }
 
         if (menuSkins != null) mb.add(menuSkins);
-
     }
 
     public void changeSkin(String skinName) {
@@ -358,10 +351,8 @@ ComponentListener, Iconifiable {
      * 
      * @return le JMenu associe au repertoire skins.
      * @return null si pas de repertoire skins.
-     * @throws IOException
-     * @throws ClassNotFoundException
      */
-    private final JMenu loadThemes() throws IOException, ClassNotFoundException {
+    private final JMenu loadThemes() {
 
         ActionListener skinListener = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
