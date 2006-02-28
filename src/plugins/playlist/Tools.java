@@ -66,14 +66,6 @@ public class Tools extends JFrame implements ActionListener, ItemListener, Prope
 
     private PlayListPlugin playlist = null;
 
-    private Color bgColor;
-
-    private Color fgColor;
-
-    private Color selectionFgColor;
-
-    private Color selectionBgColor;
-
     private FontDialogChoser fc = new FontDialogChoser();
 
     private JButton chooseFontButton;
@@ -240,39 +232,19 @@ public class Tools extends JFrame implements ActionListener, ItemListener, Prope
         }
     }
 
-    public Color getBgColor() {
-        return bgColor;
-    }
-
     public void setBgColor(Color bgColor) {
-        this.bgColor = bgColor;
         bgI.setBackground(bgColor);
     }
 
-    public Color getFgColor() {
-        return fgColor;
-    }
-
     public void setFgColor(Color fgColor) {
-        this.fgColor = fgColor;
         fgI.setBackground(fgColor);
     }
 
-    public Color getSelectionFgColor() {
-        return selectionFgColor;
-    }
-
     public void setSelectionFgColor(Color selectionFgColor) {
-        this.selectionFgColor = selectionFgColor;
         fgS.setBackground(selectionFgColor);
     }
 
-    public Color getSelectionBgColor() {
-        return selectionBgColor;
-    }
-
     public void setSelectionBgColor(Color selectionBgColor) {
-        this.selectionBgColor = selectionBgColor;
         bgS.setBackground(selectionBgColor);
     }
 }
