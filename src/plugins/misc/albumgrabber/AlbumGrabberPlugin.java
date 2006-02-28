@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.net.MalformedURLException;
 import java.util.Map;
 
 import javax.swing.ImageIcon;
@@ -46,7 +45,7 @@ public class AlbumGrabberPlugin extends FramePlugin implements ActionListener, B
 
     private String albumTitle = null;
 
-    public AlbumGrabberPlugin() throws MalformedURLException {
+    public AlbumGrabberPlugin() {
 
         popupListener = new PopupListener();
         this.addMouseListener(popupListener);
