@@ -6,6 +6,7 @@ bgSLabel,JLabel,false,false, , ,false,<default>
 cb1,JCheckBox,false,false, , ,false,<default>
 cb2,JCheckBox,false,false, , ,false,<default>
 cb3,JCheckBox,false,false, , ,false,<default>
+cb4,JCheckBox,false,false, , ,false,<default>
 cbPanel,JPanel,false,false, , ,false,<default>
 change,boolean,false,false, , ,true,<default>
 fgI,ColorControl,false,false, , ,false,<default>
