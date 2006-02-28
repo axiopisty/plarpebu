@@ -28,28 +28,14 @@ import javazoom.jlgui.basicplayer.BasicController;
 import javazoom.jlgui.basicplayer.BasicPlayerException;
 import javazoom.jlgui.basicplayer.BasicPlayerListener;
 import pluginsSDK.Iconifiable;
+import util.ZipUtil;
 
 /**
- * BasicPlayer is a threaded audio javazoom.jlgui.player.test.
- */
-/**
- * <p>
- * Title:
- * </p>
- * <p>
- * Description:
- * </p>
- * <p>
- * Copyright: Copyright (c) 2004
- * </p>
- * <p>
- * Company:
- * </p>
+ * Composite player combines the BasicMP3Player and BasicMidiPlayer.
  * 
  * @author not attributable
  * @version 1.0
  */
-
 public class CompositePlayer extends BasicPlayer implements BasicController {
     private BasicPlayer mp3Player = new BasicMP3Player();
 
@@ -59,6 +45,9 @@ public class CompositePlayer extends BasicPlayer implements BasicController {
 
     private Iconifiable playerUI;
 
+    /**
+     * Constructor
+     */
     public CompositePlayer() {
         setSupportedFileTypeExtensions();
     }

@@ -5,7 +5,6 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -21,6 +20,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import util.UserInterfaceUtil;
 
 /**
  * Playlist Configuration UI
@@ -94,23 +95,6 @@ public class Tools extends JFrame implements ActionListener, ItemListener, Prope
     }
 
     /**
-     * Center a frame TODO: Move this to a UI util class
-     * 
-     * @param frame
-     */
-    public static void centerFrame(JFrame frame) {
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        Dimension frameSize = frame.getSize();
-        if (frameSize.height > screenSize.height) {
-            frameSize.height = screenSize.height;
-        }
-        if (frameSize.width > screenSize.width) {
-            frameSize.width = screenSize.width;
-        }
-        frame.setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
-    }
-
-    /**
      * Initialize
      * 
      * @throws Exception
@@ -131,19 +115,19 @@ public class Tools extends JFrame implements ActionListener, ItemListener, Prope
         cb1 = new JCheckBox("Include SubFolders for Drag and Drop", true);
         cb1.addItemListener(this);
         cb1.setSelected(playlist.isIncludeSubFolderForDragAndDrop());
-        
+
         cb2 = new JCheckBox("Show Player Buttons in StatusBar", true);
         cb2.addItemListener(this);
         cb2.setSelected(playlist.isShowPlayerButtonsInStatusBar());
-        
+
         cb3 = new JCheckBox("Single Song Mode", false);
         cb3.addItemListener(this);
         cb3.setSelected(playlist.isSingleSongMode());
-        
+
         cb4 = new JCheckBox("Show Line Numbers in PlayList", false);
         cb4.addItemListener(this);
         cb4.setSelected(playlist.isShowLineNumbersInPlayList());
-        
+
         cbPanel = new JPanel(new GridLayout(4, 0));
         cbPanel.add(cb1);
         cbPanel.add(cb2);
@@ -190,7 +174,7 @@ public class Tools extends JFrame implements ActionListener, ItemListener, Prope
         pane.add(itemPanel);
         pane.add(itemPanel2);
         this.setSize(300, 400);
-        centerFrame(this);
+        UserInterfaceUtil.centerFrame(this);
     }
 
     /**
