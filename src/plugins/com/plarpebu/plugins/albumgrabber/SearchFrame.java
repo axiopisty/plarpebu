@@ -1,4 +1,4 @@
-package com.plarpebu.plugins.misc.albumgrabber;
+package com.plarpebu.plugins.albumgrabber;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
