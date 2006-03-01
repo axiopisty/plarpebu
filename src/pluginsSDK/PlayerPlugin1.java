@@ -7,7 +7,7 @@ import javazoom.jlgui.basicplayer.BasicPlayerEvent;
 import javazoom.jlgui.basicplayer.BasicPlayerListener;
 import fr.unice.plugin.Plugin;
 
-public interface playerPlugin extends Plugin {
+public interface PlayerPlugin1 extends Plugin {
 
     /**
      * Open callback, stream is ready to play. properties map includes audio

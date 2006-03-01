@@ -16,7 +16,7 @@ import plugins.playlist.PlayListPlugin;
  * @see AudioInfoPlugin
  * @see PlayListPlugin
  */
-abstract public class FramePlugin extends JFrameWithPreferences implements playerPlugin {
+abstract public class FramePlugin extends JFrameWithPreferences implements PlayerPlugin1 {
 
     private String preferencesDir = "preferences";
 
