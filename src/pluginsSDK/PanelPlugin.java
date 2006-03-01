@@ -20,7 +20,7 @@ import plugins.examples.ProgressBarPlugin;
  * @see InfoPlugin
  * @see StopPlaySeekPlugin
  */
-abstract public class PanelPlugin extends JPanel implements PlayerPlugin1 {
+abstract public class PanelPlugin extends JPanel implements PlayerPlugin {
 
     /**
      * Cette fonction retourne le type du plugin.

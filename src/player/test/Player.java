@@ -52,7 +52,7 @@ import pluginsSDK.FramePlugin;
 import pluginsSDK.Iconifiable;
 import pluginsSDK.JFrameWithPreferences;
 import pluginsSDK.PanelPlugin;
-import pluginsSDK.PlayerPlugin1;
+import pluginsSDK.PlayerPlugin;
 import basicplayer.CompositePlayer;
 
 import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
@@ -89,7 +89,7 @@ ComponentListener, Iconifiable {
     // New for R.Grin's lib
     private PluginManager pluginManager;
 
-    private PlayerPlugin1[] plugins;
+    private PlayerPlugin[] plugins;
 
     private PluginMenuItemFactory pluginMenuItemFactory;
 
@@ -142,7 +142,7 @@ ComponentListener, Iconifiable {
         // All jars in the plugins dir will be added automatically...
         pluginManager.addJarURLsInDirectories(new URL[] { new URL("file:plugins") });
         pluginManager.loadPlugins();
-        plugins = (PlayerPlugin1[]) pluginManager.getPluginInstances(pluginsSDK.PlayerPlugin1.class);
+        plugins = (PlayerPlugin[]) pluginManager.getPluginInstances(pluginsSDK.PlayerPlugin.class);
 
         pane = this.getContentPane();
         pane.setLayout(new GridLayout(0, 1));
@@ -258,7 +258,7 @@ ComponentListener, Iconifiable {
         // affichage des plugins
         for (int i = 0; i < origine.size(); i++) {
             namePlug = (String) origine.get(i);
-            PlayerPlugin1 pp = searchPlugin(namePlug);
+            PlayerPlugin pp = searchPlugin(namePlug);
             if (!(namePlug.equals("Pan Gain") || namePlug.equals("Stop Play Seek Plugin") || namePlug.equals("Info"))) {
                 // car buildUi se charge de l'agencement des ces plugins
 
@@ -278,7 +278,7 @@ ComponentListener, Iconifiable {
         }
     }
 
-    public int getPluginIndex(PlayerPlugin1 pp) {
+    public int getPluginIndex(PlayerPlugin pp) {
         for (int i = 0; i < plugins.length; i++) {
             if (plugins[i] == pp) return i;
         }
@@ -293,7 +293,7 @@ ComponentListener, Iconifiable {
      *        La String correspondant au nom du plugin.
      * @return le playerPlugin correspondant.
      */
-    private PlayerPlugin1 searchPlugin(String name) {
+    private PlayerPlugin searchPlugin(String name) {
         for (int i = 0; i < plugins.length; i++) {
             if (plugins[i].getName().equals(name)) {
                 return plugins[i];
@@ -395,7 +395,7 @@ ComponentListener, Iconifiable {
                 // "deseselectionne");
                 System.out.println(" : " + nameCommand);
 
-                PlayerPlugin1 pp = searchPlugin(nameCommand);
+                PlayerPlugin pp = searchPlugin(nameCommand);
 
                 if (cb.getState() == true) {
                     bplayer.addBasicPlayerListener(pp.getPlugin());
@@ -474,7 +474,7 @@ ComponentListener, Iconifiable {
         menuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 pluginManager.loadPlugins();
-                plugins = (PlayerPlugin1[]) pluginManager.getPluginInstances(pluginsSDK.PlayerPlugin1.class);
+                plugins = (PlayerPlugin[]) pluginManager.getPluginInstances(pluginsSDK.PlayerPlugin.class);
                 buildPluginMenuEntries();
                 activationOrigine();
             }
