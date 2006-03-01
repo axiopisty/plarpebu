@@ -15,6 +15,7 @@ and the Ant output directory might be "classes.ant".-->
 
 	<!-- Compile classpath -->
 	<path id="project.class.path">
+		<pathelement location="${classes.player}" />
 		<pathelement location="${lib}/albumgrabber.jar" />
 		<pathelement location="${lib}/chardet.jar" />
 		<pathelement location="${lib}/commons-logging-api.jar" />
@@ -82,23 +83,17 @@ and the Ant output directory might be "classes.ant".-->
 		<!-- Plugins -->
 		<jar compress="false" destfile="${plugins}/albumGrabberPlugin.jar">
 			<fileset dir="${classes.plugins}">
-				<include name="plugins/misc/**" />
+				<include name="com/plarpebu/plugins/misc/**" />
 			</fileset>
 		</jar>
-		<jar compress="false" destfile="${plugins}/basicAndPlaylist.jar">
+		<jar compress="false" destfile="${plugins}/cdgPlugin.jar">
 			<fileset dir="${classes.plugins}">
-				<include name="plugins/basic/**" />
-				<include name="plugins/playlist/**" />
+				<include name="com/plarpebu/plugins/karaoke/**" />
 			</fileset>
 		</jar>
-		<jar compress="false" destfile="${plugins}/cdg.jar">
+		<jar compress="false" destfile="${plugins}/examplesPlugin.jar">
 			<fileset dir="${classes.plugins}">
-				<include name="plugins/karaoke/**" />
-			</fileset>
-		</jar>
-		<jar compress="false" destfile="${plugins}/exemples.jar">
-			<fileset dir="${classes.plugins}">
-				<include name="plugins/examples/**" />
+				<include name="com/plarpebu/plugins/examples/**" />
 			</fileset>
 		</jar>
 	</target>
@@ -117,7 +112,7 @@ and the Ant output directory might be "classes.ant".-->
 
 	<target name="resource">
 		<!-- Copy player resources -->
-		<copy todir="${classes}">
+		<copy todir="${classes.player}">
 			<fileset dir="${src.player}">
 				<include name="**/*.jpe" />
 				<include name="**/*.jpeg" />
@@ -134,7 +129,7 @@ and the Ant output directory might be "classes.ant".-->
 			</fileset>
 		</copy>
 		<!-- Copy plugin resources -->
-		<copy todir="${classes}">
+		<copy todir="${classes.plugins}">
 			<fileset dir="${src.plugins}">
 				<include name="**/*.jpe" />
 				<include name="**/*.jpeg" />
@@ -159,7 +154,7 @@ and the Ant output directory might be "classes.ant".-->
 	<target depends="clean,compile,package" name="all" />
 
 	<target name="run" depends="all">
-		<java classname="player.test.Player" fork="yes">
+		<java classname="com.plarpebu.Player" fork="yes">
 			<classpath refid="project.class.path" />
 		</java>
 	</target>

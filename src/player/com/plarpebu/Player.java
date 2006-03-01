@@ -80,7 +80,6 @@ ComponentListener, Iconifiable {
         origine.add("Stop Play Seek Plugin");
         origine.add("Info");
         // origine.add("Karaoké");
-
     }
 
     // Splash Screen
@@ -123,7 +122,7 @@ ComponentListener, Iconifiable {
      */
     public Player() throws MalformedURLException {
 
-        super("Plaperbu, V0.9 beta 21");
+        super("Plarpebu, V0.9 beta 21");
 
         // Use our own security manager, that can register listeners
         // All JFrameWithPreferences qare listeners, see contructor of this
@@ -187,7 +186,7 @@ ComponentListener, Iconifiable {
         readPreferences();
         restoreVisibility();
     }
-
+    
     /**
      * Simple procedure preparant notre interface a l'operation de fermeture de
      * la fenetre principale.<br>
