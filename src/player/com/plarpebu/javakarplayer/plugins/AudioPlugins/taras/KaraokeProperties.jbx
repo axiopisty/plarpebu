@@ -1,0 +1,26 @@
+[PropertyInfo]
+backgroundType,int,false,false, , ,false,<default>
+bgColor,Color,false,false, , ,false,<default>
+bgImage,Image,false,false, , ,false,<default>
+charset,String,false,false, , ,false,<default>
+cols,int,false,false, , ,false,<default>
+fontFace,String,false,false, , ,false,<default>
+gradiantColor1,Color,false,false, , ,false,<default>
+gradiantColor2,Color,false,false, , ,false,<default>
+height,int,false,false, , ,false,<default>
+hlColor,Color,false,false, , ,false,<default>
+lines,int,false,false, , ,false,<default>
+outlineColor,Color,false,false, , ,false,<default>
+readLine,int,false,false, , ,false,<default>
+ribbonColor,Color,false,false, , ,false,<default>
+ribbonWidth,int,false,false, , ,false,<default>
+shadowColor,Color,false,false, , ,false,<default>
+style,int,false,false, , ,false,<default>
+sungSyllabesColor,Color,false,false, , ,false,<default>
+syllabesNotSungYetColor,Color,false,false, , ,false,<default>
+width,int,false,false, , ,false,<default>
+[IconNames]
+
+
+
+

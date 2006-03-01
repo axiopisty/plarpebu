@@ -1,0 +1,56 @@
+[PropertyInfo]
+border1,Border,false,false, , ,false,<default>
+border2,Border,false,false, , ,false,<default>
+border3,Border,false,false, , ,false,<default>
+border4,Border,false,false, , ,false,<default>
+border5,Border,false,false, , ,false,<default>
+border6,Border,false,false, , ,false,<default>
+buttonGroup2,ButtonGroup,false,false, , ,false,<default>
+charsetAutodetection,boolean,false,false,charsetAutodetection,charsetAutodetection,true,<default>
+colorSelectorActiveSyllabe,JPanelColorSelector,false,false, , ,false,<default>
+ColorSelectorGradiantEnd,JPanelColorSelector,false,false, , ,false,<default>
+colorSelectorGradiantStart,JPanelColorSelector,false,false, , ,false,<default>
+colorSelectorMonochrome,JPanelColorSelector,false,false, , ,false,<default>
+colorSelectorOutline,JPanelColorSelector,false,false, , ,false,<default>
+colorSelectorShadow,JPanelColorSelector,false,false, , ,false,<default>
+colorSelectorSungSyllabe,JPanelColorSelector,false,false, , ,false,<default>
+colorSelectorToSingSyllabe,JPanelColorSelector,false,false, , ,false,<default>
+fc,FontDialogChoser,false,false, , ,false,<default>
+initValuesMode,boolean,false,false, , ,false,<default>
+jButtonBrowseImage,JButton,false,false, , ,false,<default>
+jButtonChooseFont,JButton,false,false, , ,false,<default>
+jButtonClose,JButton,false,false, , ,false,<default>
+jCheckBox1,JCheckBox,false,false, , ,false,<default>
+jCheckBoxOutline,JCheckBox,false,false, , ,false,<default>
+jCheckBoxShadow,JCheckBox,false,false, , ,false,<default>
+jComboBoxCharsets,JComboBox,false,false, , ,false,<default>
+jComboBoxRadiantType,JComboBox,false,false, , ,false,<default>
+jLabel1,JLabel,false,false, , ,false,<default>
+jLabel10,JLabel,false,false, , ,false,<default>
+jLabel11,JLabel,false,false, , ,false,<default>
+jLabel14,JLabel,false,false, , ,false,<default>
+jLabel2,JLabel,false,false, , ,false,<default>
+jLabel3,JLabel,false,false, , ,false,<default>
+jLabel4,JLabel,false,false, , ,false,<default>
+jLabel7,JLabel,false,false, , ,false,<default>
+jLabel9,JLabel,false,false, , ,false,<default>
+jPanel1,JPanel,false,false, , ,false,<default>
+jPanel2,JPanel,false,false, , ,false,<default>
+jRadioButtonGradiant,JRadioButton,false,false, , ,false,<default>
+jRadioButtonImage,JRadioButton,false,false, , ,false,<default>
+jRadioButtonMonochrome,JRadioButton,false,false, , ,false,<default>
+jSliderShadowOpacity,JSlider,false,false, , ,false,<default>
+karaokePane,KaraokePane,false,false, , ,true,<default>
+titledBorder1,TitledBorder,false,false, , ,false,<default>
+titledBorder2,TitledBorder,false,false, , ,false,<default>
+titledBorder3,TitledBorder,false,false, , ,false,<default>
+visible,boolean,false,false, , ,true,<default>
+xYLayout1,XYLayout,false,false, , ,false,<default>
+xYLayout2,XYLayout,false,false, , ,false,<default>
+xYLayout3,XYLayout,false,false, , ,false,<default>
+charset,String,false,false,charset,charset,true,<default>
+[IconNames]
+
+
+
+

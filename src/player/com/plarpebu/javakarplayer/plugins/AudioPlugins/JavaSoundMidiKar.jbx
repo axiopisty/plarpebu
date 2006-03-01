@@ -1,0 +1,21 @@
+[PropertyInfo]
+artist,String,false,false, , ,false,<default>
+channels,MidiChannel[],false,false, , ,false,<default>
+gain,double,false,false, , ,true,<default>
+lyricsListener,JavaSoundLyricsListener,false,false, , ,false,<default>
+midiListener,MidiListener,false,false, , ,true,<default>
+name,String,false,false, , ,true,<default>
+pan,double,false,false, , ,true,<default>
+player,MidiListener,false,false, , ,false,<default>
+sequencer,Sequencer,false,false, , ,false,<default>
+songLength,long,false,false, , ,true,<default>
+songMicrosecondLength,long,false,false, , ,true,<default>
+songTitle,String,false,false, , ,false,<default>
+synthesizer,Synthesizer,false,false, , ,false,<default>
+ticker,Ticker,false,false, , ,false,<default>
+visualKaraoke,Karaoke,false,false, , ,false,<default>
+[IconNames]
+
+
+
+
