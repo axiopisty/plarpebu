@@ -1,4 +1,4 @@
-package com.plarpebu.plugins.playlist;
+package com.plarpebu.plugins.basic.playlist;
 
 import java.awt.Color;
 import java.awt.Component;

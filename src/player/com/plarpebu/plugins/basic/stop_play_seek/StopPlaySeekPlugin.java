@@ -24,7 +24,7 @@ import com.plarpebu.javazoom.jlgui.basicplayer.BasicController;
 import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerEvent;
 import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerException;
 import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerListener;
-import com.plarpebu.plugins.playlist.PlayListPlugin;
+import com.plarpebu.plugins.basic.playlist.PlayListPlugin;
 import com.plarpebu.pluginsSDK.PanelPlugin;
 
 /**
