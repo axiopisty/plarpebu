@@ -1,4 +1,4 @@
-package player.test;
+package com.plarpebu;
 
 import javax.swing.Icon;
 import javax.swing.JCheckBoxMenuItem;

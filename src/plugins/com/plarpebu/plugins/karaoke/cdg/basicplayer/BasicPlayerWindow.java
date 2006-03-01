@@ -26,21 +26,21 @@ import javax.swing.JPopupMenu;
 import javax.swing.JRootPane;
 import javax.swing.Timer;
 
-import javazoom.jlgui.basicplayer.BasicController;
-import javazoom.jlgui.basicplayer.BasicPlayerEvent;
-import javazoom.jlgui.basicplayer.BasicPlayerListener;
-import plugins.karaoke.cdg.basicplayer.gui.CdgOptionsDialog;
-import plugins.karaoke.cdg.basicplayer.gui.ChooseFullScreenModeDIalog;
-import plugins.karaoke.cdg.instructions.CdgBorderPreset;
-import plugins.karaoke.cdg.instructions.CdgLoadColorTable;
-import plugins.karaoke.cdg.instructions.CdgMemoryPreset;
-import plugins.karaoke.cdg.instructions.CdgScrollCopy;
-import plugins.karaoke.cdg.instructions.CdgScrollPreset;
-import plugins.karaoke.cdg.instructions.CdgTileBlock;
-import plugins.karaoke.cdg.io.CdgDataChunk;
-import plugins.karaoke.cdg.io.CdgFileObject;
-import plugins.karaoke.cdg.lyricspanel.CdgGraphicBufferedImage;
-import pluginsSDK.FramePlugin;
+import com.plarpebu.javazoom.jlgui.basicplayer.BasicController;
+import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerEvent;
+import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerListener;
+import com.plarpebu.plugins.karaoke.cdg.basicplayer.gui.CdgOptionsDialog;
+import com.plarpebu.plugins.karaoke.cdg.basicplayer.gui.ChooseFullScreenModeDIalog;
+import com.plarpebu.plugins.karaoke.cdg.instructions.CdgBorderPreset;
+import com.plarpebu.plugins.karaoke.cdg.instructions.CdgLoadColorTable;
+import com.plarpebu.plugins.karaoke.cdg.instructions.CdgMemoryPreset;
+import com.plarpebu.plugins.karaoke.cdg.instructions.CdgScrollCopy;
+import com.plarpebu.plugins.karaoke.cdg.instructions.CdgScrollPreset;
+import com.plarpebu.plugins.karaoke.cdg.instructions.CdgTileBlock;
+import com.plarpebu.plugins.karaoke.cdg.io.CdgDataChunk;
+import com.plarpebu.plugins.karaoke.cdg.io.CdgFileObject;
+import com.plarpebu.plugins.karaoke.cdg.lyricspanel.CdgGraphicBufferedImage;
+import com.plarpebu.pluginsSDK.FramePlugin;
 
 /**
  * Basic CDG player window

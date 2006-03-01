@@ -1,4 +1,4 @@
-package test.volatile_images;
+package com.plarpebu.test.volatile_images;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -28,7 +28,7 @@ class MyComponent extends JFrame {
 
     MyComponent() {
         // Get image to move into accelerated image memory
-        origImage = new ImageIcon(test.volatile_images.MyComponent.class.getResource("splash.jpg")).getImage();
+        origImage = new ImageIcon(MyComponent.class.getResource("splash.jpg")).getImage();
         new Ticker();
     }
 

@@ -1,4 +1,4 @@
-package player.test;
+package com.plarpebu;
 
 import java.awt.Component;
 import java.awt.Container;
@@ -42,20 +42,20 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
-import javazoom.jlgui.basicplayer.BasicPlayerListener;
-import player.test.utils.ExitListenerSecurityManager;
-import plugins.basic.InfoPlugin;
-import plugins.basic.PanGainPlugin;
-import plugins.basic.StopPlaySeekPlugin;
-import plugins.playlist.PlayListPlugin;
-import pluginsSDK.FramePlugin;
-import pluginsSDK.Iconifiable;
-import pluginsSDK.JFrameWithPreferences;
-import pluginsSDK.PanelPlugin;
-import pluginsSDK.PlayerPlugin;
-import basicplayer.CompositePlayer;
-
 import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
+import com.plarpebu.basicplayer.CompositePlayer;
+import com.plarpebu.javazoom.jlgui.basicplayer.BasicController;
+import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerListener;
+import com.plarpebu.plugins.basic.InfoPlugin;
+import com.plarpebu.plugins.basic.PanGainPlugin;
+import com.plarpebu.plugins.basic.StopPlaySeekPlugin;
+import com.plarpebu.plugins.playlist.PlayListPlugin;
+import com.plarpebu.pluginsSDK.FramePlugin;
+import com.plarpebu.pluginsSDK.Iconifiable;
+import com.plarpebu.pluginsSDK.JFrameWithPreferences;
+import com.plarpebu.pluginsSDK.PanelPlugin;
+import com.plarpebu.pluginsSDK.PlayerPlugin;
+import com.plarpebu.utils.ExitListenerSecurityManager;
 
 import fr.unice.plugin.Plugin;
 import fr.unice.plugin.PluginManager;
@@ -103,7 +103,7 @@ ComponentListener, Iconifiable {
 
     private ArrayList listComponent = new ArrayList();
 
-    private javazoom.jlgui.basicplayer.BasicController controller = null;
+    private BasicController controller = null;
 
     private CompositePlayer bplayer = null;
 
@@ -142,7 +142,7 @@ ComponentListener, Iconifiable {
         // All jars in the plugins dir will be added automatically...
         pluginManager.addJarURLsInDirectories(new URL[] { new URL("file:plugins") });
         pluginManager.loadPlugins();
-        plugins = (PlayerPlugin[]) pluginManager.getPluginInstances(pluginsSDK.PlayerPlugin.class);
+        plugins = (PlayerPlugin[]) pluginManager.getPluginInstances(PlayerPlugin.class);
 
         pane = this.getContentPane();
         pane.setLayout(new GridLayout(0, 1));
@@ -474,7 +474,7 @@ ComponentListener, Iconifiable {
         menuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 pluginManager.loadPlugins();
-                plugins = (PlayerPlugin[]) pluginManager.getPluginInstances(pluginsSDK.PlayerPlugin.class);
+                plugins = (PlayerPlugin[]) pluginManager.getPluginInstances(PlayerPlugin.class);
                 buildPluginMenuEntries();
                 activationOrigine();
             }

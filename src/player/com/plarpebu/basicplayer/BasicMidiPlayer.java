@@ -19,7 +19,7 @@
  * Author : Michel Buffa (buffa@unice.fr)
  */
 
-package basicplayer;
+package com.plarpebu.basicplayer;
 
 import java.io.File;
 import java.io.InputStream;
@@ -28,16 +28,15 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import javakarplayer.plugins.AudioPlugins.JavaSoundMidiKar;
-import javakarplayer.plugins.AudioPlugins.MidiListener;
-import javazoom.jlgui.basicplayer.BasicPlayerEvent;
-import javazoom.jlgui.basicplayer.BasicPlayerException;
-import javazoom.jlgui.basicplayer.BasicPlayerListener;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import pluginsSDK.Iconifiable;
+import com.plarpebu.javakarplayer.plugins.AudioPlugins.JavaSoundMidiKar;
+import com.plarpebu.javakarplayer.plugins.AudioPlugins.MidiListener;
+import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerEvent;
+import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerException;
+import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerListener;
+import com.plarpebu.pluginsSDK.Iconifiable;
 
 public class BasicMidiPlayer extends BasicPlayer implements MidiListener {
 

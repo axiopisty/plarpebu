@@ -1,4 +1,4 @@
-package plugins.karaoke.cdg.lyricspanelCanvas;
+package com.plarpebu.plugins.karaoke.cdg.lyricspanelCanvas;
 
 import java.awt.Canvas;
 import java.awt.Color;

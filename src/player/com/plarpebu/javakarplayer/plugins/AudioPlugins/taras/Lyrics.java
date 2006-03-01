@@ -1,4 +1,4 @@
-package javakarplayer.plugins.AudioPlugins.taras;
+package com.plarpebu.javakarplayer.plugins.AudioPlugins.taras;
 
 /*
  * Low level processing of the MIDI sequence

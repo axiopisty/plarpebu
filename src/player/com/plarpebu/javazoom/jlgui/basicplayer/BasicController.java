@@ -21,13 +21,13 @@
  *----------------------------------------------------------------------
  */
 
-package javazoom.jlgui.basicplayer;
+package com.plarpebu.javazoom.jlgui.basicplayer;
 
 import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
 
-import pluginsSDK.Iconifiable;
+import com.plarpebu.pluginsSDK.Iconifiable;
 
 /**
  * This interface defines player controls available.

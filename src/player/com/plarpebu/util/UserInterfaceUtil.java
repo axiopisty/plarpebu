@@ -1,4 +1,4 @@
-package util;
+package com.plarpebu.util;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;

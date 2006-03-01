@@ -1,8 +1,8 @@
-package pluginsSDK;
+package com.plarpebu.pluginsSDK;
 
-import plugins.examples.AudioInfoPlugin;
-import plugins.examples.EqualizerPlugin;
-import plugins.playlist.PlayListPlugin;
+import com.plarpebu.plugins.examples.AudioInfoPlugin;
+import com.plarpebu.plugins.examples.EqualizerPlugin;
+import com.plarpebu.plugins.playlist.PlayListPlugin;
 
 /**
  * La classe FramePlugin est la classe mere de tous les plugins qui se rajoutent

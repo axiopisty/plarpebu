@@ -1,4 +1,4 @@
-package player.test.utils;
+package com.plarpebu.utils;
 
 import java.io.FileDescriptor;
 import java.io.FilePermission;
@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.PropertyPermission;
 import java.util.logging.LoggingPermission;
 
-import pluginsSDK.SystemExitListener;
+import com.plarpebu.pluginsSDK.SystemExitListener;
 
 /**
  * <p>

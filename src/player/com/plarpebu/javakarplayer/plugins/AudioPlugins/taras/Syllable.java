@@ -1,4 +1,4 @@
-package javakarplayer.plugins.AudioPlugins.taras;
+package com.plarpebu.javakarplayer.plugins.AudioPlugins.taras;
 
 import javax.sound.midi.MetaMessage;
 import javax.sound.midi.MidiEvent;

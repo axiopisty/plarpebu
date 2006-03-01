@@ -1,4 +1,4 @@
-package javakarplayer.plugins.AudioPlugins.taras;
+package com.plarpebu.javakarplayer.plugins.AudioPlugins.taras;
 
 /*
  * Karaoke player in Java
@@ -32,9 +32,9 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollBar;
 import javax.swing.UIManager;
 
-import player.test.utils.ExitListenerSecurityManager;
-import pluginsSDK.FramePluginWithFullScreenSupport;
-import pluginsSDK.Iconifiable;
+import com.plarpebu.pluginsSDK.FramePluginWithFullScreenSupport;
+import com.plarpebu.pluginsSDK.Iconifiable;
+import com.plarpebu.utils.ExitListenerSecurityManager;
 
 /**
  * MIDI Karaoke player

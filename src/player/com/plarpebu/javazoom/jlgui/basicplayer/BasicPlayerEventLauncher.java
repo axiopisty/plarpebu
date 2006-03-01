@@ -21,7 +21,7 @@
  *----------------------------------------------------------------------
  */
 
-package javazoom.jlgui.basicplayer;
+package com.plarpebu.javazoom.jlgui.basicplayer;
 
 import java.util.Collection;
 import java.util.Iterator;

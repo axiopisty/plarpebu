@@ -1,4 +1,4 @@
-package util;
+package com.plarpebu.util;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -8,8 +8,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import javax.swing.JOptionPane;
-
-import util.CacheUtil;
 
 /**
  * Zip utilities

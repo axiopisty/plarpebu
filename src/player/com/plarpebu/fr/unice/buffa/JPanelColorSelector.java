@@ -1,4 +1,4 @@
-package fr.unice.buffa;
+package com.plarpebu.fr.unice.buffa;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

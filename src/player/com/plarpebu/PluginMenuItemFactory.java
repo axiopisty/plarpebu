@@ -1,4 +1,4 @@
-package player.test;
+package com.plarpebu;
 
 import java.awt.event.ActionListener;
 import java.util.logging.Logger;

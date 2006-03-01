@@ -1,4 +1,4 @@
-package player.test;
+package com.plarpebu;
 
 // SplashScreen.java
 // A simple application to show a title screen in the center of the screen
@@ -23,7 +23,7 @@ import fr.unice.plugin.PluginManagerEvent;
 import fr.unice.plugin.PluginManagerListener;
 
 public class SplashScreen extends JWindow implements PluginManagerListener {
-    ImageIcon icon1 = new ImageIcon(player.test.SplashScreen.class.getResource("icones/splash.jpg"));
+    ImageIcon icon1 = new ImageIcon(SplashScreen.class.getResource("icones/splash.jpg"));
 
     JPanel jPanel1 = new JPanel();
 

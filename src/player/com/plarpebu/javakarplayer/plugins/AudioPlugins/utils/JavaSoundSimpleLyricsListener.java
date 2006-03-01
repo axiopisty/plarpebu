@@ -1,4 +1,4 @@
-package javakarplayer.plugins.AudioPlugins.utils;
+package com.plarpebu.javakarplayer.plugins.AudioPlugins.utils;
 
 /**
  * <p>
@@ -17,7 +17,6 @@ package javakarplayer.plugins.AudioPlugins.utils;
  * @author Michel Buffa (buffa@unice.fr)
  * @version $Id
  */
-
 public class JavaSoundSimpleLyricsListener extends JavaSoundLyricsListener {
 
     public void clearScreen() {

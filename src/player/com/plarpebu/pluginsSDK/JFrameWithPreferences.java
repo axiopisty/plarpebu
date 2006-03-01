@@ -1,4 +1,4 @@
-package pluginsSDK;
+package com.plarpebu.pluginsSDK;
 
 import java.awt.Color;
 import java.io.File;

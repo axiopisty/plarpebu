@@ -1,4 +1,4 @@
-package javakarplayer.plugins.AudioPlugins;
+package com.plarpebu.javakarplayer.plugins.AudioPlugins;
 
 /**
  * <p>

@@ -21,7 +21,7 @@
  *----------------------------------------------------------------------
  */
 
-package javazoom.jlgui.basicplayer;
+package com.plarpebu.javazoom.jlgui.basicplayer;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;

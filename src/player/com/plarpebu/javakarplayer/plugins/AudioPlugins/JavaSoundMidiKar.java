@@ -1,10 +1,8 @@
-package javakarplayer.plugins.AudioPlugins;
+package com.plarpebu.javakarplayer.plugins.AudioPlugins;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
-import javakarplayer.plugins.AudioPlugins.taras.Karaoke;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MetaEventListener;
@@ -18,7 +16,8 @@ import javax.sound.midi.Sequencer;
 import javax.sound.midi.Synthesizer;
 import javax.sound.midi.Transmitter;
 
-import pluginsSDK.Iconifiable;
+import com.plarpebu.javakarplayer.plugins.AudioPlugins.taras.Karaoke;
+import com.plarpebu.pluginsSDK.Iconifiable;
 
 /**
  * <p>

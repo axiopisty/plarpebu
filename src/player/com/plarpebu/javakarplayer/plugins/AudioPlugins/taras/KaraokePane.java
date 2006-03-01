@@ -1,4 +1,4 @@
-package javakarplayer.plugins.AudioPlugins.taras;
+package com.plarpebu.javakarplayer.plugins.AudioPlugins.taras;
 
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;

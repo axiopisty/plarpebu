@@ -41,16 +41,16 @@ import javax.swing.tree.TreeSelectionModel;
 
 public class FileTree extends JPanel implements ActionListener {
 
-    public static final ImageIcon ICON_COMPUTER = new ImageIcon(plugins.playlist.FileTree.class
+    public static final ImageIcon ICON_COMPUTER = new ImageIcon(FileTree.class
     .getResource("icones/computer.png"));
 
-    public static final ImageIcon ICON_DISK = new ImageIcon(plugins.playlist.FileTree.class
+    public static final ImageIcon ICON_DISK = new ImageIcon(FileTree.class
     .getResource("icones/disk.gif"));
 
-    public static final ImageIcon ICON_FOLDER = new ImageIcon(plugins.playlist.FileTree.class
+    public static final ImageIcon ICON_FOLDER = new ImageIcon(FileTree.class
     .getResource("icones/folder.gif"));
 
-    public static final ImageIcon ICON_EXPANDEDFOLDER = new ImageIcon(plugins.playlist.FileTree.class
+    public static final ImageIcon ICON_EXPANDEDFOLDER = new ImageIcon(FileTree.class
     .getResource("icones/expandfolder.gif"));
 
     protected JTree m_tree;

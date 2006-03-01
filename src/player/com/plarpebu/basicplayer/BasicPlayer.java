@@ -18,17 +18,17 @@
  *----------------------------------------------------------------------
  */
 
-package basicplayer;
+package com.plarpebu.basicplayer;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-import javazoom.jlgui.basicplayer.BasicController;
-import javazoom.jlgui.basicplayer.BasicPlayerEvent;
-import javazoom.jlgui.basicplayer.BasicPlayerListener;
-import pluginsSDK.Iconifiable;
+import com.plarpebu.javazoom.jlgui.basicplayer.BasicController;
+import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerEvent;
+import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerListener;
+import com.plarpebu.pluginsSDK.Iconifiable;
 
 /**
  * <p>

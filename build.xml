@@ -9,7 +9,8 @@ and the Ant output directory might be "classes.ant".-->
 	<property name="Generated.Source" value="${classes}/Temporary_Files" />
 	<property name="lib" value="lib" />
 	<property name="plugins" value="plugins" />
-	<property name="src" value="src" />
+	<property name="src.player" value="src/player" />
+	<property name="src.plugins" value="src/plugins" />
 
 	<path id="project.class.path">
 		<pathelement location="${classes}" />

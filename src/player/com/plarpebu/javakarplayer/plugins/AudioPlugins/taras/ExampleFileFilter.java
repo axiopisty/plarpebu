@@ -1,4 +1,4 @@
-package javakarplayer.plugins.AudioPlugins.taras;
+package com.plarpebu.javakarplayer.plugins.AudioPlugins.taras;
 
 /*
  * Copyright (c) 2003 Sun Microsystems, Inc. All  Rights Reserved.

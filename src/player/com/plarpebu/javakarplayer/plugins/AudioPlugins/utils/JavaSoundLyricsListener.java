@@ -1,4 +1,4 @@
-package javakarplayer.plugins.AudioPlugins.utils;
+package com.plarpebu.javakarplayer.plugins.AudioPlugins.utils;
 
 import javax.sound.midi.MetaEventListener;
 import javax.sound.midi.MetaMessage;

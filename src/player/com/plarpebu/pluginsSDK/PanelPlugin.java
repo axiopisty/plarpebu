@@ -1,10 +1,10 @@
-package pluginsSDK;
+package com.plarpebu.pluginsSDK;
 
 import javax.swing.JPanel;
 
-import plugins.basic.InfoPlugin;
-import plugins.basic.StopPlaySeekPlugin;
-import plugins.examples.ProgressBarPlugin;
+import com.plarpebu.plugins.basic.InfoPlugin;
+import com.plarpebu.plugins.basic.StopPlaySeekPlugin;
+import com.plarpebu.plugins.examples.ProgressBarPlugin;
 
 /**
  * La classe PanelPlugin est la classe mere de tous les plugins qui se rajoutent

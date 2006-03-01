@@ -1,4 +1,4 @@
-package javakarplayer.plugins.AudioPlugins.taras;
+package com.plarpebu.javakarplayer.plugins.AudioPlugins.taras;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -39,8 +39,7 @@ import javax.swing.event.ChangeEvent;
 
 import com.borland.jbcl.layout.XYConstraints;
 import com.borland.jbcl.layout.XYLayout;
-
-import fr.unice.buffa.JPanelColorSelector;
+import com.plarpebu.fr.unice.buffa.JPanelColorSelector;
 
 /**
  * <p>

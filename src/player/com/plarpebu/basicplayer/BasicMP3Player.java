@@ -18,7 +18,7 @@
  *----------------------------------------------------------------------
  */
 
-package basicplayer;
+package com.plarpebu.basicplayer;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,17 +41,18 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-import javazoom.jlgui.basicplayer.BasicController;
-import javazoom.jlgui.basicplayer.BasicPlayerEvent;
-import javazoom.jlgui.basicplayer.BasicPlayerEventLauncher;
-import javazoom.jlgui.basicplayer.BasicPlayerException;
-import javazoom.jlgui.basicplayer.BasicPlayerListener;
 import javazoom.spi.PropertiesContainer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.tritonus.share.sampled.TAudioFormat;
 import org.tritonus.share.sampled.file.TAudioFileFormat;
+
+import com.plarpebu.javazoom.jlgui.basicplayer.BasicController;
+import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerEvent;
+import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerEventLauncher;
+import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerException;
+import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerListener;
 
 /**
  * BasicPlayer is a threaded audio javazoom.jlgui.player.test.

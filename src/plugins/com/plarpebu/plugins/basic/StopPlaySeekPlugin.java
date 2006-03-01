@@ -19,13 +19,13 @@ import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 
-import javazoom.jlgui.basicplayer.BasicController;
-import javazoom.jlgui.basicplayer.BasicPlayerEvent;
-import javazoom.jlgui.basicplayer.BasicPlayerException;
-import javazoom.jlgui.basicplayer.BasicPlayerListener;
-import player.test.Player;
-import plugins.playlist.PlayListPlugin;
-import pluginsSDK.PanelPlugin;
+import com.plarpebu.Player;
+import com.plarpebu.javazoom.jlgui.basicplayer.BasicController;
+import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerEvent;
+import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerException;
+import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerListener;
+import com.plarpebu.plugins.playlist.PlayListPlugin;
+import com.plarpebu.pluginsSDK.PanelPlugin;
 
 /**
  *
