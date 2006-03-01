@@ -1,9 +1,5 @@
 package com.plarpebu.pluginsSDK;
 
-import com.plarpebu.plugins.examples.AudioInfoPlugin;
-import com.plarpebu.plugins.examples.EqualizerPlugin;
-import com.plarpebu.plugins.playlist.PlayListPlugin;
-
 /**
  * La classe FramePlugin est la classe mere de tous les plugins qui se rajoutent
  * en creeant une nouvelle fenetre. Elle etend JFrame et doit implementer bien
@@ -11,10 +7,6 @@ import com.plarpebu.plugins.playlist.PlayListPlugin;
  * servira pour le polymorphisme.
  * 
  * @author ARNAUD & PEPINO
- * @version finale
- * @see EqualizerPlugin
- * @see AudioInfoPlugin
- * @see PlayListPlugin
  */
 abstract public class FramePlugin extends JFrameWithPreferences implements PlayerPlugin {
 

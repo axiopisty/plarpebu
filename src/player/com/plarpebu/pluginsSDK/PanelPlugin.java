@@ -2,10 +2,6 @@ package com.plarpebu.pluginsSDK;
 
 import javax.swing.JPanel;
 
-import com.plarpebu.plugins.basic.InfoPlugin;
-import com.plarpebu.plugins.basic.StopPlaySeekPlugin;
-import com.plarpebu.plugins.examples.ProgressBarPlugin;
-
 /**
  * La classe PanelPlugin est la classe mere de tous les plugins qui se rajoutent
  * dans l'interface principale de notre lecteur mp3 sans pour autant creer une
@@ -14,11 +10,6 @@ import com.plarpebu.plugins.examples.ProgressBarPlugin;
  * polymorphisme.
  * 
  * @author ARNAUD & PEPINO
- * @version finale
- * @see PainGainPlugin
- * @see ProgressBarPlugin
- * @see InfoPlugin
- * @see StopPlaySeekPlugin
  */
 abstract public class PanelPlugin extends JPanel implements PlayerPlugin {
 
