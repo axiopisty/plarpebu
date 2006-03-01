@@ -55,7 +55,7 @@ import com.plarpebu.pluginsSDK.Iconifiable;
 import com.plarpebu.pluginsSDK.JFrameWithPreferences;
 import com.plarpebu.pluginsSDK.PanelPlugin;
 import com.plarpebu.pluginsSDK.PlayerPlugin;
-import com.plarpebu.utils.ExitListenerSecurityManager;
+import com.plarpebu.util.ExitListenerSecurityManager;
 
 import fr.unice.plugin.Plugin;
 import fr.unice.plugin.PluginManager;

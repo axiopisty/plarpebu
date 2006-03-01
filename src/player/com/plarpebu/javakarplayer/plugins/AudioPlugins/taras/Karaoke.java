@@ -34,7 +34,7 @@ import javax.swing.UIManager;
 
 import com.plarpebu.pluginsSDK.FramePluginWithFullScreenSupport;
 import com.plarpebu.pluginsSDK.Iconifiable;
-import com.plarpebu.utils.ExitListenerSecurityManager;
+import com.plarpebu.util.ExitListenerSecurityManager;
 
 /**
  * MIDI Karaoke player

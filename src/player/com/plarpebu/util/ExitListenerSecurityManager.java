@@ -1,4 +1,4 @@
-package com.plarpebu.utils;
+package com.plarpebu.util;
 
 import java.io.FileDescriptor;
 import java.io.FilePermission;
