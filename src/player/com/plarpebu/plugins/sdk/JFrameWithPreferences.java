@@ -44,7 +44,7 @@ public abstract class JFrameWithPreferences extends JFrame implements SystemExit
     String defaultPreferencesFilename) {
         this.preferencesDir = preferencesDir;
         this.preferenceFileName = preferencesDir + File.separator + preferenceFileName;
-        this.defaultPreferencesFilename = preferencesDir + File.separator /* "/" */+ defaultPreferencesFilename;
+        this.defaultPreferencesFilename = preferencesDir + File.separator + defaultPreferencesFilename;
     }
 
     public void readPreferences() {

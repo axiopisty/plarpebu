@@ -778,10 +778,12 @@ ComponentListener, Iconifiable {
         Properties defaultProps = new Properties();
         Properties preferences = null;
         InputStream in = null;
-
+        File file = null;
+        
         // create and load default properties
         try {
-            in = new FileInputStream("preferences" + File.separator + "defaultPlaperbu.properties");
+            file = new File("preferences" + File.separator + "defaultPlaperbu.properties");
+            in = new FileInputStream(file);
             /*
              * System.out.println("On cherche la ressource " +
              * "/preferences/defaultPlaperbu.properties"); in =
@@ -793,17 +795,18 @@ ComponentListener, Iconifiable {
             in.close();
         }
         catch (Exception e) {
-            System.out.println("No default preferences file found...");
+            System.out.println("No default preferences file found: " + file.getAbsolutePath());
         }
-
+ 
         try {
             // now load properties from last invocation
-            in = new FileInputStream("preferences" + File.separator + "Plaperbu.properties");
+            file = new File("preferences" + File.separator + "Plaperbu.properties");
+            in = new FileInputStream(file);
             preferences.load(in);
             in.close();
         }
         catch (Exception e) {
-            System.out.println("No preferences file found : ");
+            System.out.println("No preferences file found : " + file.getAbsolutePath());
         }
 
         return preferences.getProperty("lastSkin");
