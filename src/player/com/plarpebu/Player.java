@@ -46,7 +46,7 @@ import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
 import com.plarpebu.basicplayer.CompositePlayer;
 import com.plarpebu.javazoom.jlgui.basicplayer.BasicController;
 import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerListener;
-import com.plarpebu.plugins.basic.InfoPlugin;
+import com.plarpebu.plugins.basic.info.InfoPlugin;
 import com.plarpebu.plugins.basic.PanGainPlugin;
 import com.plarpebu.plugins.basic.StopPlaySeekPlugin;
 import com.plarpebu.plugins.playlist.PlayListPlugin;
