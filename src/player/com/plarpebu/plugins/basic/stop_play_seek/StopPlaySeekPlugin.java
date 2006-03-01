@@ -1,4 +1,4 @@
-package com.plarpebu.plugins.basic;
+package com.plarpebu.plugins.basic.stop_play_seek;
 
 import java.awt.Dimension;
 import java.awt.HeadlessException;
