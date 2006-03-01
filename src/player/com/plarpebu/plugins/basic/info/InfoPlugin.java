@@ -1,4 +1,4 @@
-package com.plarpebu.plugins.basic;
+package com.plarpebu.plugins.basic.info;
 
 import java.awt.Color;
 import java.awt.Dimension;

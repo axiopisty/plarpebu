@@ -1,4 +1,4 @@
-package com.plarpebu.segments_clock;
+package com.plarpebu.plugins.basic.info.segments_clock;
 
 /**
  * Seven Segment Digit
