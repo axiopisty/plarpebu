@@ -1,4 +1,4 @@
-package com.plarpebu.fr.unice.buffa;
+package com.plarpebu.javakarplayer.plugins.AudioPlugins.taras;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
