@@ -27,7 +27,7 @@ import com.plarpebu.pluginsSDK.FramePlugin;
  * @author not attributable
  * @version 1.0
  */
-public class Visu extends FramePlugin implements BasicPlayerListener, Runnable, ImageObserver {
+public class Visualizer extends FramePlugin implements BasicPlayerListener, Runnable, ImageObserver {
 
     private BorderLayout borderLayout1 = new BorderLayout();
 
@@ -59,7 +59,7 @@ public class Visu extends FramePlugin implements BasicPlayerListener, Runnable, 
     //private static DisplayMode[] BEST_DISPLAY_MODES = new DisplayMode[] { new DisplayMode(640, 480, 32, 0),
     //new DisplayMode(640, 480, 16, 0), new DisplayMode(640, 480, 8, 0) };
 
-    public Visu() {
+    public Visualizer() {
         try {
             jbInit();
         }
