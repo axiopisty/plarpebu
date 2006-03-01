@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.PropertyPermission;
 import java.util.logging.LoggingPermission;
 
-import com.plarpebu.pluginsSDK.SystemExitListener;
+import com.plarpebu.plugins.sdk.SystemExitListener;
 
 /**
  * <p>

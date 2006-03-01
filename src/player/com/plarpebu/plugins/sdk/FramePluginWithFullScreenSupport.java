@@ -1,4 +1,4 @@
-package com.plarpebu.pluginsSDK;
+package com.plarpebu.plugins.sdk;
 
 import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;

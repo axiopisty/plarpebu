@@ -28,7 +28,7 @@ import java.util.Iterator;
 import com.plarpebu.javazoom.jlgui.basicplayer.BasicController;
 import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerEvent;
 import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerListener;
-import com.plarpebu.pluginsSDK.Iconifiable;
+import com.plarpebu.plugins.sdk.Iconifiable;
 
 /**
  * <p>

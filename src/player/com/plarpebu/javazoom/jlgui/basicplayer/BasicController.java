@@ -27,7 +27,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
 
-import com.plarpebu.pluginsSDK.Iconifiable;
+import com.plarpebu.plugins.sdk.Iconifiable;
 
 /**
  * This interface defines player controls available.

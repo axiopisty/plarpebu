@@ -50,11 +50,11 @@ import com.plarpebu.plugins.basic.info.InfoPlugin;
 import com.plarpebu.plugins.basic.pan_gain.PanGainPlugin;
 import com.plarpebu.plugins.basic.playlist.PlayListPlugin;
 import com.plarpebu.plugins.basic.stop_play_seek.StopPlaySeekPlugin;
-import com.plarpebu.pluginsSDK.FramePlugin;
-import com.plarpebu.pluginsSDK.Iconifiable;
-import com.plarpebu.pluginsSDK.JFrameWithPreferences;
-import com.plarpebu.pluginsSDK.PanelPlugin;
-import com.plarpebu.pluginsSDK.PlayerPlugin;
+import com.plarpebu.plugins.sdk.FramePlugin;
+import com.plarpebu.plugins.sdk.Iconifiable;
+import com.plarpebu.plugins.sdk.JFrameWithPreferences;
+import com.plarpebu.plugins.sdk.PanelPlugin;
+import com.plarpebu.plugins.sdk.PlayerPlugin;
 import com.plarpebu.util.ExitListenerSecurityManager;
 
 import fr.unice.plugin.Plugin;

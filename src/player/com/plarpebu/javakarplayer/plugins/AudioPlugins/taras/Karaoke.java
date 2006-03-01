@@ -32,8 +32,8 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollBar;
 import javax.swing.UIManager;
 
-import com.plarpebu.pluginsSDK.FramePluginWithFullScreenSupport;
-import com.plarpebu.pluginsSDK.Iconifiable;
+import com.plarpebu.plugins.sdk.FramePluginWithFullScreenSupport;
+import com.plarpebu.plugins.sdk.Iconifiable;
 import com.plarpebu.util.ExitListenerSecurityManager;
 
 /**

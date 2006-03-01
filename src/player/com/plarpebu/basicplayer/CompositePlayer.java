@@ -27,7 +27,7 @@ import java.net.URL;
 import com.plarpebu.javazoom.jlgui.basicplayer.BasicController;
 import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerException;
 import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerListener;
-import com.plarpebu.pluginsSDK.Iconifiable;
+import com.plarpebu.plugins.sdk.Iconifiable;
 import com.plarpebu.util.ZipUtil;
 
 /**

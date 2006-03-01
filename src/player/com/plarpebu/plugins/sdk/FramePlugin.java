@@ -1,4 +1,4 @@
-package com.plarpebu.pluginsSDK;
+package com.plarpebu.plugins.sdk;
 
 /**
  * La classe FramePlugin est la classe mere de tous les plugins qui se rajoutent

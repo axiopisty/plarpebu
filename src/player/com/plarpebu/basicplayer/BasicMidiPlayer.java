@@ -36,7 +36,7 @@ import com.plarpebu.javakarplayer.plugins.AudioPlugins.MidiListener;
 import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerEvent;
 import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerException;
 import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerListener;
-import com.plarpebu.pluginsSDK.Iconifiable;
+import com.plarpebu.plugins.sdk.Iconifiable;
 
 public class BasicMidiPlayer extends BasicPlayer implements MidiListener {
 

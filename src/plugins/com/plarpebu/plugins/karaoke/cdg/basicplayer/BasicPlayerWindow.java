@@ -40,7 +40,7 @@ import com.plarpebu.plugins.karaoke.cdg.instructions.CdgTileBlock;
 import com.plarpebu.plugins.karaoke.cdg.io.CdgDataChunk;
 import com.plarpebu.plugins.karaoke.cdg.io.CdgFileObject;
 import com.plarpebu.plugins.karaoke.cdg.lyricspanel.CdgGraphicBufferedImage;
-import com.plarpebu.pluginsSDK.FramePlugin;
+import com.plarpebu.plugins.sdk.FramePlugin;
 
 /**
  * Basic CDG player window

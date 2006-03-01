@@ -1,4 +1,4 @@
-package com.plarpebu.pluginsSDK;
+package com.plarpebu.plugins.sdk;
 
 /**
  * <p>

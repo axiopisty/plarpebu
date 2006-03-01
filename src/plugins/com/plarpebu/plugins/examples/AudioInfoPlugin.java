@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 import com.plarpebu.javazoom.jlgui.basicplayer.BasicController;
 import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerEvent;
 import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerListener;
-import com.plarpebu.pluginsSDK.FramePlugin;
+import com.plarpebu.plugins.sdk.FramePlugin;
 
 /**
  * Audio Info

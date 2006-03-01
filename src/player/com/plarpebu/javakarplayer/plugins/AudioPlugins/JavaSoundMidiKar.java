@@ -17,7 +17,7 @@ import javax.sound.midi.Synthesizer;
 import javax.sound.midi.Transmitter;
 
 import com.plarpebu.javakarplayer.plugins.AudioPlugins.taras.Karaoke;
-import com.plarpebu.pluginsSDK.Iconifiable;
+import com.plarpebu.plugins.sdk.Iconifiable;
 
 /**
  * <p>
