@@ -14,7 +14,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -44,24 +43,11 @@ import plugins.karaoke.cdg.lyricspanel.CdgGraphicBufferedImage;
 import pluginsSDK.FramePlugin;
 
 /**
- * <p>
- * Title:
- * </p>
- * <p>
- * Description:
- * </p>
- * <p>
- * Copyright: Copyright (c) 2003
- * </p>
- * <p>
- * Company:
- * </p>
+ * Basic CDG player window
  * 
  * @author Michel Buffa (buffa@unice.fr)
- * @version $Id
  */
-
-public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListener {
+public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListener, ActionListener {
 
     private long tempsMp3;
 
@@ -103,20 +89,30 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
 
     private DisplayMode oldDisplayMode = myDevice.getDisplayMode();
 
-    // private JLabel jLabel1 = new JLabel("Status area...");
-    JPopupMenu jPopupMenu1 = new JPopupMenu();
+    private JPopupMenu jPopupMenu1 = new JPopupMenu();
 
-    JMenuItem jMenuItemHelp = new JMenuItem();
+    private JMenuItem jMenuItemHelp = new JMenuItem();
 
-    JMenuItem jMenuItemFullScreensOptions = new JMenuItem();
+    private JMenuItem jMenuItemFullScreensOptions = new JMenuItem();
 
-    JMenuItem jMenuItemLyricsSyncOptions = new JMenuItem();
+    private JMenuItem jMenuItemLyricsSyncOptions = new JMenuItem();
 
-    ChooseFullScreenModeDIalog chooseFullScreenDialog;
+    private ChooseFullScreenModeDIalog chooseFullScreenDialog;
 
-    CdgOptionsDialog cdgOptionsDialog;
+    private CdgOptionsDialog cdgOptionsDialog;
 
-    JMenuItem jMenuItemFullScreenWindow = new JMenuItem();
+    private JMenuItem jMenuItemFullScreenWindow = new JMenuItem();
+
+    // Size multiples
+    private JMenuItem jMenuItemOneX = new JMenuItem();
+
+    private JMenuItem jMenuItemTwoX = new JMenuItem();
+
+    private JMenuItem jMenuItemThreeX = new JMenuItem();
+
+    private int defaultWidth = 369;
+
+    private int defaultHeight = 299;
 
     // Construct the frame
     private int oldPosX;
@@ -129,19 +125,25 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
 
     private boolean hardwareAcceleratedFullScreenModeSupported = false;
 
-    JCheckBoxMenuItem jCheckBoxMenuItem2 = new JCheckBoxMenuItem();
+    private JCheckBoxMenuItem jCheckBoxMenuItemUseHardwareFullScreenMode = new JCheckBoxMenuItem();
 
+    /**
+     * Constructor
+     */
     public BasicPlayerWindow() {
+        // Read preferences first
+        readPreferences();
+
         setTitle("CDG Lyrics Display " + getVersion());
+
         // the mp3 player
         setUndecorated(true);
-        // setIgnoreRepaint(true);
-        // setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+
         Container cp = getContentPane();
         cp.add(panelLyrics, BorderLayout.CENTER);
-        // cp.add(jLabel1, BorderLayout.SOUTH);
         pack();
-        // addMouseMotionListener(new MouseDragger());
+
+        addMouseListener(new PopupListener());
         addMouseListener(new MyMouseListener());
         addKeyListener(new MyKeyListener());
 
@@ -151,13 +153,48 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
         catch (Exception e) {
             e.printStackTrace();
         }
-        MouseListener popupListener = new PopupListener();
-        addMouseListener(popupListener);
+
         // Dialog for chosing the full screen mode, modal
         chooseFullScreenDialog = new ChooseFullScreenModeDIalog(this, true);
         cdgOptionsDialog = new CdgOptionsDialog(this, "Cdg options", true);
 
         loadPreferences();
+    }
+
+    private void jbInit() throws Exception {
+
+        jMenuItemLyricsSyncOptions.setText("Lyrics Sync Options");
+        jMenuItemLyricsSyncOptions.addActionListener(this);
+
+        jMenuItemOneX.setText("1x");
+        jMenuItemOneX.addActionListener(this);
+        jMenuItemTwoX.setText("2x");
+        jMenuItemTwoX.addActionListener(this);
+        jMenuItemThreeX.setText("3x");
+        jMenuItemThreeX.addActionListener(this);
+
+        jCheckBoxMenuItemUseHardwareFullScreenMode.setText("Use HW Full Screen Mode (win+linux only)");
+        jCheckBoxMenuItemUseHardwareFullScreenMode.addActionListener(this);
+
+        jMenuItemFullScreensOptions.setText("Choose Fullscreen Resolution");
+        jMenuItemFullScreensOptions.addActionListener(this);
+
+        jMenuItemFullScreenWindow.setText("Fullscreen/Window");
+        jMenuItemFullScreenWindow.addActionListener(this);
+
+        jMenuItemHelp.setText("Help");
+
+        jPopupMenu1.add(jMenuItemLyricsSyncOptions);
+        jPopupMenu1.addSeparator();
+        jPopupMenu1.add(jMenuItemOneX);
+        jPopupMenu1.add(jMenuItemTwoX);
+        jPopupMenu1.add(jMenuItemThreeX);
+        jPopupMenu1.addSeparator();
+        jPopupMenu1.add(jCheckBoxMenuItemUseHardwareFullScreenMode);
+        jPopupMenu1.add(jMenuItemFullScreensOptions);
+        jPopupMenu1.add(jMenuItemFullScreenWindow);
+        jPopupMenu1.addSeparator();
+        jPopupMenu1.add(jMenuItemHelp);
     }
 
     /**
@@ -170,9 +207,13 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
         super.savePreferences();
     }
 
+    /**
+     * Load prefs
+     * 
+     * @throws NumberFormatException
+     * @throws HeadlessException
+     */
     private void loadPreferences() throws NumberFormatException, HeadlessException {
-        // inherited behavior
-        readPreferences();
 
         try {
             // Read all preferences
@@ -215,36 +256,11 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
                 + "," + fsDepth + "," + fsFreq + ")");
                 userDisplayMode = new DisplayMode(fsWidth, fsHeight, fsDepth, fsFreq);
             }
-
         }
         catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-    // The window will appear centered
-    /*
-     * public void setVisible(boolean flag) { Dimension screenSize =
-     * Toolkit.getDefaultToolkit().getScreenSize(); Dimension frameSize =
-     * getSize(); if (frameSize.height > screenSize.height) { frameSize.height =
-     * screenSize.height; } if (frameSize.width > screenSize.width) {
-     * frameSize.width = screenSize.width; } setLocation( (screenSize.width -
-     * frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
-     * super.setVisible(flag); }
-     */
-    /*
-     * public void play(File file, int nbCdgInstructions) { try { if (player ==
-     * null) { player = new BasicPlayer(this); } System.out.println("Opening mp3
-     * file : " + file.getAbsolutePath()); player.setDataSource(new
-     * File(file.getAbsolutePath())); //player.setDataSource(new
-     * File(file.getAbsolutePath())); loadCdgFile(file); cdgFileLoaded = true;
-     * player.startPlayback(); startTimedPlay(); } catch (Exception ex) {
-     * cdgFileLoaded = false; ex.printStackTrace(); } }
-     */
-    /*
-     * public void playCdgOnly(int nbCdgInstructions) { if (cdgFileLoaded)
-     * startTimedPlay(); }
-     */
 
     public String getName() {
         return "KaraokeCdg";
@@ -254,8 +270,10 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
         return "V1.0 beta 21";
     }
 
+    /**
+     * Stop CDG only
+     */
     public void stopCdgOnly() {
-
         if (timer != null) {
             setVisible(false);
             timer.stop();
@@ -267,9 +285,6 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
         this.nbCdgInstructions = nbCdgInstructions;
     }
 
-    /*
-     * public void stopMp3PlusCdg() { stopCdgOnly(); player.stopPlayback(); }
-     */
     /**
      * Loads a cdg file whose basename is taken from the mp3File parameter
      * 
@@ -373,7 +388,6 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
                             }
                         }
                     }
-
                 }
             }
         });
@@ -434,7 +448,9 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
         }
     }
 
-    // For full screen support
+    /**
+     * Choose best disply mode. For full screen support.
+     */
     public static void chooseBestDisplayMode(GraphicsDevice device) {
         DisplayMode best = getBestDisplayMode(device);
         if (best != null) {
@@ -442,6 +458,12 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
         }
     }
 
+    /**
+     * Get best disply mode
+     * 
+     * @param device
+     * @return DisplayMode
+     */
     private static DisplayMode getBestDisplayMode(GraphicsDevice device) {
         for (int x = 0; x < BEST_DISPLAY_MODES.length; x++) {
             DisplayMode[] modes = device.getDisplayModes();
@@ -456,6 +478,9 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
         return null;
     }
 
+    /**
+     * Switch back and forth between full screen and window mode
+     */
     private void switchFullScreenWindowedMode() {
         if (windowedMode) {
             System.out.println("Go TO FULL SCREEN");
@@ -481,6 +506,9 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
         pack();
     }
 
+    /**
+     * Switch to full screen mode
+     */
     private void goToFullScreen() {
         if (!hardwareAcceleratedFullScreenModeSupported) return;
 
@@ -513,6 +541,9 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
         }
     }
 
+    /**
+     * Switch to windowed mode
+     */
     private void goToWindowedMode() {
         if (!hardwareAcceleratedFullScreenModeSupported) return;
 
@@ -545,16 +576,14 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
         setSize(oldWidth, oldHeight);
     }
 
-    public class MyMouseListener extends MouseAdapter {
+    private class MyMouseListener extends MouseAdapter {
         public void mouseClicked(MouseEvent e) {
-            if (e.getClickCount() == 2) {
-                // Switching to/from fullScreen/windowed mode
-                switchFullScreenWindowedMode();
-            }
+            // Double click switches between "full screen" and "windowed" modes.
+            if (e.getClickCount() == 2) switchFullScreenWindowedMode();
         }
     }
 
-    public class MyKeyListener extends KeyAdapter {
+    private class MyKeyListener extends KeyAdapter {
         /**
          * Key pressed
          */
@@ -563,6 +592,22 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
 
             // If escape key is pressed, go to windowed mode!
             if (e.getKeyCode() == KeyEvent.VK_ESCAPE) goToWindowedMode();
+        }
+    }
+
+    private class PopupListener extends MouseAdapter {
+        public void mousePressed(MouseEvent e) {
+            maybeShowPopup(e);
+        }
+
+        public void mouseReleased(MouseEvent e) {
+            maybeShowPopup(e);
+        }
+
+        private void maybeShowPopup(MouseEvent e) {
+            if (e.isPopupTrigger()) {
+                jPopupMenu1.show(e.getComponent(), e.getX(), e.getY());
+            }
         }
     }
 
@@ -726,82 +771,12 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
     // End of Méthods required by the pluglin implementation
     // ----------------------------------------------
 
-    private void jbInit() throws Exception {
-        jMenuItemLyricsSyncOptions.setText("Lyrics sync options");
-        jMenuItemHelp.setText("Help");
-        jMenuItemFullScreensOptions.setText("Choose fullscreen resolution");
-        jMenuItemFullScreensOptions.addActionListener(new BasicPlayerWindow_jMenuItemFullScreensOptions_actionAdapter(
-        this));
-        jMenuItemLyricsSyncOptions.setText("Lyrics not in sinc ?");
-        jMenuItemLyricsSyncOptions.addActionListener(new BasicPlayerWindow_jMenuItemLyricsSyncOptions_actionAdapter(
-        this));
-        jMenuItemFullScreenWindow.setText("Fullscreen/Window");
-        jMenuItemFullScreenWindow
-        .addActionListener(new BasicPlayerWindow_jMenuItemFullScreenWindow_actionAdapter(this));
-        jCheckBoxMenuItem2.setText("Use hw full screen mode (win+linux only)");
-        jCheckBoxMenuItem2.addActionListener(new BasicPlayerWindow_jCheckBoxMenuItem2_actionAdapter(this));
-        jPopupMenu1.add(jMenuItemLyricsSyncOptions);
-        jPopupMenu1.addSeparator();
-        jPopupMenu1.add(jCheckBoxMenuItem2);
-        jPopupMenu1.add(jMenuItemFullScreensOptions);
-        jPopupMenu1.add(jMenuItemFullScreenWindow);
-        jPopupMenu1.addSeparator();
-        jPopupMenu1.add(jMenuItemHelp);
-    }
-
-    class PopupListener extends MouseAdapter {
-        public void mousePressed(MouseEvent e) {
-            maybeShowPopup(e);
-        }
-
-        public void mouseReleased(MouseEvent e) {
-            maybeShowPopup(e);
-        }
-
-        private void maybeShowPopup(MouseEvent e) {
-            if (e.isPopupTrigger()) {
-                jPopupMenu1.show(e.getComponent(), e.getX(), e.getY());
-            }
-        }
-    }
-
-    void jMenuItemFullScreensOptions_actionPerformed(ActionEvent e) {
-        goToWindowedMode();
-        // chooseFullScreenDialog.setVisible(true);
-        chooseFullScreenDialog.setVisible(true);
-        userDisplayMode = chooseFullScreenDialog.getSelectedDisplayMode();
-
-        // Save in the preferences
-        preferences.setProperty("fsWidth", "" + userDisplayMode.getWidth());
-        preferences.setProperty("fsHeight", "" + userDisplayMode.getHeight());
-        preferences.setProperty("fsDepth", "" + userDisplayMode.getBitDepth());
-        preferences.setProperty("fsFreq", "" + userDisplayMode.getRefreshRate());
-
-        panelLyrics.redrawFullImage();
-    }
-
     private void pause() {
         pausedPlay = true;
     }
 
     private void resume() {
         pausedPlay = false;
-    }
-
-    void jMenuItemLyricsSyncOptions_actionPerformed(ActionEvent e) {
-        // pops up the cdg options....
-        goToWindowedMode();
-        cdgOptionsDialog.setVisible(true);
-        int nbCdgInstructions = cdgOptionsDialog.getCdgBufferSize();
-        preferences.setProperty("nbCdgInstructions", "" + nbCdgInstructions);
-        setNbCdgInstructions(nbCdgInstructions);
-
-        panelLyrics.setForceDrawFullImage(cdgOptionsDialog.getRedrawFullImage());
-        System.out.println("setting nbCdgInstruction to : " + nbCdgInstructions
-        + ". Will take effect on next song played.");
-
-        panelLyrics.redrawFullImage();
-        preferences.setProperty("redrawAllFrame", "" + "" + cdgOptionsDialog.getRedrawFullImage());
     }
 
     /**
@@ -813,72 +788,80 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
         return this;
     }
 
-    void jMenuItemFullScreenWindow_actionPerformed(ActionEvent e) {
-        switchFullScreenWindowedMode();
-    }
-
-    void jCheckBoxMenuItem2_actionPerformed(ActionEvent e) {
-        // Support for hardware full screen mode
-        hardwareAcceleratedFullScreenModeSupported = !hardwareAcceleratedFullScreenModeSupported;
-        setFullScreenModeOption();
-
-    }
-
     private void setFullScreenModeOption() {
         preferences.setProperty("hardwareAcceleratedFullScreenModeSupported", ""
         + hardwareAcceleratedFullScreenModeSupported);
-        jCheckBoxMenuItem2.setSelected(hardwareAcceleratedFullScreenModeSupported);
+        jCheckBoxMenuItemUseHardwareFullScreenMode.setSelected(hardwareAcceleratedFullScreenModeSupported);
         jMenuItemFullScreensOptions.setEnabled(hardwareAcceleratedFullScreenModeSupported);
         jMenuItemFullScreenWindow.setEnabled(hardwareAcceleratedFullScreenModeSupported);
-
-    }
-}
-
-class BasicPlayerWindow_jMenuItemFullScreensOptions_actionAdapter implements java.awt.event.ActionListener {
-    BasicPlayerWindow adaptee;
-
-    BasicPlayerWindow_jMenuItemFullScreensOptions_actionAdapter(BasicPlayerWindow adaptee) {
-        this.adaptee = adaptee;
     }
 
-    public void actionPerformed(ActionEvent e) {
-        adaptee.jMenuItemFullScreensOptions_actionPerformed(e);
-    }
-}
+    /**
+     * Popup actions
+     */
+    public void actionPerformed(ActionEvent event) {
+        // Lyrics sync options
+        if (event.getSource().equals(jMenuItemLyricsSyncOptions)) {
+            // pops up the cdg options....
+            goToWindowedMode();
+            cdgOptionsDialog.setVisible(true);
+            int nbCdgInstructions = cdgOptionsDialog.getCdgBufferSize();
+            preferences.setProperty("nbCdgInstructions", "" + nbCdgInstructions);
+            setNbCdgInstructions(nbCdgInstructions);
 
-class BasicPlayerWindow_jMenuItemLyricsSyncOptions_actionAdapter implements java.awt.event.ActionListener {
-    BasicPlayerWindow adaptee;
+            panelLyrics.setForceDrawFullImage(cdgOptionsDialog.getRedrawFullImage());
+            System.out.println("setting nbCdgInstruction to : " + nbCdgInstructions
+            + ". Will take effect on next song played.");
 
-    BasicPlayerWindow_jMenuItemLyricsSyncOptions_actionAdapter(BasicPlayerWindow adaptee) {
-        this.adaptee = adaptee;
-    }
+            panelLyrics.redrawFullImage();
+            preferences.setProperty("redrawAllFrame", "" + "" + cdgOptionsDialog.getRedrawFullImage());
+        }
 
-    public void actionPerformed(ActionEvent e) {
-        adaptee.jMenuItemLyricsSyncOptions_actionPerformed(e);
-    }
+        // Set size 1x
+        else if (event.getSource().equals(jMenuItemOneX)) {
+            goToWindowedMode();
+            setSize(defaultWidth, defaultHeight);
+            validate();
+        }
 
-}
+        // Set size 2x
+        else if (event.getSource().equals(jMenuItemTwoX)) {
+            goToWindowedMode();
+            setSize(defaultWidth * 2, defaultHeight * 2);
+            validate();
+        }
 
-class BasicPlayerWindow_jMenuItemFullScreenWindow_actionAdapter implements java.awt.event.ActionListener {
-    BasicPlayerWindow adaptee;
+        // Set size 3x
+        else if (event.getSource().equals(jMenuItemThreeX)) {
+            goToWindowedMode();
+            setSize(defaultWidth * 3, defaultHeight * 3);
+            validate();
+        }
 
-    BasicPlayerWindow_jMenuItemFullScreenWindow_actionAdapter(BasicPlayerWindow adaptee) {
-        this.adaptee = adaptee;
-    }
+        else if (event.getSource().equals(jCheckBoxMenuItemUseHardwareFullScreenMode)) {
+            // Support for hardware full screen mode
+            hardwareAcceleratedFullScreenModeSupported = !hardwareAcceleratedFullScreenModeSupported;
+            setFullScreenModeOption();
+        }
 
-    public void actionPerformed(ActionEvent e) {
-        adaptee.jMenuItemFullScreenWindow_actionPerformed(e);
-    }
-}
+        // Full screen options
+        else if (event.getSource().equals(jMenuItemFullScreensOptions)) {
+            goToWindowedMode();
+            chooseFullScreenDialog.setVisible(true);
+            userDisplayMode = chooseFullScreenDialog.getSelectedDisplayMode();
 
-class BasicPlayerWindow_jCheckBoxMenuItem2_actionAdapter implements java.awt.event.ActionListener {
-    BasicPlayerWindow adaptee;
+            // Save in the preferences
+            preferences.setProperty("fsWidth", "" + userDisplayMode.getWidth());
+            preferences.setProperty("fsHeight", "" + userDisplayMode.getHeight());
+            preferences.setProperty("fsDepth", "" + userDisplayMode.getBitDepth());
+            preferences.setProperty("fsFreq", "" + userDisplayMode.getRefreshRate());
 
-    BasicPlayerWindow_jCheckBoxMenuItem2_actionAdapter(BasicPlayerWindow adaptee) {
-        this.adaptee = adaptee;
-    }
+            panelLyrics.redrawFullImage();
+        }
 
-    public void actionPerformed(ActionEvent e) {
-        adaptee.jCheckBoxMenuItem2_actionPerformed(e);
+        // Switch back and forth between "Full Screen" and "Windowed" mode
+        else if (event.getSource().equals(jMenuItemFullScreenWindow)) {
+            switchFullScreenWindowedMode();
+        }
     }
 }
