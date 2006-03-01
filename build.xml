@@ -83,7 +83,7 @@ and the Ant output directory might be "classes.ant".-->
 		<!-- Plugins -->
 		<jar compress="false" destfile="${plugins}/albumGrabberPlugin.jar">
 			<fileset dir="${classes.plugins}">
-				<include name="com/plarpebu/plugins/misc/**" />
+				<include name="com/plarpebu/plugins/albumgrabber/**" />
 			</fileset>
 		</jar>
 		<jar compress="false" destfile="${plugins}/cdgPlugin.jar">

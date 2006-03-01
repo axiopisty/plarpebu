@@ -60,7 +60,6 @@ public class InfoPlugin extends PanelPlugin implements BasicPlayerListener, Runn
      * @throws HeadlessException
      */
     public InfoPlugin() throws HeadlessException {
-
         initUI();
     }
 
