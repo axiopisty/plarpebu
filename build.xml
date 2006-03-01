@@ -4,16 +4,17 @@
 this exported Ant file be kept separate and be written to different
 directories. For example, the JBuilder output directory might be "classes"
 and the Ant output directory might be "classes.ant".-->
-<project basedir="." default="rebuild" name="player.jpx">
-	<property name="classes" value="classes.ant" />
-	<property name="Generated.Source" value="${classes}/Temporary_Files" />
+<project basedir="." default="all" name="player.jpx">
+
 	<property name="lib" value="lib" />
 	<property name="plugins" value="plugins" />
 	<property name="src.player" value="src/player" />
 	<property name="src.plugins" value="src/plugins" />
+	<property name="classes.player" value="classes.player" />
+	<property name="classes.plugins" value="classes.plugins" />
 
+	<!-- Compile classpath -->
 	<path id="project.class.path">
-		<pathelement location="${classes}" />
 		<pathelement location="${lib}/albumgrabber.jar" />
 		<pathelement location="${lib}/chardet.jar" />
 		<pathelement location="${lib}/commons-logging-api.jar" />
@@ -32,82 +33,109 @@ and the Ant output directory might be "classes.ant".-->
 		<pathelement location="${lib}/vorbisspi1.0.1.jar" />
 	</path>
 
-	<!--Patternset to exclude files from the output directory:-->
-	<patternset id="classes.exclude">
-		<exclude name="Temporary_Files/" />
-		<exclude name="Generated Source/" />
-		<exclude name="package cache/" />
-		<exclude name="dependency cache/" />
-		<exclude name="jsp cache/" />
-	</patternset>
+	<!-- Init -->
+	<target name="init">
+		<mkdir dir="${classes.player}" />
+		<mkdir dir="${classes.plugins}" />
+	</target>
 
-	<target depends="init" name="javacompile">
+	<!-- Compile -->
+	<target depends="init, compile_player, compile_plugins" name="compile" />
+
+	<!-- Compile Player -->
+	<target depends="init" name="compile_player">
 		<javac classpathref="project.class.path"
 		       debug="true"
 		       deprecation="true"
-		       destdir="${classes}"
+		       destdir="${classes.player}"
 		       nowarn="false">
-			<src path="${src}" />
-			<src path="${Generated.Source}" />
+			<src path="${src.player}" />
 		</javac>
 	</target>
 
-	<target depends="compile,resource" name="archive">
-		<jar compress="false" destfile="${plugins}/albumGrabberPlugin.jar">
-			<fileset dir="${classes}">
-				<patternset refid="classes.exclude" />
-				<include name="plugins/misc/**" />
-			</fileset>
-		</jar>
+	<!-- Compile Plugins -->
+	<target depends="compile_player" name="compile_plugins">
+		<javac classpathref="project.class.path"
+		       debug="true"
+		       deprecation="true"
+		       destdir="${classes.plugins}"
+		       nowarn="false">
+			<src path="${src.plugins}" />
+		</javac>
+	</target>
 
+	<!-- jar -->
+	<target depends="compile, resource" name="archive">
+		<!-- Player jar -->
 		<jar compress="true" jarfile="player.jar">
-			<fileset dir="${classes}">
-				<patternset refid="classes.exclude" />
+			<fileset dir="${classes.player}">
 				<include name="**/*.*" />
 			</fileset>
 			<manifest>
 				<attribute name="Built-By" value="${user.name}" />
-				<attribute name="Main-Class" value="player.test.Player" />
+				<attribute name="Main-Class" value="com.plarpebu.player.Player" />
 				<attribute name="Class-Path"
 				           value="${lib}/albumgrabber.jar ${lib}/chardet.jar ${lib}/commons-logging-api.jar ${lib}/jakarta-regexp-1.2.jar ${lib}/jbcl.jar ${lib}/jl1.0.jar ${lib}/jogg-0.0.7.jar ${lib}/jorbis-0.0.13.jar ${lib}/jspeex0.9.3.jar ${lib}/l2fprod-common-directorychooser.jar ${lib}/l2fprod-common-fontchooser.jar ${lib}/mp3spi1.9.2.jar ${lib}/pluginLoaderAPI.jar ${lib}/skinlf.jar ${lib}/tritonus_share.jar ${lib}/vorbisspi1.0.1.jar" />
 			</manifest>
 		</jar>
 
+		<!-- Plugins -->
+		<jar compress="false" destfile="${plugins}/albumGrabberPlugin.jar">
+			<fileset dir="${classes.plugins}">
+				<include name="plugins/misc/**" />
+			</fileset>
+		</jar>
 		<jar compress="false" destfile="${plugins}/basicAndPlaylist.jar">
-			<fileset dir="${classes}">
-				<patternset refid="classes.exclude" />
+			<fileset dir="${classes.plugins}">
 				<include name="plugins/basic/**" />
 				<include name="plugins/playlist/**" />
 			</fileset>
 		</jar>
 		<jar compress="false" destfile="${plugins}/cdg.jar">
-			<fileset dir="${classes}">
-				<patternset refid="classes.exclude" />
+			<fileset dir="${classes.plugins}">
 				<include name="plugins/karaoke/**" />
 			</fileset>
 		</jar>
 		<jar compress="false" destfile="${plugins}/exemples.jar">
-			<fileset dir="${classes}">
-				<patternset refid="classes.exclude" />
+			<fileset dir="${classes.plugins}">
 				<include name="plugins/examples/**" />
 			</fileset>
 		</jar>
 	</target>
 
-	<target name="cleanup">
+	<!-- Clean -->
+	<target name="clean">
 		<delete file="player.jar" />
-		<delete file="${plugins}/albumGrabberPlugin.jar" />
-		<delete file="${plugins}/basicAndPlaylist.jar" />
-		<delete file="${plugins}/cdg.jar" />
-		<delete file="${plugins}/exemples.jar" />
+		<delete>
+			<fileset dir="${plugins}" includes="*.jar" />
+		</delete>
 		<delete failonerror="false" includeemptydirs="true">
-			<fileset dir="${classes}" />
+			<fileset dir="${classes.player}" />
+			<fileset dir="${classes.plugins}" />
 		</delete>
 	</target>
 
 	<target name="resource">
+		<!-- Copy player resources -->
 		<copy todir="${classes}">
-			<fileset dir="${src}">
+			<fileset dir="${src.player}">
+				<include name="**/*.jpe" />
+				<include name="**/*.jpeg" />
+				<include name="**/*.rmf" />
+				<include name="**/*.wav" />
+				<include name="**/*.mid" />
+				<include name="**/*.midi" />
+				<include name="**/*.au" />
+				<include name="**/*.gif" />
+				<include name="**/*.png" />
+				<include name="**/*.jpg" />
+				<include name="**/*.aiff" />
+				<include name="**/*.properties" />
+			</fileset>
+		</copy>
+		<!-- Copy plugin resources -->
+		<copy todir="${classes}">
+			<fileset dir="${src.plugins}">
 				<include name="**/*.jpe" />
 				<include name="**/*.jpeg" />
 				<include name="**/*.rmf" />
@@ -126,28 +154,11 @@ and the Ant output directory might be "classes.ant".-->
 
 	<target name="javadoc" />
 
-	<target depends="cleanup" name="clean" />
+	<target depends="archive,javadoc" name="package" />
 
-	<target name="precompile" />
+	<target depends="clean,compile,package" name="all" />
 
-	<target depends="javacompile" name="compile" />
-
-	<target name="postcompile" />
-
-	<target depends="archive,javadoc,resource" name="package" />
-
-	<target name="deploy" />
-
-	<target depends="precompile,compile,postcompile,package,deploy" name="make" />
-
-	<target depends="clean,make" name="rebuild" />
-
-	<target name="init">
-		<mkdir dir="${classes}" />
-		<mkdir dir="${Generated.Source}" />
-	</target>
-
-	<target name="run" depends="make">
+	<target name="run" depends="all">
 		<java classname="player.test.Player" fork="yes">
 			<classpath refid="project.class.path" />
 		</java>
