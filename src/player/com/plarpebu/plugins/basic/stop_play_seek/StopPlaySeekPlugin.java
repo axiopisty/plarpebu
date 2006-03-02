@@ -82,22 +82,22 @@ public class StopPlaySeekPlugin extends PanelPlugin implements BasicPlayerListen
         // this.setLayout(new GridLayout(2, 0));
         panelButton = new JPanel();
 
-        prev = addButton(panelButton, "prev", "prev", "/icons/tmp/bigPrev.gif");
+        prev = addButton(panelButton, "prev", "prev", "/icons/big/bigPrev.gif");
         prev.addActionListener(this);
 
-        play = addButton(panelButton, "play", "play", "/icons/tmp/bigPlay.gif");
+        play = addButton(panelButton, "play", "play", "/icons/big/bigPlay.gif");
         play.addActionListener(this);
 
-        pause = addButton(panelButton, "pause", "pause", "/icons/tmp/bigPause.gif");
+        pause = addButton(panelButton, "pause", "pause", "/icons/big/bigPause.gif");
         pause.addActionListener(this);
 
-        stop = addButton(panelButton, "stop", "stop", "/icons/tmp/bigStop.gif");
+        stop = addButton(panelButton, "stop", "stop", "/icons/big/bigStop.gif");
         stop.addActionListener(this);
 
-        next = addButton(panelButton, "next", "next", "/icons/tmp/bigNext.gif");
+        next = addButton(panelButton, "next", "next", "/icons/big/bigNext.gif");
         next.addActionListener(this);
 
-        add = addButton(panelButton, "add", "add file", "/icons/tmp/bigEject.gif");
+        add = addButton(panelButton, "add", "add file", "/icons/big/bigEject.gif");
         add.addActionListener(this);
 
         slider.setEnabled(false);
