@@ -200,22 +200,22 @@ MouseMotionListener, DropTargetListener {
         tpm.setReshowDelay(100);
         pnl = new JPanel();
 
-        buttonPrev = addButton(pnl, "prev", "prev", "icones/tmp/littlePrev.gif");
+        buttonPrev = addButton(pnl, "prev", "prev", "/icons/tmp/littlePrev.gif");
         buttonPrev.addActionListener(this);
 
-        buttonPlay = addButton(pnl, "play", "play", "icones/tmp/littlePlay.gif");
+        buttonPlay = addButton(pnl, "play", "play", "/icons/tmp/littlePlay.gif");
         buttonPlay.addActionListener(this);
 
-        buttonPause = addButton(pnl, "pause", "pause", "icones/tmp/littlePause.gif");
+        buttonPause = addButton(pnl, "pause", "pause", "/icons/tmp/littlePause.gif");
         buttonPause.addActionListener(this);
 
-        buttonStop = addButton(pnl, "stop", "stop", "icones/tmp/littleStop.gif");
+        buttonStop = addButton(pnl, "stop", "stop", "/icons/tmp/littleStop.gif");
         buttonStop.addActionListener(this);
 
-        buttonNext = addButton(pnl, "next", "next", "icones/tmp/littleNext.gif");
+        buttonNext = addButton(pnl, "next", "next", "/icons/tmp/littleNext.gif");
         buttonNext.addActionListener(this);
 
-        buttonAdd = addButton(pnl, "add", "add file", "icones/tmp/littleEject.gif");
+        buttonAdd = addButton(pnl, "add", "add file", "/icons/tmp/littleEject.gif");
         buttonAdd.addActionListener(this);
 
         model = new DefaultBoundedRangeModel(0, 1, 0, modelscale);
