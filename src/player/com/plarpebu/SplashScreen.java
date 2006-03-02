@@ -23,7 +23,7 @@ import fr.unice.plugin.PluginManagerEvent;
 import fr.unice.plugin.PluginManagerListener;
 
 public class SplashScreen extends JWindow implements PluginManagerListener {
-    ImageIcon icon1 = new ImageIcon(getClass().getResource("/icons/splash.jpg"));
+    ImageIcon icon1 = new ImageIcon(SplashScreen.class.getResource("/icons/splash.jpg"));
     
     JPanel jPanel1 = new JPanel();
 
