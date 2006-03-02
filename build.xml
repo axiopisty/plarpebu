@@ -115,12 +115,11 @@ and the Ant output directory might be "classes.ant".-->
 		</delete>
 	</target>
 
+	<!-- Resources -->
 	<target name="resource">
-		<!-- Copy image resources -->
-		<copy todir="${classes.player}/icons">
-			<fileset dir="icones">
-				<include name="**/*" />
-			</fileset>
+		<!-- Copy icons -->
+		<copy todir="${classes.player}">
+			<fileset dir="icons"/>
 		</copy>
 	</target>
 
