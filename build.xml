@@ -81,6 +81,11 @@ and the Ant output directory might be "classes.ant".-->
 		</jar>
 
 		<!-- Plugins -->
+		<jar compress="false" destfile="${plugins}/basicPlugins.jar">
+			<fileset dir="${classes.player}">
+				<include name="com/plarpebu/plugins/basic/**" />
+			</fileset>
+		</jar>
 		<jar compress="false" destfile="${plugins}/albumGrabberPlugin.jar">
 			<fileset dir="${classes.plugins}">
 				<include name="com/plarpebu/plugins/albumgrabber/**" />
@@ -91,7 +96,7 @@ and the Ant output directory might be "classes.ant".-->
 				<include name="com/plarpebu/plugins/karaoke/**" />
 			</fileset>
 		</jar>
-		<jar compress="false" destfile="${plugins}/examplesPlugin.jar">
+		<jar compress="false" destfile="${plugins}/examplePlugins.jar">
 			<fileset dir="${classes.plugins}">
 				<include name="com/plarpebu/plugins/examples/**" />
 			</fileset>

@@ -135,9 +135,12 @@ ComponentListener, Iconifiable {
         // NOW WE DO USE R.GRIN's lib for plugins management. Changes by M.Buffa
 
         // Do not pollute with too many messages. Comment this line for debug
-        Logger.getLogger("fr.unice.plugin").setLevel(Level.SEVERE);
-        pluginManager = PluginManager.getPluginManager(new URL[] { new URL("file:plugins") });
+        Logger.getLogger("fr.unice.plugin").setLevel(Level.ALL);
+        
+        // Specify the play.jar to load the basic plugins
+        pluginManager = PluginManager.getPluginManager();
         pluginManager.addPluginManagerListener(splashScreen);
+       
         // All jars in the plugins dir will be added automatically...
         pluginManager.addJarURLsInDirectories(new URL[] { new URL("file:plugins") });
         pluginManager.loadPlugins();
