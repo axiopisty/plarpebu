@@ -344,9 +344,8 @@ MouseMotionListener, DropTargetListener {
 
         toolFrame = new Tools(this);
         plm = new PlayListManager(listModel);
-        this.setJMenuBar(menuBar);
-        this.setSize(350, 230);
-        this.setTitle("PlayList " + getVersion());
+        setJMenuBar(menuBar);
+        setTitle("PlayList " + getVersion());
 
         // Load preferences
         loadPreferences();
@@ -360,17 +359,20 @@ MouseMotionListener, DropTargetListener {
      */
     private void loadPreferences() throws NumberFormatException, HeadlessException {
         try {
+        	//Set window size
+        	int width = Integer.parseInt(preferences.getProperty("width"));
+            int height = Integer.parseInt(preferences.getProperty("height"));
+        	setSize(width, height);
+        	
             // Look for the currentPlaylist
             currentPlaylistFilename = preferences.getProperty("currentPlaylist");
-            // System.out.println("Lu dans les prefs currentPlaylist = " +
-            // currentPlaylistFilename);
             readPlaylist(currentPlaylistFilename);
 
             // Look for font used in the playlist
             String font = preferences.getProperty("font");
-            int size = Integer.parseInt(preferences.getProperty("fontSize"));
-            int style = Integer.parseInt(preferences.getProperty("fontStyle"));
-            setPlayListFont(font, size, style);
+            int fontSize = Integer.parseInt(preferences.getProperty("fontSize"));
+            int fontStyle = Integer.parseInt(preferences.getProperty("fontStyle"));
+            setPlayListFont(font, fontSize, fontStyle);
 
             // Look for text colors
             Color c = StringToColor(preferences.getProperty("foregroundColor"));
@@ -558,7 +560,7 @@ MouseMotionListener, DropTargetListener {
     }
 
     public void setPlayListSelectionFg(Color c) {
-        System.out.println("On met sel fg à " + colorToString(c));
+        System.out.println("On met sel fg ï¿½ " + colorToString(c));
         lstPlayList.setSelectionForeground(c);
         preferences.setProperty("selectionForegroundColor", colorToString(c));
     }
@@ -598,13 +600,13 @@ MouseMotionListener, DropTargetListener {
      * tooltip et une icone
      * 
      * @param p
-     *        composant dans lequel il va etre ajouté
+     *        composant dans lequel il va etre ajoutï¿½
      * @param name
      *        son nom pour lui associer une action(actionPerformed)
      * @param tooltiptext
      *        le tooltip a afficher
      * @param imageName
-     *        le chemin d'accés a l'icone
+     *        le chemin d'accï¿½s a l'icone
      */
     JButton addButton(JComponent p, String name, String tooltiptext, String imageName) {
         JButton b;
@@ -635,13 +637,13 @@ MouseMotionListener, DropTargetListener {
      * un tooltip et une icone
      * 
      * @param p
-     *        composant dans lequel il va etre ajouté
+     *        composant dans lequel il va etre ajoutï¿½
      * @param name
      *        son nom pour lui associer une action(actionPerformed)
      * @param tooltiptext
      *        le tooltip a afficher
      * @param imageName
-     *        le chemin d'accés a l'icone
+     *        le chemin d'accï¿½s a l'icone
      */
     JToggleButton addToggleButton(JComponent p, String name, String tooltiptext, String imageName) {
         JToggleButton b;
@@ -951,7 +953,7 @@ MouseMotionListener, DropTargetListener {
     public void actionPerformed(ActionEvent e) {
         String c = e.getActionCommand();
 
-        // Ajout d'un fichier à partir du menu
+        // Ajout d'un fichier ï¿½ partir du menu
         if (e.getSource() == buttonAdd || c.equals("addfile")) {
 
             if (fc == null) fc = new JFileChooser();
@@ -979,7 +981,7 @@ MouseMotionListener, DropTargetListener {
         }
 
         // Ajout d'un repertoire (avec inclusion recursive optionnelle
-        // des sous-repertoires) à partir du menu
+        // des sous-repertoires) ï¿½ partir du menu
         else {
             if (e.getSource() == buttonAdd || c.equals("adddir")) {
 
@@ -1002,8 +1004,8 @@ MouseMotionListener, DropTargetListener {
                 // parcoursRecursif(file, recursion);
             }
 
-            // Suppression de la selection courante à partir du
-            // menu du popup ou à partir du menu
+            // Suppression de la selection courante ï¿½ partir du
+            // menu du popup ou ï¿½ partir du menu
             else if (c.equals("remove")) {
                 if (listModel.size() != 0 && !(lstPlayList.isSelectionEmpty())) {
                     int index = lstPlayList.getSelectedIndex();
@@ -1011,8 +1013,8 @@ MouseMotionListener, DropTargetListener {
                 }
             }
 
-            // Play pour une chanson à partir du bouton de la barre de status
-            // ou à partir du menu du popup
+            // Play pour une chanson ï¿½ partir du bouton de la barre de status
+            // ou ï¿½ partir du menu du popup
             else if (e.getSource() == buttonPlay) {
                 try {
                     if (listModel.size() != 0 && !(lstPlayList.isSelectionEmpty())) {
@@ -1033,7 +1035,7 @@ MouseMotionListener, DropTargetListener {
                         // System.out.println("Informations diverses ");
                         // System.out.println("Artiste : " + mi.getArtist());
                         // System.out.println("Album : " + mi.getAlbum());
-                        // System.out.println("Année : " + mi.getYear());
+                        // System.out.println("Annï¿½e : " + mi.getYear());
                         // System.out.println("Titre : " + mi.getTitle());
                         // }
                         // catch (ID3Exception ex) {}
@@ -1046,7 +1048,7 @@ MouseMotionListener, DropTargetListener {
                 }
             }
 
-            // Pause d'une chanson à partir du bouton de la barre de status
+            // Pause d'une chanson ï¿½ partir du bouton de la barre de status
             else if (e.getSource() == buttonPause) {
                 try {
                     if (paused == true) {
@@ -1063,7 +1065,7 @@ MouseMotionListener, DropTargetListener {
                 }
             }
 
-            // Stop d'une chanson à partir de la barre de status
+            // Stop d'une chanson ï¿½ partir de la barre de status
             else if (e.getSource() == buttonStop) {
                 try {
                     controller.stop();
@@ -1079,30 +1081,30 @@ MouseMotionListener, DropTargetListener {
                 time.setText("00:00 / " + millisec_to_time(milliseconds));
             }
 
-            // Suppression de tous les elements de la playlist à partir
+            // Suppression de tous les elements de la playlist ï¿½ partir
             // du menu
             else if (c.equals("clear")) {
                 listModel.removeAllElements();
             }
 
-            // Chargement d'une playlist à partir du menu
+            // Chargement d'une playlist ï¿½ partir du menu
             else if (c.equals("load")) {
                 loadPlaylist();
             }
 
-            // Enregistrement d'une playlist à partir du menu
+            // Enregistrement d'une playlist ï¿½ partir du menu
             else if (c.equals("save")) {
                 savePlaylist();
             }
 
-            // Next : passage à la chanson suivante à partir du bouton de la
+            // Next : passage ï¿½ la chanson suivante ï¿½ partir du bouton de la
             // barre
             // de status
             else if (e.getSource() == buttonNext) {
                 getNext();
             }
 
-            // Prev : passage à la chanson precedente à partir du bouton de la
+            // Prev : passage ï¿½ la chanson precedente ï¿½ partir du bouton de la
             // barre
             // de status
             else if (e.getSource() == buttonPrev) {
@@ -1112,8 +1114,8 @@ MouseMotionListener, DropTargetListener {
             // Pour l'instant rien
             else if (c.equals("fileinfo")) {}
 
-            // Play : joue une chanson à partir du menu du popup
-            // Attention à rejoindre avec le play normal
+            // Play : joue une chanson ï¿½ partir du menu du popup
+            // Attention ï¿½ rejoindre avec le play normal
             else if (c.equals("playitem")) {
                 try {
                     if (listModel.size() != 0 && !(lstPlayList.isSelectionEmpty())) {
@@ -1131,7 +1133,7 @@ MouseMotionListener, DropTargetListener {
             }
 
             // Crop : ne garde dans la playlist que la selection courante
-            // à partir du menu u popup
+            // ï¿½ partir du menu u popup
             else if (c.equals("cropitem")) {
                 if (listModel.size() != 0 && !(lstPlayList.isSelectionEmpty())) {
                     int index = lstPlayList.getSelectedIndex();
@@ -1141,7 +1143,7 @@ MouseMotionListener, DropTargetListener {
                 }
             }
 
-            // Suppression d'un fichier à partir du popup
+            // Suppression d'un fichier ï¿½ partir du popup
             // Attention a rejoindre av ce la suppression normale
             else if (c.equals("removeitem")) {
                 if (listModel.size() != 0 && !(lstPlayList.isSelectionEmpty())) {
@@ -1170,9 +1172,9 @@ MouseMotionListener, DropTargetListener {
                     plm.setVisible(true);
             }
 
-            // Permet de savoir s'il faut inclure les sous repertoires à
+            // Permet de savoir s'il faut inclure les sous repertoires ï¿½
             // l'inclusion
-            // d'un repertoire à la playlist
+            // d'un repertoire ï¿½ la playlist
             else if (e.getSource() == cb) {
                 recursion = cb.isSelected();
             }
@@ -1182,7 +1184,7 @@ MouseMotionListener, DropTargetListener {
     /**
      * Permet l'affichage des ToolTip sur les figures
      * 
-     * @return la chaine décrivant la figure et qui va etre affichée
+     * @return la chaine dï¿½crivant la figure et qui va etre affichï¿½e
      */
     public String getToolTipText(MouseEvent e) {
         // System.out.println("on est dans le tooltip");
@@ -1196,7 +1198,7 @@ MouseMotionListener, DropTargetListener {
     /** ************************************************************************** */
     /** ************************************************************************** */
 
-    /** Classe dédiée au Popup de la JList */
+    /** Classe dï¿½diï¿½e au Popup de la JList */
     class PopupListener extends MouseAdapter {
 
         public void mousePressed(MouseEvent e) {
@@ -1209,7 +1211,7 @@ MouseMotionListener, DropTargetListener {
 
         /**
          * Fonction qui initialise le PopUp lors de son affichage i.e. qui
-         * active ou désactive certains menus selon le contexte
+         * active ou dï¿½sactive certains menus selon le contexte
          */
         public void maybeShowPopup(MouseEvent e) {
             if (e.isPopupTrigger()) {
@@ -1229,7 +1231,7 @@ MouseMotionListener, DropTargetListener {
     }
 
     /***************************************************************************
-     * Ensemble des fonctions à implementer lors de l'utilisation de l'interface
+     * Ensemble des fonctions ï¿½ implementer lors de l'utilisation de l'interface
      * MouseListener
      **************************************************************************/
     public void mousePressed(MouseEvent e) {
@@ -1484,7 +1486,7 @@ MouseMotionListener, DropTargetListener {
     }
 
     /**
-     * ajoutes les fichiers à la playlist lors du drop nous pouvons ajouter un
+     * ajoutes les fichiers ï¿½ la playlist lors du drop nous pouvons ajouter un
      * ou plusieurs fichier venant de l'exterieur ainsi que des playlist
      * 
      * @param e
@@ -1521,8 +1523,8 @@ MouseMotionListener, DropTargetListener {
                         File file = null;
 
                         /**
-                         * ajout des données recues dans la liste graphique et
-                         * réelle
+                         * ajout des donnï¿½es recues dans la liste graphique et
+                         * rï¿½elle
                          */
                         ListIterator li = al.listIterator();
                         while (li.hasNext()) {
