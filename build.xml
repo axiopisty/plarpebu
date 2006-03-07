@@ -74,7 +74,7 @@ and the Ant output directory might be "classes.ant".-->
 			</fileset>
 			<manifest>
 				<attribute name="Built-By" value="${user.name}" />
-				<attribute name="Main-Class" value="com.plarpebu.player.Player" />
+				<attribute name="Main-Class" value="com.plarpebu.Player" />
 				<attribute name="Class-Path"
 				           value="${lib}/albumgrabber.jar ${lib}/chardet.jar ${lib}/commons-logging-api.jar ${lib}/jakarta-regexp-1.2.jar ${lib}/jbcl.jar ${lib}/jl1.0.jar ${lib}/jogg-0.0.7.jar ${lib}/jorbis-0.0.13.jar ${lib}/jspeex0.9.3.jar ${lib}/l2fprod-common-directorychooser.jar ${lib}/l2fprod-common-fontchooser.jar ${lib}/mp3spi1.9.2.jar ${lib}/pluginLoaderAPI.jar ${lib}/skinlf.jar ${lib}/tritonus_share.jar ${lib}/vorbisspi1.0.1.jar" />
 			</manifest>

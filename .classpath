@@ -10,7 +10,6 @@
 	<classpathentry kind="lib" path="lib/pluginLoaderAPI.jar"/>
 	<classpathentry kind="lib" path="lib/skinlf.jar"/>
 	<classpathentry kind="lib" path="lib/tritonus_share.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.5.0_06"/>
 	<classpathentry kind="lib" path="lib/albumgrabber.jar"/>
 	<classpathentry kind="lib" path="lib/jakarta-regexp-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/jl1.0.jar"/>
@@ -19,5 +18,6 @@
 	<classpathentry kind="lib" path="lib/jspeex0.9.3.jar"/>
 	<classpathentry kind="lib" path="lib/mp3spi1.9.2.jar"/>
 	<classpathentry kind="lib" path="lib/vorbisspi1.0.1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
