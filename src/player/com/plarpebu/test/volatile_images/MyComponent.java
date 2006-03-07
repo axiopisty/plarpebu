@@ -28,7 +28,7 @@ class MyComponent extends JFrame {
 
     MyComponent() {
         // Get image to move into accelerated image memory
-        origImage = new ImageIcon(MyComponent.class.getResource("splash.jpg")).getImage();
+        origImage = new ImageIcon(MyComponent.class.getResource("/icons/splash.jpg")).getImage();
         new Ticker();
     }
 
