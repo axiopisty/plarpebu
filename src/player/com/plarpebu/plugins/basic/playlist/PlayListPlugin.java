@@ -32,6 +32,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Random;
@@ -317,13 +318,18 @@ MouseMotionListener, DropTargetListener {
         menuItem.addActionListener(this);
         menu.add(menuItem);
 
-        menuItem = new JMenuItem("Save playlist");
+        menuItem = new JMenuItem("Save Playlist");
         menuItem.setMnemonic(KeyEvent.VK_S);
         menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.ALT_MASK));
         menuItem.setActionCommand("save");
         menuItem.addActionListener(this);
         menu.add(menuItem);
 
+        menuItem = new JMenuItem("Sort Playlist");
+        menuItem.setActionCommand("sort");
+        menuItem.addActionListener(this);
+        menu.add(menuItem);
+        
         menu = new JMenu("Tools");
         menu.setMnemonic(KeyEvent.VK_T);
         menuBar.add(menu);
@@ -805,6 +811,18 @@ MouseMotionListener, DropTargetListener {
     }
 
     /**
+     * Sort the playlist. (By filename)
+     */
+    public void sortPlaylist()
+    {
+        Object[] list = listModel.toArray();
+        Arrays.sort(list);
+        listModel.removeAllElements();
+        for(int i=0; i< list.length; ++i)
+            listModel.addElement(list[i]);
+    }
+    
+    /**
      * Cette methode va permettre a l'utilisateur de charger une playlist
      * [lisible donc par l'homme ]. Les 3 premieres lignes indiqueront la fonte ,
      * taille et style de la playlist (au niveau ecriture) ensuite les lignes
@@ -1097,6 +1115,11 @@ MouseMotionListener, DropTargetListener {
                 savePlaylist();
             }
 
+            // Sort the playlist
+            else if (c.equals("sort")) {
+                sortPlaylist();
+            }
+            
             // Next : passage � la chanson suivante � partir du bouton de la
             // barre
             // de status
