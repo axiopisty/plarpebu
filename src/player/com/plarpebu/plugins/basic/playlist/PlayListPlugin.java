@@ -33,6 +33,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Random;
@@ -324,9 +325,9 @@ MouseMotionListener, DropTargetListener {
         menuItem.setActionCommand("save");
         menuItem.addActionListener(this);
         menu.add(menuItem);
-
-        menuItem = new JMenuItem("Sort Playlist");
-        menuItem.setActionCommand("sort");
+        
+        menuItem = new JMenuItem("Sort Playlist By Filename");
+        menuItem.setActionCommand("sortbyfilename");
         menuItem.addActionListener(this);
         menu.add(menuItem);
         
@@ -809,17 +810,30 @@ MouseMotionListener, DropTargetListener {
             System.out.println("Unable to write playlist to disk");
         }
     }
-
+    
     /**
      * Sort the playlist. (By filename)
      */
-    public void sortPlaylist()
+    public void sortPlaylistByFilename()
     {
         Object[] list = listModel.toArray();
-        Arrays.sort(list);
+        Arrays.sort(list, new SortByFilenameComparator());
         listModel.removeAllElements();
         for(int i=0; i< list.length; ++i)
             listModel.addElement(list[i]);
+    }
+    
+    /**
+     * Used to sort the playlist by filename.
+     * 
+     * @author kmschmidt
+     */
+    private class SortByFilenameComparator implements Comparator
+    {
+        public int compare(Object o1, Object o2)
+        {
+            return ((File)o1).getName().compareTo(((File)o2).getName());
+        }
     }
     
     /**
@@ -944,8 +958,6 @@ MouseMotionListener, DropTargetListener {
                     parcoursRecursif(tab[i], recu, depth + 1);
                 }
             }
-            else
-                ;
         }
     }
 
@@ -1114,10 +1126,10 @@ MouseMotionListener, DropTargetListener {
             else if (c.equals("save")) {
                 savePlaylist();
             }
-
-            // Sort the playlist
-            else if (c.equals("sort")) {
-                sortPlaylist();
+            
+            // Sort the playlist by filename
+            else if (c.equals("sortbyfilename")) {
+                sortPlaylistByFilename();
             }
             
             // Next : passage � la chanson suivante � partir du bouton de la
