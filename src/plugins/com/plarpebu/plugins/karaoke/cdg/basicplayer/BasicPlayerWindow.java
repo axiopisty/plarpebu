@@ -202,7 +202,7 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
      * false before saving the preferences
      */
     public void savePreferences() {
-        System.out.println("dans pref redéfinie");
+        System.out.println("dans pref redï¿½finie");
         setVisible(false);
         super.savePreferences();
     }
@@ -216,6 +216,11 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
     private void loadPreferences() throws NumberFormatException, HeadlessException {
 
         try {
+            //Set window size
+            int width = Integer.parseInt(preferences.getProperty("width"));
+            int height = Integer.parseInt(preferences.getProperty("height"));
+            setSize(width, height);
+            
             // Read all preferences
             String stringValue = null;
             Boolean value = null;
@@ -376,7 +381,7 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
                             }
                             else {
 
-                                // System.out.println("accélère " + (current_row
+                                // System.out.println("accï¿½lï¿½re " + (current_row
                                 // * 3.33) + " < " + tempsMp3);
                                 if (timer.getDelay() > 0) {
                                     timer.setDelay(timer.getDelay() - 1);
@@ -612,7 +617,7 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
     }
 
     // ----------------------------------------------
-    // Méthods required by the pluglin implementation
+    // Mï¿½thods required by the pluglin implementation
     // ----------------------------------------------
     /**
      * A handle to the BasicPlayer, plugins may control the player through the
@@ -714,8 +719,8 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
             current_row = (int) ((tempsMp3 / 3.33) + 0.5);
             seeking = false;
             System.out.println("-----");
-            System.out.println("Current row recalculé");
-            System.out.println("currentRow après " + current_row);
+            System.out.println("Current row recalculï¿½");
+            System.out.println("currentRow aprï¿½s " + current_row);
             System.out.println("-----");
 
         }
@@ -768,7 +773,7 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
     }
 
     // ----------------------------------------------
-    // End of Méthods required by the pluglin implementation
+    // End of Mï¿½thods required by the pluglin implementation
     // ----------------------------------------------
 
     private void pause() {
