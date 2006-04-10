@@ -17,8 +17,8 @@
 	<classpathentry kind="lib" path="lib/jspeex0.9.3.jar"/>
 	<classpathentry kind="lib" path="lib/mp3spi1.9.2.jar"/>
 	<classpathentry kind="lib" path="lib/vorbisspi1.0.1.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="src/player"/>
 	<classpathentry kind="src" path="src/plugins"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
