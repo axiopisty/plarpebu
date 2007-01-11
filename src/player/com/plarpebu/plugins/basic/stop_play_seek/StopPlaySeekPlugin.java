@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.net.URL;
 import java.util.Map;
 
 import javax.swing.Box;
@@ -24,6 +25,7 @@ import com.plarpebu.javazoom.jlgui.basicplayer.BasicController;
 import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerEvent;
 import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerException;
 import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerListener;
+import com.plarpebu.plugins.basic.SwingUtils;
 import com.plarpebu.plugins.basic.playlist.PlayListPlugin;
 import com.plarpebu.plugins.sdk.PanelPlugin;
 
@@ -82,22 +84,22 @@ public class StopPlaySeekPlugin extends PanelPlugin implements BasicPlayerListen
         // this.setLayout(new GridLayout(2, 0));
         panelButton = new JPanel();
 
-        prev = addButton(panelButton, "prev", "prev", "/icons/big/bigPrev.gif");
+        prev = SwingUtils.addButton(panelButton, "prev", "prev", "/icons/big/bigPrev.gif");
         prev.addActionListener(this);
 
-        play = addButton(panelButton, "play", "play", "/icons/big/bigPlay.gif");
+        play = SwingUtils.addButton(panelButton, "play", "play", "/icons/big/bigPlay.gif");
         play.addActionListener(this);
 
-        pause = addButton(panelButton, "pause", "pause", "/icons/big/bigPause.gif");
+        pause = SwingUtils.addButton(panelButton, "pause", "pause", "/icons/big/bigPause.gif");
         pause.addActionListener(this);
 
-        stop = addButton(panelButton, "stop", "stop", "/icons/big/bigStop.gif");
+        stop = SwingUtils.addButton(panelButton, "stop", "stop", "/icons/big/bigStop.gif");
         stop.addActionListener(this);
 
-        next = addButton(panelButton, "next", "next", "/icons/big/bigNext.gif");
+        next = SwingUtils.addButton(panelButton, "next", "next", "/icons/big/bigNext.gif");
         next.addActionListener(this);
 
-        add = addButton(panelButton, "add", "add file", "/icons/big/bigEject.gif");
+        add = SwingUtils.addButton(panelButton, "add", "add file", "/icons/big/bigEject.gif");
         add.addActionListener(this);
 
         slider.setEnabled(false);
@@ -110,44 +112,6 @@ public class StopPlaySeekPlugin extends PanelPlugin implements BasicPlayerListen
 
     public String getName() {
         return "Stop Play Seek Plugin";
-    }
-
-    /**
-     * Permet de créer un nouveau bouton en lui associant, une action, un
-     * tooltip et une icone
-     * 
-     * @param p
-     *        composant dans lequel il va etre ajouté
-     * @param name
-     *        son nom pour lui associer une action(actionPerformed)
-     * @param tooltiptext
-     *        le tooltip à afficher
-     * @param imageName
-     *        le chemin d'accés à l'icone
-     */
-    public JButton addButton(JComponent p, String name, String tooltiptext, String imageName) {
-        JButton b;
-        if ((imageName == null) || (imageName.equals(""))) {
-            b = (JButton) p.add(new JButton(name));
-        }
-        else {
-            java.net.URL u = this.getClass().getResource(imageName);
-            if (u != null) {
-                ImageIcon im = new ImageIcon(u);
-
-                b = (JButton) p.add(new JButton(im));
-            }
-            else {
-                b = (JButton) p.add(new JButton(name));
-                // b.setActionCommand(name);
-            }
-        }
-
-        b.setToolTipText(tooltiptext);
-        Insets insets = new Insets(0, 0, 0, 0);
-        b.setMargin(insets);
-
-        return b;
     }
 
     public void actionPerformed(ActionEvent e) {

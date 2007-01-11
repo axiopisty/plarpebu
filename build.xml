@@ -18,12 +18,12 @@ and the Ant output directory might be "classes.ant".-->
 		<pathelement location="${classes.player}" />
 		<pathelement location="${lib}/albumgrabber.jar" />
 		<pathelement location="${lib}/chardet.jar" />
-		<pathelement location="${lib}/commons-logging-api.jar" />
+		<pathelement location="${lib}/commons-logging-1.1.jar" />
 		<pathelement location="${lib}/jakarta-regexp-1.2.jar" />
 		<pathelement location="${lib}/jbcl.jar" />
 		<pathelement location="${lib}/jl1.0.jar" />
 		<pathelement location="${lib}/jogg-0.0.7.jar" />
-		<pathelement location="${lib}/jorbis-0.0.13.jar" />
+		<pathelement location="${lib}/jorbis-0.0.15.jar" />
 		<pathelement location="${lib}/jspeex0.9.3.jar" />
 		<pathelement location="${lib}/l2fprod-common-directorychooser.jar" />
 		<pathelement location="${lib}/l2fprod-common-fontchooser.jar" />
@@ -76,7 +76,7 @@ and the Ant output directory might be "classes.ant".-->
 				<attribute name="Built-By" value="${user.name}" />
 				<attribute name="Main-Class" value="com.plarpebu.Player" />
 				<attribute name="Class-Path"
-				           value="${lib}/albumgrabber.jar ${lib}/chardet.jar ${lib}/commons-logging-api.jar ${lib}/jakarta-regexp-1.2.jar ${lib}/jbcl.jar ${lib}/jl1.0.jar ${lib}/jogg-0.0.7.jar ${lib}/jorbis-0.0.13.jar ${lib}/jspeex0.9.3.jar ${lib}/l2fprod-common-directorychooser.jar ${lib}/l2fprod-common-fontchooser.jar ${lib}/mp3spi1.9.2.jar ${lib}/pluginLoaderAPI.jar ${lib}/skinlf.jar ${lib}/tritonus_share.jar ${lib}/vorbisspi1.0.1.jar" />
+				           value="${lib}/albumgrabber.jar ${lib}/chardet.jar ${lib}/commons-logging-1.1.jar ${lib}/jakarta-regexp-1.2.jar ${lib}/jbcl.jar ${lib}/jl1.0.jar ${lib}/jogg-0.0.7.jar ${lib}/jorbis-0.0.15.jar ${lib}/jspeex0.9.3.jar ${lib}/l2fprod-common-directorychooser.jar ${lib}/l2fprod-common-fontchooser.jar ${lib}/mp3spi1.9.2.jar ${lib}/pluginLoaderAPI.jar ${lib}/skinlf.jar ${lib}/tritonus_share.jar ${lib}/vorbisspi1.0.2.jar" />
 			</manifest>
 		</jar>
 

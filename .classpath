@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="lib" path="player.jar"/>
 	<classpathentry kind="lib" path="lib/chardet.jar"/>
-	<classpathentry kind="lib" path="lib/commons-logging-api.jar"/>
 	<classpathentry kind="lib" path="lib/jbcl.jar"/>
 	<classpathentry kind="lib" path="lib/l2fprod-common-directorychooser.jar"/>
 	<classpathentry kind="lib" path="lib/l2fprod-common-fontchooser.jar"/>
@@ -13,12 +11,14 @@
 	<classpathentry kind="lib" path="lib/jakarta-regexp-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/jl1.0.jar"/>
 	<classpathentry kind="lib" path="lib/jogg-0.0.7.jar"/>
-	<classpathentry kind="lib" path="lib/jorbis-0.0.13.jar"/>
 	<classpathentry kind="lib" path="lib/jspeex0.9.3.jar"/>
 	<classpathentry kind="lib" path="lib/mp3spi1.9.2.jar"/>
-	<classpathentry kind="lib" path="lib/vorbisspi1.0.1.jar"/>
 	<classpathentry kind="src" path="src/player"/>
 	<classpathentry kind="src" path="src/plugins"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.1.jar"/>
+	<classpathentry kind="lib" path="lib/jorbis-0.0.15.jar"/>
+	<classpathentry kind="lib" path="lib/vorbisspi1.0.2.jar"/>
+	<classpathentry kind="lib" path="icons"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
