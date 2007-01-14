@@ -35,7 +35,7 @@ and the Ant output directory might be "classes.ant".-->
 		<pathelement location="${lib}/pluginLoaderAPI.jar" />
 		<pathelement location="${lib}/skinlf.jar" />
 		<pathelement location="${lib}/tritonus_share.jar" />
-		<pathelement location="${lib}/vorbisspi1.0.1.jar" />
+		<pathelement location="${lib}/vorbisspi1.0.2.jar" />
 	</path>
 
 	<!-- Init -->
