@@ -13,11 +13,12 @@ import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
+import javazoom.jlgui.basicplayer.BasicController;
+import javazoom.jlgui.basicplayer.BasicPlayerEvent;
+import javazoom.jlgui.basicplayer.BasicPlayerListener;
+
 import com.bluedragontavern.albumgrabber.Album;
 import com.bluedragontavern.albumgrabber.allmusic.AlbumSearch;
-import com.plarpebu.javazoom.jlgui.basicplayer.BasicController;
-import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerEvent;
-import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerListener;
 import com.plarpebu.plugins.sdk.FramePlugin;
 import com.plarpebu.util.CacheUtil;
 

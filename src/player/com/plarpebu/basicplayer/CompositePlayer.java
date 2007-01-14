@@ -24,9 +24,10 @@ import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
 
-import com.plarpebu.javazoom.jlgui.basicplayer.BasicController;
-import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerException;
-import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerListener;
+import javazoom.jlgui.basicplayer.BasicController;
+import javazoom.jlgui.basicplayer.BasicPlayerException;
+import javazoom.jlgui.basicplayer.BasicPlayerListener;
+
 import com.plarpebu.plugins.sdk.Iconifiable;
 import com.plarpebu.util.ZipUtil;
 

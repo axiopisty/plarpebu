@@ -18,9 +18,10 @@ import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
 
-import com.plarpebu.javazoom.jlgui.basicplayer.BasicController;
-import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerEvent;
-import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerListener;
+import javazoom.jlgui.basicplayer.BasicController;
+import javazoom.jlgui.basicplayer.BasicPlayerEvent;
+import javazoom.jlgui.basicplayer.BasicPlayerListener;
+
 import com.plarpebu.plugins.sdk.PanelPlugin;
 import com.plarpebu.test.LabelClock;
 

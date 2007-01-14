@@ -11,8 +11,6 @@
 	<classpathentry kind="lib" path="lib/jakarta-regexp-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/jl1.0.jar"/>
 	<classpathentry kind="lib" path="lib/jogg-0.0.7.jar"/>
-	<classpathentry kind="lib" path="lib/jspeex0.9.3.jar"/>
-	<classpathentry kind="lib" path="lib/mp3spi1.9.2.jar"/>
 	<classpathentry kind="src" path="src/player"/>
 	<classpathentry kind="src" path="src/plugins"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
@@ -20,5 +18,11 @@
 	<classpathentry kind="lib" path="lib/jorbis-0.0.15.jar"/>
 	<classpathentry kind="lib" path="lib/vorbisspi1.0.2.jar"/>
 	<classpathentry kind="lib" path="icons"/>
+	<classpathentry kind="lib" path="lib/basicplayer3.0.jar"/>
+	<classpathentry kind="lib" path="lib/jflac-1.2.jar"/>
+	<classpathentry kind="lib" path="lib/jmactritonusspi1.74.jar"/>
+	<classpathentry kind="lib" path="lib/jspeex0.9.7.jar"/>
+	<classpathentry kind="lib" path="lib/kj_dsp1.1.jar"/>
+	<classpathentry kind="lib" path="lib/mp3spi1.9.4.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

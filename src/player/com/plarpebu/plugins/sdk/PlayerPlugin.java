@@ -2,10 +2,9 @@ package com.plarpebu.plugins.sdk;
 
 import java.util.Map;
 
-import com.plarpebu.javazoom.jlgui.basicplayer.BasicController;
-import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerEvent;
-import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerListener;
-
+import javazoom.jlgui.basicplayer.BasicController;
+import javazoom.jlgui.basicplayer.BasicPlayerEvent;
+import javazoom.jlgui.basicplayer.BasicPlayerListener;
 import fr.unice.plugin.Plugin;
 
 public interface PlayerPlugin extends Plugin {

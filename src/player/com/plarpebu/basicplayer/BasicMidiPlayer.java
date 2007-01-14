@@ -28,14 +28,15 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import javazoom.jlgui.basicplayer.BasicPlayerEvent;
+import javazoom.jlgui.basicplayer.BasicPlayerException;
+import javazoom.jlgui.basicplayer.BasicPlayerListener;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.plarpebu.javakarplayer.plugins.AudioPlugins.JavaSoundMidiKar;
 import com.plarpebu.javakarplayer.plugins.AudioPlugins.MidiListener;
-import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerEvent;
-import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerException;
-import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerListener;
 import com.plarpebu.plugins.sdk.Iconifiable;
 
 public class BasicMidiPlayer extends BasicPlayer implements MidiListener {

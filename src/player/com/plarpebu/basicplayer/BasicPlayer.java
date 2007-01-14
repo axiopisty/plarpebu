@@ -25,29 +25,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-import com.plarpebu.javazoom.jlgui.basicplayer.BasicController;
-import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerEvent;
-import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerListener;
+import javazoom.jlgui.basicplayer.BasicController;
+import javazoom.jlgui.basicplayer.BasicPlayerEvent;
+import javazoom.jlgui.basicplayer.BasicPlayerListener;
+
 import com.plarpebu.plugins.sdk.Iconifiable;
 
 /**
- * <p>
- * Title:
- * </p>
- * <p>
- * Description:
- * </p>
- * <p>
- * Copyright: Copyright (c) 2004
- * </p>
- * <p>
- * Company:
- * </p>
- * 
- * @author not attributable
- * @version 1.0
+ * This has additional functionality not built into the jlGUI BasicPlayer
  */
-
 public abstract class BasicPlayer implements BasicController {
     /**
      * These variables are used to distinguish stopped, paused, playing states.

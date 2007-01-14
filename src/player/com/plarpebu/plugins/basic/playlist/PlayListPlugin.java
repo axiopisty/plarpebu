@@ -63,11 +63,13 @@ import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.ToolTipManager;
 
+import javazoom.jlgui.basicplayer.BasicController;
+import javazoom.jlgui.basicplayer.BasicPlayerEvent;
+import javazoom.jlgui.basicplayer.BasicPlayerException;
+import javazoom.jlgui.basicplayer.BasicPlayerListener;
+
 import com.l2fprod.common.swing.JDirectoryChooser;
-import com.plarpebu.javazoom.jlgui.basicplayer.BasicController;
-import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerEvent;
-import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerException;
-import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerListener;
+import com.plarpebu.basicplayer.BasicPlayer;
 import com.plarpebu.plugins.basic.SwingUtils;
 import com.plarpebu.plugins.sdk.FramePlugin;
 
@@ -129,7 +131,7 @@ public class PlayListPlugin extends FramePlugin implements BasicPlayerListener, 
 
 	private JPopupMenu popup;
 
-	private static BasicController controller = null;
+	private static BasicPlayer controller = null;
 
 	private int oldRand = -1;
 
@@ -703,7 +705,7 @@ public class PlayListPlugin extends FramePlugin implements BasicPlayerListener, 
 
 	public void setController(BasicController newController)
 	{
-		PlayListPlugin.controller = newController;
+		PlayListPlugin.controller = (BasicPlayer)newController;
 	}
 
 	public boolean isShuffle()

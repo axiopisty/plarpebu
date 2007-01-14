@@ -2,29 +2,26 @@ package com.plarpebu.plugins.basic.stop_play_seek;
 
 import java.awt.Dimension;
 import java.awt.HeadlessException;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
-import java.net.URL;
 import java.util.Map;
 
 import javax.swing.Box;
 import javax.swing.DefaultBoundedRangeModel;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 
+import javazoom.jlgui.basicplayer.BasicController;
+import javazoom.jlgui.basicplayer.BasicPlayerEvent;
+import javazoom.jlgui.basicplayer.BasicPlayerException;
+import javazoom.jlgui.basicplayer.BasicPlayerListener;
+
 import com.plarpebu.Player;
-import com.plarpebu.javazoom.jlgui.basicplayer.BasicController;
-import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerEvent;
-import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerException;
-import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerListener;
 import com.plarpebu.plugins.basic.SwingUtils;
 import com.plarpebu.plugins.basic.playlist.PlayListPlugin;
 import com.plarpebu.plugins.sdk.PanelPlugin;

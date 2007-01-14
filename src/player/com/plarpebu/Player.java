@@ -42,10 +42,12 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
+import javazoom.jlgui.basicplayer.BasicController;
+import javazoom.jlgui.basicplayer.BasicPlayerListener;
+
 import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
+import com.plarpebu.basicplayer.BasicPlayer;
 import com.plarpebu.basicplayer.CompositePlayer;
-import com.plarpebu.javazoom.jlgui.basicplayer.BasicController;
-import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerListener;
 import com.plarpebu.plugins.basic.info.InfoPlugin;
 import com.plarpebu.plugins.basic.pan_gain.PanGainPlugin;
 import com.plarpebu.plugins.basic.playlist.PlayListPlugin;
@@ -102,7 +104,7 @@ ComponentListener, Iconifiable {
 
     private ArrayList listComponent = new ArrayList();
 
-    private BasicController controller = null;
+    private BasicPlayer controller = null;
 
     private CompositePlayer bplayer = null;
 

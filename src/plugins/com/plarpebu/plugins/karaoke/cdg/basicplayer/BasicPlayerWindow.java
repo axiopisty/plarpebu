@@ -26,9 +26,11 @@ import javax.swing.JPopupMenu;
 import javax.swing.JRootPane;
 import javax.swing.Timer;
 
-import com.plarpebu.javazoom.jlgui.basicplayer.BasicController;
-import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerEvent;
-import com.plarpebu.javazoom.jlgui.basicplayer.BasicPlayerListener;
+import javazoom.jlgui.basicplayer.BasicController;
+import javazoom.jlgui.basicplayer.BasicPlayerEvent;
+import javazoom.jlgui.basicplayer.BasicPlayerListener;
+
+import com.plarpebu.basicplayer.BasicPlayer;
 import com.plarpebu.plugins.karaoke.cdg.basicplayer.gui.CdgOptionsDialog;
 import com.plarpebu.plugins.karaoke.cdg.basicplayer.gui.ChooseFullScreenModeDIalog;
 import com.plarpebu.plugins.karaoke.cdg.instructions.CdgBorderPreset;
@@ -51,7 +53,7 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
 
     private long tempsMp3;
 
-    private BasicController controllerMp3;
+    private BasicPlayer controllerMp3;
 
     private Timer timer;
 
@@ -627,7 +629,7 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
      *        a handle to the player
      */
     public void setController(BasicController controller) {
-        this.controllerMp3 = controller;
+        this.controllerMp3 = (BasicPlayer)controller;
     }
 
     /**
