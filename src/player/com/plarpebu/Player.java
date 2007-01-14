@@ -142,6 +142,13 @@ public class Player extends JFrameWithPreferences implements DropTargetListener,
 	{
 		super("Plarpebu v1.0");
 
+		// Read preferences
+		setPreferencesFileNames("preferences", "Plaperbu.properties", "defaultPlaperbu.properties");
+		readPreferences();
+
+		// Set the default skin
+		SkinMgr.getInstance().setSkin(preferences.getProperty("lastSkin"));
+
 		// Use our own security manager, that can register listeners
 		// All JFrameWithPreferences qare listeners, see contructor of this
 		// class
@@ -198,18 +205,6 @@ public class Player extends JFrameWithPreferences implements DropTargetListener,
 
 		/* on charge automatiquement les plugins que l'on souhaite en permanence */
 		activationOrigine();
-
-		loadPreferences();
-	}
-
-	private void loadPreferences()
-	{
-		// Préférences, inherited from JFrameWithPreferences
-		setPreferencesFileNames("preferences", "Plaperbu.properties", "defaultPlaperbu.properties");
-		readPreferences();
-
-		// Set the default skin
-		SkinMgr.getInstance().setSkin(preferences.getProperty("lastSkin"));
 
 		restoreVisibility();
 	}
