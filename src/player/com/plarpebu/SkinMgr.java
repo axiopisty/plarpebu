@@ -51,11 +51,7 @@ public class SkinMgr
 	 * Private Constructor
 	 */
 	private SkinMgr()
-	{
-		//Set so that frame and dialogs are also decorated by SkinLF
-		JFrame.setDefaultLookAndFeelDecorated(true);
-		JDialog.setDefaultLookAndFeelDecorated(true);
-		
+	{	
 		// Get the skinLF skins (zip files)
 		String[] fullSkinNames = (new File(SKINDIR)).list(new SkinFilter());
 

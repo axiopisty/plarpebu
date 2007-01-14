@@ -90,8 +90,7 @@ public class Karaoke extends FramePluginWithFullScreenSupport implements MetaEve
 
 	public Karaoke(Sequencer sequencer)
 	{
-		// setUndecorated(true);
-		// getRootPane().setWindowDecorationStyle(JRootPane.NONE);
+		super("Kar Midi Lyrics Player");
 
 		this.sequencer = sequencer;
 		sequencer.addMetaEventListener(this);
@@ -446,6 +445,7 @@ public class Karaoke extends FramePluginWithFullScreenSupport implements MetaEve
 
 	public Karaoke()
 	{
+		super("Kar Midi Lyrics Player");
 		try
 		{
 			jbInit();
@@ -460,7 +460,6 @@ public class Karaoke extends FramePluginWithFullScreenSupport implements MetaEve
 	{
 		this.getContentPane().setLayout(borderLayout1);
 		this.getContentPane().setBackground(UIManager.getColor("Tree.selectionBorderColor"));
-		this.setTitle("Kar Midi Lyrics Player");
 		tempoSlider.setMaximum(10);
 		tempoSlider.setMinimum(1);
 		tempoSlider.setOrientation(JScrollBar.HORIZONTAL);

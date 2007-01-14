@@ -65,6 +65,7 @@ public class Visualizer extends FramePlugin implements BasicPlayerListener, Runn
 
 	public Visualizer()
 	{
+		super("Visualizer");
 		try
 		{
 			jbInit();
@@ -87,7 +88,6 @@ public class Visualizer extends FramePlugin implements BasicPlayerListener, Runn
 		height = 200;
 
 		setSize(width, height);
-		setTitle("Visualizer " + getVersion());
 
 		sound = new int[width];
 

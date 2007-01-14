@@ -56,7 +56,7 @@ public class AudioInfoPlugin extends FramePlugin implements BasicPlayerListener
 
 	public AudioInfoPlugin() throws HeadlessException
 	{
-		super();
+		super("Audio Info");
 		initUI();
 	}
 

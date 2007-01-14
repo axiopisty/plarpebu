@@ -10,6 +10,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 
 import com.l2fprod.common.swing.JFontChooser;
+import com.plarpebu.SkinMgr;
 
 /**
  * <p>
@@ -40,11 +41,20 @@ public class FontDialogChoser extends JDialog
 
 	JFontChooser fc = new JFontChooser();
 
+	/**
+	 * Constructor
+	 * 
+	 * @param frame
+	 * @param title
+	 * @param modal
+	 */
 	public FontDialogChoser(Frame frame, String title, boolean modal)
 	{
 		super(frame, title, modal);
 		try
 		{
+			SkinMgr.getInstance().addComponent(this);
+			
 			jbInit();
 			panel1.add(fc, BorderLayout.CENTER);
 			setSize(640, 400);

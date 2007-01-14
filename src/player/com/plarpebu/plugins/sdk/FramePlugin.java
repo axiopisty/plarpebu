@@ -15,8 +15,10 @@ abstract public class FramePlugin extends JFrameWithPreferences implements Playe
 
 	private String defaultPreferencesFilename = "default" + getName() + ".properties";
 
-	public FramePlugin()
+	public FramePlugin(String title)
 	{
+		super(title);
+		
 		// Specify the dir and filenames for preferences files
 		setPreferencesFileNames(preferencesDir, preferenceFileName, defaultPreferencesFilename);
 	}

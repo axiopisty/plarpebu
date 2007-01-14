@@ -23,6 +23,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
+import com.plarpebu.SkinMgr;
+
 /**
  * <p>
  * Title:
@@ -40,7 +42,6 @@ import javax.swing.border.TitledBorder;
  * @author Michel Buffa (buffa@unice.fr)
  * @version $Id
  */
-
 public class CdgOptionsDialog extends JDialog
 {
 	JPanel panel1 = new JPanel();
@@ -95,9 +96,19 @@ public class CdgOptionsDialog extends JDialog
 
 	GridBagLayout gridBagLayout1 = new GridBagLayout();
 
+	/**
+	 * Constructor
+	 * 
+	 * @param frame
+	 * @param title
+	 * @param modal
+	 */
 	public CdgOptionsDialog(JFrame frame, String title, boolean modal)
 	{
 		super(frame, title, modal);
+		
+		SkinMgr.getInstance().addComponent(this);
+		
 		parentFrame = frame;
 		try
 		{
@@ -111,6 +122,9 @@ public class CdgOptionsDialog extends JDialog
 		}
 	}
 
+	/**
+	 * Constructor
+	 */
 	public CdgOptionsDialog()
 	{
 		this(null, "", false);

@@ -66,11 +66,10 @@ public class ProgressBarPlugin extends FramePlugin implements BasicPlayerListene
 
 	private Boolean lock = Boolean.TRUE;
 
-	public ProgressBarPlugin(/* String title */) throws HeadlessException
+	public ProgressBarPlugin() throws HeadlessException
 	{
-		// super(title);
+		super("Progress Bar");
 		initUI();
-		setTitle("Progress Bar " + getVersion());
 	}
 
 	public void initUI()

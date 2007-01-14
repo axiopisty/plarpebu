@@ -18,6 +18,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
+import com.plarpebu.SkinMgr;
+
 /**
  * <p>
  * Title:
@@ -68,9 +70,18 @@ public class ChooseFullScreenModeDIalog extends JDialog
 
 	JFrame parentFrame;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param parent
+	 * @param modal
+	 */
 	public ChooseFullScreenModeDIalog(JFrame parent, boolean modal)
 	{
 		super(parent, modal);
+		
+		SkinMgr.getInstance().addComponent(this);
+		
 		parentFrame = parent;
 		try
 		{

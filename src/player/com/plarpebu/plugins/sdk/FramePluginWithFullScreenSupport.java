@@ -46,8 +46,10 @@ abstract public class FramePluginWithFullScreenSupport extends JFrameWithPrefere
 	/**
 	 * Constructor
 	 */
-	public FramePluginWithFullScreenSupport()
+	public FramePluginWithFullScreenSupport(String title)
 	{
+		super(title);
+		
 		// Mouse listener for double click detection
 		addMouseListener(new MyMouseListener());
 	}

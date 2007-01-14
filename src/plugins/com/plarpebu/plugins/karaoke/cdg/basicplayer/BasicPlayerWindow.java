@@ -136,10 +136,10 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
 	 */
 	public BasicPlayerWindow()
 	{
+		super("CDG Lyrics Display");
+		
 		// Read preferences first
 		readPreferences();
-
-		setTitle("CDG Lyrics Display " + getVersion());
 
 		// the mp3 player
 		setUndecorated(true);

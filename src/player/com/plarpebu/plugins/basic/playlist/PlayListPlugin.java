@@ -174,6 +174,8 @@ public class PlayListPlugin extends FramePlugin implements BasicPlayerListener, 
 	 */
 	public PlayListPlugin()
 	{
+		super("PlayList");
+		
 		// Read preferences
 		readPreferences();
 
@@ -381,7 +383,6 @@ public class PlayListPlugin extends FramePlugin implements BasicPlayerListener, 
 		toolFrame = new Tools(this);
 		playListMgr = new PlayListManager(listModel);
 		setJMenuBar(menuBar);
-		setTitle("PlayList " + getVersion());
 
 		// Load preferences
 		loadPreferences();

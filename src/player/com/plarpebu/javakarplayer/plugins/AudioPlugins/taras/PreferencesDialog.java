@@ -39,6 +39,7 @@ import javax.swing.event.ChangeEvent;
 
 import com.borland.jbcl.layout.XYConstraints;
 import com.borland.jbcl.layout.XYLayout;
+import com.plarpebu.SkinMgr;
 
 /**
  * <p>
@@ -232,10 +233,15 @@ public class PreferencesDialog extends JDialog implements PropertyChangeListener
 
 	XYLayout xYLayout7 = new XYLayout();
 
+	/**
+	 * Constructor
+	 */
 	public PreferencesDialog()
 	{
 		try
 		{
+			SkinMgr.getInstance().addComponent(this);
+			
 			fillCharsetComboBoxWithAvailableCharsets();
 			fillCharsetHintsComboBox();
 

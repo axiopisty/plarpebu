@@ -33,6 +33,8 @@ import java.util.logging.Logger;
 import javax.swing.Box;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -72,6 +74,10 @@ public class Player extends JFrameWithPreferences implements DropTargetListener,
 
 	static
 	{
+		// Set so that frame and dialogs are also decorated by SkinLF
+		JFrame.setDefaultLookAndFeelDecorated(true);
+		JDialog.setDefaultLookAndFeelDecorated(true);
+
 		origine.add(PanGainPlugin.NAME);
 		origine.add(StopPlaySeekPlugin.NAME);
 		origine.add(InfoPlugin.NAME);
@@ -201,10 +207,10 @@ public class Player extends JFrameWithPreferences implements DropTargetListener,
 		// Préférences, inherited from JFrameWithPreferences
 		setPreferencesFileNames("preferences", "Plaperbu.properties", "defaultPlaperbu.properties");
 		readPreferences();
-		
-		//Set the default skin
+
+		// Set the default skin
 		SkinMgr.getInstance().setSkin(preferences.getProperty("lastSkin"));
-		
+
 		restoreVisibility();
 	}
 
@@ -539,8 +545,7 @@ public class Player extends JFrameWithPreferences implements DropTargetListener,
 	 *           un evenement engendré par la souris.
 	 */
 	public void mouseDragged(MouseEvent e)
-	{
-	}
+	{}
 
 	/**
 	 * Fonction implémentée pour l'interface mais non utile ici.
@@ -756,8 +761,7 @@ public class Player extends JFrameWithPreferences implements DropTargetListener,
 	 *           ComponentEvent
 	 */
 	public void componentResized(ComponentEvent e)
-	{
-	}
+	{}
 
 	/**
 	 * Fonction implémentée pour l'interface mais non utile ici.

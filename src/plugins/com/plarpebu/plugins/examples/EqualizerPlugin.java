@@ -47,7 +47,7 @@ public class EqualizerPlugin extends FramePlugin implements BasicPlayerListener,
 	 */
 	public EqualizerPlugin() throws HeadlessException
 	{
-		super();
+		super("Equalizer");
 		initUI();
 	}
 
@@ -88,7 +88,6 @@ public class EqualizerPlugin extends FramePlugin implements BasicPlayerListener,
 
 		pane.add(north, BorderLayout.NORTH);
 		pane.add(south, BorderLayout.SOUTH);
-		this.setTitle("Equalizer " + getVersion());
 		this.setSize(350, 170);
 		this.setSize(100, 200);
 

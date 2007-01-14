@@ -28,11 +28,6 @@ public abstract class JFrameWithPreferences extends JFrame implements SystemExit
 	private String defaultPreferencesFilename = preferencesDir + File.separator
 	         + "default.properties";
 
-	public JFrameWithPreferences()
-	{
-		SkinMgr.getInstance().addComponent(this);
-	}
-
 	public JFrameWithPreferences(String title)
 	{
 		super(title);
