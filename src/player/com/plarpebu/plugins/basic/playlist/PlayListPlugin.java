@@ -280,7 +280,7 @@ public class PlayListPlugin extends FramePlugin implements BasicPlayerListener, 
 		// Create quickFindPanel
 		quickFindPanel = new QuickFindPanel(this);
 		quickFindPanel.addKeyListener(this);
-		
+
 		pane.add(quickFindPanel, BorderLayout.NORTH);
 		pane.add(listScrollPane, BorderLayout.CENTER);
 		pane.add(controlPanel, BorderLayout.SOUTH);
@@ -363,7 +363,7 @@ public class PlayListPlugin extends FramePlugin implements BasicPlayerListener, 
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, ActionEvent.ALT_MASK));
 		menuItem.addActionListener(this);
 		menu.add(menuItem);
-		
+
 		menuItem = new JMenuItem("Config");
 		menuItem.setActionCommand("config");
 		menuItem.setMnemonic(KeyEvent.VK_C);
@@ -705,7 +705,7 @@ public class PlayListPlugin extends FramePlugin implements BasicPlayerListener, 
 
 	public void setController(BasicController newController)
 	{
-		PlayListPlugin.controller = (BasicPlayer)newController;
+		PlayListPlugin.controller = (BasicPlayer) newController;
 	}
 
 	public boolean isShuffle()
@@ -752,7 +752,7 @@ public class PlayListPlugin extends FramePlugin implements BasicPlayerListener, 
 			// Its ok to loop back to the beginning of the list
 			if (++currentIndex > listSize - 1)
 				currentIndex = 0;
-			
+
 			if (((File) listModel.get(currentIndex)).getName().toUpperCase().indexOf(
 			         searchText.toUpperCase()) != -1)
 			{
@@ -789,7 +789,7 @@ public class PlayListPlugin extends FramePlugin implements BasicPlayerListener, 
 			// Its ok to loop back to the beginning of the list
 			if (--currentIndex == -1)
 				currentIndex = listSize - 1;
-			
+
 			if (((File) listModel.get(currentIndex)).getName().toUpperCase().indexOf(
 			         searchText.toUpperCase()) != -1)
 			{
@@ -1373,7 +1373,7 @@ public class PlayListPlugin extends FramePlugin implements BasicPlayerListener, 
 			{
 				quickFindPanel.setVisible(true);
 			}
-			
+
 			// Permet de lancer le Manager pour la PlayList
 			else if (actionCommand.equals("manager"))
 			{

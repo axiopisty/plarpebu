@@ -28,26 +28,26 @@ public class QuickFindPanel extends JPanel implements ActionListener, KeyListene
 
 		// Build Quick Find Panel
 		addKeyListener(playListPlugin);
-		
+
 		quickFindCloseButton = SwingUtils.addButton(this, "Close QuickFind", "Close QuickFind",
 		         "/icons/little/littleStop.gif");
 		quickFindCloseButton.addActionListener(this);
 		quickFindCloseButton.addKeyListener(playListPlugin);
-		
+
 		add(quickFindCloseButton);
 		add(new JLabel("Find:"));
 		quickFindField = new JTextField(20);
 		quickFindField.addKeyListener(this);
 		quickFindField.addKeyListener(playListPlugin);
 		add(quickFindField);
-		
+
 		quickFindPrevButton = SwingUtils.addButton(this, "Find Prev", "Find Prev",
 		         "/icons/little/littlePrev.gif");
 		quickFindPrevButton.setMnemonic(KeyEvent.VK_P);
 		quickFindPrevButton.addActionListener(this);
 		quickFindPrevButton.addKeyListener(playListPlugin);
 		add(quickFindPrevButton);
-		
+
 		quickFindNextButton = SwingUtils.addButton(this, "Find Next", "Find Next",
 		         "/icons/little/littleNext.gif");
 		quickFindNextButton.setMnemonic(KeyEvent.VK_N);

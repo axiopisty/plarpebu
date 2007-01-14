@@ -34,98 +34,110 @@ import com.plarpebu.plugins.sdk.Iconifiable;
 /**
  * This has additional functionality not built into the jlGUI BasicPlayer
  */
-public abstract class BasicPlayer implements BasicController {
-    /**
-     * These variables are used to distinguish stopped, paused, playing states.
-     * We need them to control Thread.
-     */
-    public static final int UNKNOWN = -1;
+public abstract class BasicPlayer implements BasicController
+{
+	/**
+	 * These variables are used to distinguish stopped, paused, playing states. We need them to
+	 * control Thread.
+	 */
+	public static final int UNKNOWN = -1;
 
-    public static final int PLAYING = 0;
+	public static final int PLAYING = 0;
 
-    public static final int PAUSED = 1;
+	public static final int PAUSED = 1;
 
-    public static final int STOPPED = 2;
+	public static final int STOPPED = 2;
 
-    public static final int OPENED = 3;
+	public static final int OPENED = 3;
 
-    public static final int SEEKING = 4;
+	public static final int SEEKING = 4;
 
-    protected int m_status = UNKNOWN;
+	protected int m_status = UNKNOWN;
 
-    // Listeners to be notified.
-    protected Collection m_listeners = new ArrayList();
+	// Listeners to be notified.
+	protected Collection m_listeners = new ArrayList();
 
-    protected String[] supportedFileTypeExtensions = {};
+	protected String[] supportedFileTypeExtensions = {};
 
-    private Iconifiable playerUI;
+	private Iconifiable playerUI;
 
-    public void addBasicPlayerListener(BasicPlayerListener bpl) {
-        m_listeners.add(bpl);
-    }
+	public void addBasicPlayerListener(BasicPlayerListener bpl)
+	{
+		m_listeners.add(bpl);
+	}
 
-    /**
-     * Returns BasicPlayer status.
-     * 
-     * @return status
-     */
-    public int getStatus() {
-        return m_status;
-    }
+	/**
+	 * Returns BasicPlayer status.
+	 * 
+	 * @return status
+	 */
+	public int getStatus()
+	{
+		return m_status;
+	}
 
-    /**
-     * Notify listeners about a BasicPlayerEvent.
-     * 
-     * @param code
-     *        event code.
-     * @param position
-     *        in the stream when the event occurs.
-     */
-    protected void notifyEvent(int code, int position, double value, Object description) {
-        Iterator it = m_listeners.iterator();
-        while (it.hasNext()) {
-            BasicPlayerListener bpl = (BasicPlayerListener) it.next();
-            bpl.stateUpdated(new BasicPlayerEvent(this, code, position, value, description));
-        }
-    }
+	/**
+	 * Notify listeners about a BasicPlayerEvent.
+	 * 
+	 * @param code
+	 *           event code.
+	 * @param position
+	 *           in the stream when the event occurs.
+	 */
+	protected void notifyEvent(int code, int position, double value, Object description)
+	{
+		Iterator it = m_listeners.iterator();
+		while (it.hasNext())
+		{
+			BasicPlayerListener bpl = (BasicPlayerListener) it.next();
+			bpl.stateUpdated(new BasicPlayerEvent(this, code, position, value, description));
+		}
+	}
 
-    /**
-     * Checks if the file is in a supported format
-     * 
-     * @param file
-     * @return true if file is supported, false otherwise
-     */
-    public boolean isFileSupported(File file) {
-        return isFileSupported(file.getName());
-    }
+	/**
+	 * Checks if the file is in a supported format
+	 * 
+	 * @param file
+	 * @return true if file is supported, false otherwise
+	 */
+	public boolean isFileSupported(File file)
+	{
+		return isFileSupported(file.getName());
+	}
 
-    /**
-     * Checks if the file is in a supported format
-     * 
-     * @param filename
-     * @return true if file is supported, false otherwise
-     */
-    public boolean isFileSupported(String filename) {
-        System.out.println("On teste pour " + filename);
-        for (int i = 0; i < supportedFileTypeExtensions.length; i++) {
-            System.out.println("On compare avec " + supportedFileTypeExtensions[i]);
-            if (filename.toLowerCase().endsWith(supportedFileTypeExtensions[i])) return true;
-        }
-        return false;
-    }
+	/**
+	 * Checks if the file is in a supported format
+	 * 
+	 * @param filename
+	 * @return true if file is supported, false otherwise
+	 */
+	public boolean isFileSupported(String filename)
+	{
+		System.out.println("On teste pour " + filename);
+		for (int i = 0; i < supportedFileTypeExtensions.length; i++)
+		{
+			System.out.println("On compare avec " + supportedFileTypeExtensions[i]);
+			if (filename.toLowerCase().endsWith(supportedFileTypeExtensions[i]))
+				return true;
+		}
+		return false;
+	}
 
-    public String[] getSupportedFileTypeExtensions() {
-        return supportedFileTypeExtensions;
-    }
+	public String[] getSupportedFileTypeExtensions()
+	{
+		return supportedFileTypeExtensions;
+	}
 
-    public abstract void setSupportedFileTypeExtensions();
+	public abstract void setSupportedFileTypeExtensions();
 
-    public Iconifiable getPlayerUI() {
-        return playerUI;
-    }
+	public Iconifiable getPlayerUI()
+	{
+		return playerUI;
+	}
 
-    public void setPlayerUI(Iconifiable playerUI) {
-        this.playerUI = playerUI;
-    }
+	public void setPlayerUI(Iconifiable playerUI)
+	{
+		this.playerUI = playerUI;
+	}
 
 }

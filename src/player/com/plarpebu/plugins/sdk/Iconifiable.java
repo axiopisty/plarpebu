@@ -18,8 +18,9 @@ package com.plarpebu.plugins.sdk;
  * @version 1.0
  */
 
-public interface Iconifiable {
-    public void minimize();
+public interface Iconifiable
+{
+	public void minimize();
 
-    public void setToOriginalSize();
+	public void setToOriginalSize();
 }

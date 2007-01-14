@@ -5,10 +5,9 @@ package com.plarpebu.plugins.karaoke.cdg.instructions;
  * Title:
  * </p>
  * <p>
- * Description: Define Transparent Color (subCode.instruction==28) This command
- * is used to define a CLUT color as being transparent, for example so that the
- * the graphics can be overlayed on top of a live video signal. I don't see any
- * interest for now ... ???
+ * Description: Define Transparent Color (subCode.instruction==28) This command is used to define a
+ * CLUT color as being transparent, for example so that the the graphics can be overlayed on top of
+ * a live video signal. I don't see any interest for now ... ???
  * </p>
  * <p>
  * Copyright: Copyright (c) 2003
@@ -21,6 +20,8 @@ package com.plarpebu.plugins.karaoke.cdg.instructions;
  * @version $Id
  */
 
-public class CdgDefineTransparentColor {
-    public CdgDefineTransparentColor(byte[] data) {}
+public class CdgDefineTransparentColor
+{
+	public CdgDefineTransparentColor(byte[] data)
+	{}
 }

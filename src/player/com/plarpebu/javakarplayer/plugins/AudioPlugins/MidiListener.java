@@ -18,7 +18,8 @@ package com.plarpebu.javakarplayer.plugins.AudioPlugins;
  * @version $Id
  */
 
-public interface MidiListener {
+public interface MidiListener
+{
 
-    public void setCurrentPosition(long pos);
+	public void setCurrentPosition(long pos);
 }

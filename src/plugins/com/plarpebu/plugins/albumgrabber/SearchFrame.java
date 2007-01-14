@@ -13,6 +13,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.plarpebu.SkinMgr;
+
 /**
  * <p>
  * Title:
@@ -30,95 +32,110 @@ import javax.swing.JPanel;
  * @author not attributable
  * @version 1.0
  */
+public class SearchFrame extends JFrame
+{
+	private BorderLayout borderLayout1 = new BorderLayout();
 
-public class SearchFrame extends JFrame {
+	private JFormattedTextField auteurT = null;
 
-    private BorderLayout borderLayout1 = new BorderLayout();
+	private JFormattedTextField albumT = null;
 
-    private JFormattedTextField auteurT = null;
+	private JLabel nomAuteur = null;
 
-    private JFormattedTextField albumT = null;
+	private JLabel nomAlbum = null;
 
-    private JLabel nomAuteur = null;
+	private AlbumGrabberPlugin abp = null;
 
-    private JLabel nomAlbum = null;
+	private String auteurS = null;
 
-    private AlbumGrabberPlugin abp = null;
+	private String albumS = null;
 
-    private String auteurS = null;
+	private Container pane = null;
 
-    private String albumS = null;
+	private JButton gosearch = null;
 
-    private Container pane = null;
+	/**
+	 * Constructor
+	 * @param abp
+	 */
+	public SearchFrame(AlbumGrabberPlugin abp)
+	{
+		this.abp = abp;
+		try
+		{
+			jbInit();
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		
+		SkinMgr.getInstance().addComponent(this);
+	}
 
-    private JButton gosearch = null;
+	/**
+	 * Initialize UI
+	 * 
+	 * @throws Exception
+	 */
+	void jbInit() throws Exception
+	{
+		pane = this.getContentPane();
+		pane.setLayout(borderLayout1);
 
-    public SearchFrame(AlbumGrabberPlugin abp) {
-        this.abp = abp;
-        try {
-            jbInit();
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
+		auteurS = abp.getAuteur();
+		albumS = abp.getAlbum();
 
-    void jbInit() throws Exception {
+		nomAuteur = new JLabel("Nom de l'auteur : ");
+		nomAlbum = new JLabel("Nom de l'album : ");
 
-        pane = this.getContentPane();
-        pane.setLayout(borderLayout1);
+		auteurT = new JFormattedTextField();
+		auteurT.setColumns(30);
 
-        auteurS = abp.getAuteur();
-        albumS = abp.getAlbum();
+		if (auteurS != null)
+			auteurT.setValue(auteurS);
+		else
+			auteurT.setValue("null");
 
-        nomAuteur = new JLabel("Nom de l'auteur : ");
-        nomAlbum = new JLabel("Nom de l'album : ");
+		albumT = new JFormattedTextField();
 
-        auteurT = new JFormattedTextField();
-        auteurT.setColumns(30);
+		if (albumS != null)
+			albumT.setValue(albumS);
+		else
+			albumT.setValue("null");
 
-        if (auteurS != null)
-            auteurT.setValue(auteurS);
-        else
-            auteurT.setValue("null");
+		albumT.setColumns(30);
 
-        albumT = new JFormattedTextField();
+		JPanel labelPane = new JPanel(new GridLayout(0, 1));
+		labelPane.add(nomAuteur);
+		labelPane.add(nomAlbum);
 
-        if (albumS != null)
-            albumT.setValue(albumS);
-        else
-            albumT.setValue("null");
+		JPanel fieldPane = new JPanel(new GridLayout(0, 1));
+		fieldPane.add(auteurT);
+		fieldPane.add(albumT);
 
-        albumT.setColumns(30);
+		gosearch = new JButton("Go search");
+		gosearch.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				System.out.println("on lance la recherche");
+				auteurS = (String) auteurT.getValue();
+				albumS = (String) albumT.getValue();
+				System.out.println(auteurS + albumS);
+				abp.setAlbum(auteurS, albumS);
+			}
+		});
 
-        JPanel labelPane = new JPanel(new GridLayout(0, 1));
-        labelPane.add(nomAuteur);
-        labelPane.add(nomAlbum);
+		pane.add(labelPane, BorderLayout.CENTER);
+		pane.add(fieldPane, BorderLayout.LINE_END);
+		pane.add(gosearch, BorderLayout.SOUTH);
 
-        JPanel fieldPane = new JPanel(new GridLayout(0, 1));
-        fieldPane.add(auteurT);
-        fieldPane.add(albumT);
+		// abp.setAlbum(auteurS, albumS);
 
-        gosearch = new JButton("Go search");
-        gosearch.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("on lance la recherche");
-                auteurS = (String) auteurT.getValue();
-                albumS = (String) albumT.getValue();
-                System.out.println(auteurS + albumS);
-                abp.setAlbum(auteurS, albumS);
-            }
-        });
-
-        pane.add(labelPane, BorderLayout.CENTER);
-        pane.add(fieldPane, BorderLayout.LINE_END);
-        pane.add(gosearch, BorderLayout.SOUTH);
-
-        // abp.setAlbum(auteurS, albumS);
-
-        setTitle("Search Frame");
-        setSize(new Dimension(350, 100));
-        pack();
-    }
+		setTitle("Search Frame");
+		setSize(new Dimension(350, 100));
+		pack();
+	}
 
 }

@@ -27,192 +27,222 @@ import com.plarpebu.util.CacheUtil;
  * 
  * @author kmschmidt
  */
-public class AlbumGrabberPlugin extends FramePlugin implements ActionListener, BasicPlayerListener {
+public class AlbumGrabberPlugin extends FramePlugin implements ActionListener, BasicPlayerListener
+{
 
-    private Album album = null;
+	private Album album = null;
 
-    private RechercheThread st;
+	private RechercheThread st;
 
-    private JLabel imageLabel = null;
+	private JLabel imageLabel = null;
 
-    private JPopupMenu popup = null;
+	private JPopupMenu popup = null;
 
-    private PopupListener popupListener = null;
+	private PopupListener popupListener = null;
 
-    private SearchFrame searchframe = null;
+	private SearchFrame searchframe = null;
 
-    private String auteur = null;
+	private String auteur = null;
 
-    private String albumTitle = null;
+	private String albumTitle = null;
 
-    public AlbumGrabberPlugin() {
+	public AlbumGrabberPlugin()
+	{
 
-        popupListener = new PopupListener();
-        this.addMouseListener(popupListener);
+		popupListener = new PopupListener();
+		this.addMouseListener(popupListener);
 
-        popup = new JPopupMenu();
-        JMenuItem mi = new JMenuItem("Save Picture");
-        mi.setActionCommand("save");
-        mi.addActionListener(this);
-        popup.add(mi);
+		popup = new JPopupMenu();
+		JMenuItem mi = new JMenuItem("Save Picture");
+		mi.setActionCommand("save");
+		mi.addActionListener(this);
+		popup.add(mi);
 
-        mi = new JMenuItem("Skip picture");
-        mi.setActionCommand("skip");
-        mi.addActionListener(this);
-        popup.add(mi);
+		mi = new JMenuItem("Skip picture");
+		mi.setActionCommand("skip");
+		mi.addActionListener(this);
+		popup.add(mi);
 
-        popup.addSeparator();
-        mi = new JMenuItem("Search +");
-        mi.setActionCommand("search");
-        mi.addActionListener(this);
-        popup.add(mi);
+		popup.addSeparator();
+		mi = new JMenuItem("Search +");
+		mi.setActionCommand("search");
+		mi.addActionListener(this);
+		popup.add(mi);
 
-        setTitle("Album Grabber " + getVersion());
-        imageLabel = new JLabel();
+		setTitle("Album Grabber " + getVersion());
+		imageLabel = new JLabel();
 
-        this.getContentPane().add(imageLabel);
-        setSize(200, 200);
-        readPreferences();
-    }
+		this.getContentPane().add(imageLabel);
+		setSize(200, 200);
+		readPreferences();
+	}
 
-    public String getName() {
-        return "AlbumGrabber";
-    }
+	public String getName()
+	{
+		return "AlbumGrabber";
+	}
 
-    public String getAuteur() {
-        return auteur;
-    }
+	public String getAuteur()
+	{
+		return auteur;
+	}
 
-    public String getAlbum() {
-        return albumTitle;
-    }
+	public String getAlbum()
+	{
+		return albumTitle;
+	}
 
-    public void setAlbum(String auteurN, String albumN) {
-        RechercheThread.yield();
-        auteur = auteurN;
-        albumTitle = albumN;
-        try {
-            File albumCacheDir = CacheUtil.getAlbumCacheDir();
-            album = new Album(albumCacheDir, auteur, albumTitle);
-            st = new RechercheThread(album, imageLabel, this);
-            st.start();
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
+	public void setAlbum(String auteurN, String albumN)
+	{
+		RechercheThread.yield();
+		auteur = auteurN;
+		albumTitle = albumN;
+		try
+		{
+			File albumCacheDir = CacheUtil.getAlbumCacheDir();
+			album = new Album(albumCacheDir, auteur, albumTitle);
+			st = new RechercheThread(album, imageLabel, this);
+			st.start();
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+	}
 
-    public void stateUpdated(BasicPlayerEvent event) {}
+	public void stateUpdated(BasicPlayerEvent event)
+	{}
 
-    public void opened(Object stream, Map properties) {
-        if (isVisible()) {
-            if (stream != null) {
-                auteur = ((String) properties.get("author"));
-                albumTitle = ((String) properties.get("album"));
-                try {
-                    File albumCacheDir = CacheUtil.getAlbumCacheDir();
-                    album = new Album(albumCacheDir, auteur, albumTitle);
-                    System.out.println("auteur : " + auteur + " album " + albumTitle);
+	public void opened(Object stream, Map properties)
+	{
+		if (isVisible())
+		{
+			if (stream != null)
+			{
+				auteur = ((String) properties.get("author"));
+				albumTitle = ((String) properties.get("album"));
+				try
+				{
+					File albumCacheDir = CacheUtil.getAlbumCacheDir();
+					album = new Album(albumCacheDir, auteur, albumTitle);
+					System.out.println("auteur : " + auteur + " album " + albumTitle);
 
-                    st = new RechercheThread(album, imageLabel, this);
-                    st.start();
-                }
-                catch (Exception ex) {}
-            }
-        }
-    }
+					st = new RechercheThread(album, imageLabel, this);
+					st.start();
+				}
+				catch (Exception ex)
+				{}
+			}
+		}
+	}
 
-    public void progress(int bytesread, long microseconds, byte[] pcmdata, Map properties) {}
+	public void progress(int bytesread, long microseconds, byte[] pcmdata, Map properties)
+	{}
 
-    /**
-     * getPlugin
-     * 
-     * @return BasicPlayerListener
-     */
-    public BasicPlayerListener getPlugin() {
-        return this;
-    }
+	/**
+	 * getPlugin
+	 * 
+	 * @return BasicPlayerListener
+	 */
+	public BasicPlayerListener getPlugin()
+	{
+		return this;
+	}
 
-    /**
-     * setController
-     * 
-     * @param controller
-     *        BasicController
-     */
-    public void setController(BasicController controller) {}
+	/**
+	 * setController
+	 * 
+	 * @param controller
+	 *           BasicController
+	 */
+	public void setController(BasicController controller)
+	{}
 
-    /**
-     * actionPerformed
-     * 
-     * @param e
-     *        ActionEvent
-     */
-    public void actionPerformed(ActionEvent e) {
-        String c = e.getActionCommand();
-        if (c.equals("search")) {
-            searchframe = new SearchFrame(this);
-            searchframe.setVisible(true);
-        }
-    }
+	/**
+	 * actionPerformed
+	 * 
+	 * @param e
+	 *           ActionEvent
+	 */
+	public void actionPerformed(ActionEvent e)
+	{
+		String c = e.getActionCommand();
+		if (c.equals("search"))
+		{
+			searchframe = new SearchFrame(this);
+			searchframe.setVisible(true);
+		}
+	}
 
-    public String getVersion() {
-        return "v1.2";
-    }
+	public String getVersion()
+	{
+		return "v1.2";
+	}
 
-    private class RechercheThread extends Thread {
-        private Album album;
+	private class RechercheThread extends Thread
+	{
+		private Album album;
 
-        private JLabel label;
+		private JLabel label;
 
-        private JFrame frame;
+		private JFrame frame;
 
-        /**
-         * Constructor
-         * 
-         * @param album
-         *        DOCUMENT ME!
-         */
-        public RechercheThread(Album aTrouver, JLabel label, JFrame frame) {
-            this.album = aTrouver;
-            this.label = label;
-            this.frame = frame;
-        }
+		/**
+		 * Constructor
+		 * 
+		 * @param album
+		 *           DOCUMENT ME!
+		 */
+		public RechercheThread(Album aTrouver, JLabel label, JFrame frame)
+		{
+			this.album = aTrouver;
+			this.label = label;
+			this.frame = frame;
+		}
 
-        /**
-         * Run the search
-         */
-        public void run() {
-            try {
-                album = AlbumSearch.search(album);
-                label.setIcon(new ImageIcon(album.getImageBytes()));
-                frame.pack();
-            }
-            catch (Exception ex) {
-                System.out.println("Album non trouve");
-            }
-        }
-    }
+		/**
+		 * Run the search
+		 */
+		public void run()
+		{
+			try
+			{
+				album = AlbumSearch.search(album);
+				label.setIcon(new ImageIcon(album.getImageBytes()));
+				frame.pack();
+			}
+			catch (Exception ex)
+			{
+				System.out.println("Album non trouve");
+			}
+		}
+	}
 
-    /** Classe dédiée au Popup */
-    class PopupListener extends MouseAdapter {
+	/** Classe dédiée au Popup */
+	class PopupListener extends MouseAdapter
+	{
 
-        public void mousePressed(MouseEvent e) {
-            maybeShowPopup(e);
-        }
+		public void mousePressed(MouseEvent e)
+		{
+			maybeShowPopup(e);
+		}
 
-        public void mouseReleased(MouseEvent e) {
-            maybeShowPopup(e);
-        }
+		public void mouseReleased(MouseEvent e)
+		{
+			maybeShowPopup(e);
+		}
 
-        /**
-         * Fonction qui initialise le PopUp lors de son affichage i.e. qui
-         * active ou désactive certains menus selon le contexte
-         */
-        public void maybeShowPopup(MouseEvent e) {
-            if (e.isPopupTrigger()) {
-                popup.show(e.getComponent(), e.getX(), e.getY());
-                popup.revalidate();
-            }
-        }
-    }
+		/**
+		 * Fonction qui initialise le PopUp lors de son affichage i.e. qui active ou désactive
+		 * certains menus selon le contexte
+		 */
+		public void maybeShowPopup(MouseEvent e)
+		{
+			if (e.isPopupTrigger())
+			{
+				popup.show(e.getComponent(), e.getX(), e.getY());
+				popup.revalidate();
+			}
+		}
+	}
 }
