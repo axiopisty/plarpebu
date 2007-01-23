@@ -140,7 +140,7 @@ public class Player extends JFrameWithPreferences implements DropTargetListener,
 	 */
 	public Player() throws MalformedURLException
 	{
-		super("Plarpebu v1.0");
+		super("Plarpebu v1.0 Final");
 
 		// Read preferences
 		setPreferencesFileNames("preferences", "Plaperbu.properties", "defaultPlaperbu.properties");
