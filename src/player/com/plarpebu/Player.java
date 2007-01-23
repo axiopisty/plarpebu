@@ -386,7 +386,7 @@ public class Player extends JFrameWithPreferences implements DropTargetListener,
 			{
 				public void actionPerformed(ActionEvent e)
 				{
-					JOptionPane.showMessageDialog(menuHelp, "           Open Source Java Karaoke Player\n\nCurrent Developers:\n   Michel Buffa (micbuffa@gmail.com)\n   Kevin Schmidt (kevin.m.schmidt@fuse.net)\n\nLicense: GNU General Public License (GPL)", "About Plarpebu",
+					JOptionPane.showMessageDialog(menuHelp, "           Open Source Java Karaoke Player\n\nhttp://miageprojet.unice.fr/twiki/bin/view/Fun/JavaKarPlayer\n\nCurrent Developers:\n   Michel Buffa (micbuffa@gmail.com)\n   Kevin Schmidt (kevin.m.schmidt@fuse.net)\n\nLicense: GNU General Public License (GPL)", "About Plarpebu",
 					         JOptionPane.PLAIN_MESSAGE);
 				}
 			};
