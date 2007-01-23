@@ -1,5 +1,5 @@
 
-Changes since 1.0 b22
+Changes in 1.0 Final
 ---------------------
 * Added javadocs
 * Added Help menu and about popup
