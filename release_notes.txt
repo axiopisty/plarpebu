@@ -1,6 +1,7 @@
 
 Changes since 1.0 b22
 ---------------------
+* Added javadocs
 * Added Help menu and about popup
 * Fixed skin management
 * Upgraded to use BasicPlayer 3.0 & other 3rdparty libs

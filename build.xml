@@ -6,12 +6,15 @@ directories. For example, the JBuilder output directory might be "classes"
 and the Ant output directory might be "classes.ant".-->
 <project basedir="." default="all" name="Plarpebu">
 
+	<property name="build" value="build" />
+	<property name="doc" value="doc" />
 	<property name="lib" value="lib" />
 	<property name="plugins" value="plugins" />
-	<property name="src.player" value="src/player" />
-	<property name="src.plugins" value="src/plugins" />
-	<property name="classes.player" value="classes.player" />
-	<property name="classes.plugins" value="classes.plugins" />
+	<property name="src" value="src" />
+	<property name="src.player" value="${src}/player" />
+	<property name="src.plugins" value="${src}/plugins" />
+	<property name="classes.player" value="${build}/classes.player" />
+	<property name="classes.plugins" value="${build}/classes.plugins" />
 
 	<!-- Compile classpath -->
 	<path id="project.class.path">
@@ -38,6 +41,25 @@ and the Ant output directory might be "classes.ant".-->
 		<pathelement location="${lib}/vorbisspi1.0.2.jar" />
 	</path>
 
+	<!-- All -->
+	<target name="all" depends="clean, package" />
+
+	<!-- Package -->
+	<target name="package" depends="jar, javadoc" />
+
+	<!-- Clean -->
+	<target name="clean">
+		<delete dir="${build}" />
+		<delete file="player.jar" />
+		<delete>
+			<fileset dir="${plugins}" includes="*.jar" />
+		</delete>
+		<delete failonerror="false" includeemptydirs="true">
+			<fileset dir="${classes.player}" />
+			<fileset dir="${classes.plugins}" />
+		</delete>
+	</target>
+
 	<!-- Init -->
 	<target name="init">
 		<mkdir dir="${classes.player}" />
@@ -49,28 +71,20 @@ and the Ant output directory might be "classes.ant".-->
 
 	<!-- Compile Player -->
 	<target depends="init" name="compile_player">
-		<javac classpathref="project.class.path"
-		       debug="true"
-		       deprecation="true"
-		       destdir="${classes.player}"
-		       nowarn="false">
+		<javac classpathref="project.class.path" debug="true" deprecation="true" destdir="${classes.player}" nowarn="false">
 			<src path="${src.player}" />
 		</javac>
 	</target>
 
 	<!-- Compile Plugins -->
 	<target depends="compile_player" name="compile_plugins">
-		<javac classpathref="project.class.path"
-		       debug="true"
-		       deprecation="true"
-		       destdir="${classes.plugins}"
-		       nowarn="false">
+		<javac classpathref="project.class.path" debug="true" deprecation="true" destdir="${classes.plugins}" nowarn="false">
 			<src path="${src.plugins}" />
 		</javac>
 	</target>
 
 	<!-- jar -->
-	<target depends="compile, resource" name="archive">
+	<target name="jar" depends="compile, resource">
 		<!-- Player jar -->
 		<jar compress="true" jarfile="player.jar">
 			<fileset dir="${classes.player}">
@@ -79,8 +93,7 @@ and the Ant output directory might be "classes.ant".-->
 			<manifest>
 				<attribute name="Built-By" value="${user.name}" />
 				<attribute name="Main-Class" value="com.plarpebu.Player" />
-				<attribute name="Class-Path"
-				           value="${lib}/albumgrabber.jar ${lib}/basicplayer3.0.jar ${lib}/chardet.jar ${lib}/commons-logging-1.1.jar ${lib}/jakarta-regexp-1.2.jar ${lib}/jbcl.jar ${lib}/jflac-1.2.jar ${lib}/jl1.0.jar ${lib}/jmactritonusspi1.74.jar ${lib}/jogg-0.0.7.jar ${lib}/jorbis-0.0.15.jar ${lib}/jspeex0.9.7.jar ${lib}/kj_dsp1.1.jar ${lib}/l2fprod-common-directorychooser.jar ${lib}/l2fprod-common-fontchooser.jar ${lib}/mp3spi1.9.4.jar ${lib}/pluginLoaderAPI.jar ${lib}/skinlf.jar ${lib}/tritonus_share.jar ${lib}/vorbisspi1.0.2.jar" />
+				<attribute name="Class-Path" value="${lib}/albumgrabber.jar ${lib}/basicplayer3.0.jar ${lib}/chardet.jar ${lib}/commons-logging-1.1.jar ${lib}/jakarta-regexp-1.2.jar ${lib}/jbcl.jar ${lib}/jflac-1.2.jar ${lib}/jl1.0.jar ${lib}/jmactritonusspi1.74.jar ${lib}/jogg-0.0.7.jar ${lib}/jorbis-0.0.15.jar ${lib}/jspeex0.9.7.jar ${lib}/kj_dsp1.1.jar ${lib}/l2fprod-common-directorychooser.jar ${lib}/l2fprod-common-fontchooser.jar ${lib}/mp3spi1.9.4.jar ${lib}/pluginLoaderAPI.jar ${lib}/skinlf.jar ${lib}/tritonus_share.jar ${lib}/vorbisspi1.0.2.jar" />
 			</manifest>
 		</jar>
 
@@ -107,33 +120,28 @@ and the Ant output directory might be "classes.ant".-->
 		</jar>
 	</target>
 
-	<!-- Clean -->
-	<target name="clean">
-		<delete file="player.jar" />
-		<delete>
-			<fileset dir="${plugins}" includes="*.jar" />
-		</delete>
-		<delete failonerror="false" includeemptydirs="true">
-			<fileset dir="${classes.player}" />
-			<fileset dir="${classes.plugins}" />
-		</delete>
-	</target>
-
 	<!-- Resources -->
 	<target name="resource">
 		<!-- Copy icons -->
 		<copy todir="${classes.player}/icons">
-			<fileset dir="icons"/>
+			<fileset dir="icons" />
 		</copy>
 	</target>
 
-	<target name="javadoc" />
+	<!-- Javadoc -->
+	<target name="javadoc">
+		<echo message="If running through Eclipse, you might need to add %JAVA_HOME%/bin to your path"/>
+		<property name="build.javadoc" value="${build}/javadoc" />
+		<mkdir dir="${build.javadoc}" />
+		<javadoc classpathref="project.class.path" destdir="${build.javadoc}" windowtitle="Plarpebu API">
+			<fileset dir="${src.player}" />
+			<fileset dir="${src.plugins}" />
+		</javadoc>
+		<zip destfile="${doc}/javadoc.zip" basedir="${build.javadoc}" update="true" />
+	</target>
 
-	<target depends="archive,javadoc" name="package" />
-
-	<target depends="clean,compile,package" name="all" />
-
-	<target name="run" depends="all">
+	<!-- Run -->
+	<target name="run" depends="jar">
 		<java classname="com.plarpebu.Player" fork="yes">
 			<classpath refid="project.class.path" />
 		</java>
