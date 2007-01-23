@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Exported by JBuilder on 5 avr. 2004 13:59:53-->
-<!--It is RECOMMENDED that JBuilder builds and Ant builds done with
-this exported Ant file be kept separate and be written to different
-directories. For example, the JBuilder output directory might be "classes"
-and the Ant output directory might be "classes.ant".-->
 <project basedir="." default="all" name="Plarpebu">
 
+	<!-- Properties -->
 	<property name="build" value="build" />
 	<property name="doc" value="doc" />
 	<property name="lib" value="lib" />
@@ -19,36 +15,17 @@ and the Ant output directory might be "classes.ant".-->
 	<!-- Compile classpath -->
 	<path id="project.class.path">
 		<pathelement location="${classes.player}" />
-		<pathelement location="${lib}/albumgrabber.jar" />
-		<pathelement location="${lib}/basicplayer3.0.jar" />
-		<pathelement location="${lib}/chardet.jar" />
-		<pathelement location="${lib}/commons-logging-1.1.jar" />
-		<pathelement location="${lib}/jakarta-regexp-1.2.jar" />
-		<pathelement location="${lib}/jbcl.jar" />
-		<pathelement location="${lib}/jflac-1.2.jar" />
-		<pathelement location="${lib}/jl1.0.jar" />
-		<pathelement location="${lib}/jmactritonusspi1.74.jar" />
-		<pathelement location="${lib}/jogg-0.0.7.jar" />
-		<pathelement location="${lib}/jorbis-0.0.15.jar" />
-		<pathelement location="${lib}/jspeex0.9.7.jar" />
-		<pathelement location="${lib}/kj_dsp1.1.jar" />
-		<pathelement location="${lib}/l2fprod-common-directorychooser.jar" />
-		<pathelement location="${lib}/l2fprod-common-fontchooser.jar" />
-		<pathelement location="${lib}/mp3spi1.9.4.jar" />
-		<pathelement location="${lib}/pluginLoaderAPI.jar" />
-		<pathelement location="${lib}/skinlf.jar" />
-		<pathelement location="${lib}/tritonus_share.jar" />
-		<pathelement location="${lib}/vorbisspi1.0.2.jar" />
+		<fileset dir="${lib}" includes="*.jar"/>
 	</path>
 
 	<!-- All -->
-	<target name="all" depends="clean, package" />
+	<target name="all" depends="clean, package" description="Clean and package"/>
 
 	<!-- Package -->
-	<target name="package" depends="jar, javadoc" />
+	<target name="package" depends="jar, javadoc" description="Package"/>
 
 	<!-- Clean -->
-	<target name="clean">
+	<target name="clean" description="Clean">
 		<delete dir="${build}" />
 		<delete file="player.jar" />
 		<delete>
@@ -61,30 +38,31 @@ and the Ant output directory might be "classes.ant".-->
 	</target>
 
 	<!-- Init -->
-	<target name="init">
+	<target name="init" description="Initialize">
 		<mkdir dir="${classes.player}" />
 		<mkdir dir="${classes.plugins}" />
 	</target>
 
 	<!-- Compile -->
-	<target depends="init, compile_player, compile_plugins" name="compile" />
-
-	<!-- Compile Player -->
-	<target depends="init" name="compile_player">
+	<target name="compile" depends="init" description="Compile">
+		<!-- Compile Player -->
 		<javac classpathref="project.class.path" debug="true" deprecation="true" destdir="${classes.player}" nowarn="false">
 			<src path="${src.player}" />
 		</javac>
-	</target>
-
-	<!-- Compile Plugins -->
-	<target depends="compile_player" name="compile_plugins">
+		
+		<!-- Compile Plugins -->
 		<javac classpathref="project.class.path" debug="true" deprecation="true" destdir="${classes.plugins}" nowarn="false">
 			<src path="${src.plugins}" />
 		</javac>
 	</target>
 
 	<!-- jar -->
-	<target name="jar" depends="compile, resource">
+	<target name="jar" depends="compile" description="Create Java Archives">
+		<!-- Copy icons -->
+		<copy todir="${classes.player}/icons">
+			<fileset dir="icons" />
+		</copy>
+		
 		<!-- Player jar -->
 		<jar compress="true" jarfile="player.jar">
 			<fileset dir="${classes.player}">
@@ -93,7 +71,7 @@ and the Ant output directory might be "classes.ant".-->
 			<manifest>
 				<attribute name="Built-By" value="${user.name}" />
 				<attribute name="Main-Class" value="com.plarpebu.Player" />
-				<attribute name="Class-Path" value="${lib}/albumgrabber.jar ${lib}/basicplayer3.0.jar ${lib}/chardet.jar ${lib}/commons-logging-1.1.jar ${lib}/jakarta-regexp-1.2.jar ${lib}/jbcl.jar ${lib}/jflac-1.2.jar ${lib}/jl1.0.jar ${lib}/jmactritonusspi1.74.jar ${lib}/jogg-0.0.7.jar ${lib}/jorbis-0.0.15.jar ${lib}/jspeex0.9.7.jar ${lib}/kj_dsp1.1.jar ${lib}/l2fprod-common-directorychooser.jar ${lib}/l2fprod-common-fontchooser.jar ${lib}/mp3spi1.9.4.jar ${lib}/pluginLoaderAPI.jar ${lib}/skinlf.jar ${lib}/tritonus_share.jar ${lib}/vorbisspi1.0.2.jar" />
+				<attribute name="Class-Path" value="${lib}/albumgrabber.jar ${lib}/basicplayer3.0.jar ${lib}/BrowserLauncher2-10rc4.jar ${lib}/chardet.jar ${lib}/commons-logging-1.1.jar ${lib}/jakarta-regexp-1.2.jar ${lib}/jbcl.jar ${lib}/jflac-1.2.jar ${lib}/jl1.0.jar ${lib}/jmactritonusspi1.74.jar ${lib}/jogg-0.0.7.jar ${lib}/jorbis-0.0.15.jar ${lib}/jspeex0.9.7.jar ${lib}/kj_dsp1.1.jar ${lib}/l2fprod-common-directorychooser.jar ${lib}/l2fprod-common-fontchooser.jar ${lib}/mp3spi1.9.4.jar ${lib}/pluginLoaderAPI.jar ${lib}/skinlf.jar ${lib}/tritonus_share.jar ${lib}/vorbisspi1.0.2.jar" />
 			</manifest>
 		</jar>
 
@@ -120,16 +98,8 @@ and the Ant output directory might be "classes.ant".-->
 		</jar>
 	</target>
 
-	<!-- Resources -->
-	<target name="resource">
-		<!-- Copy icons -->
-		<copy todir="${classes.player}/icons">
-			<fileset dir="icons" />
-		</copy>
-	</target>
-
 	<!-- Javadoc -->
-	<target name="javadoc">
+	<target name="javadoc" description="Create Javadocs">
 		<echo message="If running through Eclipse, you might need to add %JAVA_HOME%/bin to your path"/>
 		<property name="build.javadoc" value="${build}/javadoc" />
 		<mkdir dir="${build.javadoc}" />
@@ -141,7 +111,7 @@ and the Ant output directory might be "classes.ant".-->
 	</target>
 
 	<!-- Run -->
-	<target name="run" depends="jar">
+	<target name="run" depends="jar" description="Run Plarpebu!!!">
 		<java classname="com.plarpebu.Player" fork="yes">
 			<classpath refid="project.class.path" />
 		</java>
