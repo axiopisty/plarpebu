@@ -193,6 +193,7 @@ public class Player extends JFrameWithPreferences implements DropTargetListener,
 		buildChargementMenu(); // simple menu pour recharcher d'eventuels
 		// nouveau plugins
 		buildSkinMenu(); // le menu pour changer de skins
+		buildHelpMenu();
 
 		// Construction de l'interface a partir des plugins chargés
 		buildUI();
@@ -365,6 +366,36 @@ public class Player extends JFrameWithPreferences implements DropTargetListener,
 			}
 
 			mb.add(menuSkins);
+		}
+		catch (Exception ex)
+		{
+			System.out.println("Error building skins menu" + ex.toString());
+		}
+	}
+
+	/**
+	 * Build about menu.
+	 */
+	private void buildHelpMenu()
+	{
+		final JMenu menuHelp = new JMenu("Help");
+
+		try
+		{
+			ActionListener aboutListener = new ActionListener()
+			{
+				public void actionPerformed(ActionEvent e)
+				{
+					JOptionPane.showMessageDialog(menuHelp, "           Open Source Java Karaoke Player\n\nCurrent Developers:\n   Michel Buffa (micbuffa@gmail.com)\n   Kevin Schmidt (kevin.m.schmidt@fuse.net)\n\nLicense: GNU General Public License (GPL)", "About Plarpebu",
+					         JOptionPane.PLAIN_MESSAGE);
+				}
+			};
+
+			JMenuItem menuItem = new JMenuItem("About");
+			menuItem.addActionListener(aboutListener);
+			menuHelp.add(menuItem);
+
+			mb.add(menuHelp);
 		}
 		catch (Exception ex)
 		{
