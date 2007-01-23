@@ -3,7 +3,7 @@ Changes in 1.0 Final
 ---------------------
 * Added javadocs
 * Added Help menu and about popup
-* Fixed skin management
+* Fixed skin management, more parts of the ui are skinned, skins load faster, many more skins added.
 * Upgraded to use BasicPlayer 3.0 & other 3rdparty libs
 * Quick Search playlist toolbar (Very similar to Firefox)
 * Refactoring of code for cleaner separation of plugin and core code.
