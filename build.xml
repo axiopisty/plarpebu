@@ -71,7 +71,7 @@
 			<manifest>
 				<attribute name="Built-By" value="${user.name}" />
 				<attribute name="Main-Class" value="com.plarpebu.Player" />
-				<attribute name="Class-Path" value="${lib}/albumgrabber.jar ${lib}/basicplayer3.0.jar ${lib}/BrowserLauncher2-10rc4.jar ${lib}/chardet.jar ${lib}/commons-logging-1.1.jar ${lib}/jakarta-regexp-1.2.jar ${lib}/jbcl.jar ${lib}/jflac-1.2.jar ${lib}/jl1.0.jar ${lib}/jmactritonusspi1.74.jar ${lib}/jogg-0.0.7.jar ${lib}/jorbis-0.0.15.jar ${lib}/jspeex0.9.7.jar ${lib}/kj_dsp1.1.jar ${lib}/l2fprod-common-directorychooser.jar ${lib}/l2fprod-common-fontchooser.jar ${lib}/mp3spi1.9.4.jar ${lib}/pluginLoaderAPI.jar ${lib}/skinlf.jar ${lib}/tritonus_share.jar ${lib}/vorbisspi1.0.2.jar" />
+				<attribute name="Class-Path" value="${lib}/albumgrabber.jar ${lib}/basicplayer3.0.jar ${lib}/BrowserLauncher2-10rc4.jar ${lib}/chardet.jar ${lib}/commons-logging-1.1.jar ${lib}/jakarta-regexp-1.2.jar ${lib}/jbcl.jar ${lib}/jflac-1.2.jar ${lib}/jl1.0.jar ${lib}/jmactritonusspi1.74.jar ${lib}/jogg-0.0.7.jar ${lib}/jorbis-0.0.15.jar ${lib}/jspeex0.9.7.jar ${lib}/kj_dsp1.1.jar ${lib}/l2fprod-common-directorychooser.jar ${lib}/l2fprod-common-fontchooser.jar ${lib}/mp3spi1.9.4.jar ${lib}/pluginLoaderAPI.jar ${lib}/skinlf.jar ${lib}/tritonus_share.jar ${lib}/vorbisspi1.0.2.jar ${plugins}/albumGrabberPlugin.jar ${plugins}/basicPlugins.jar ${plugins}/cdgPlugin.jar ${plugins}/examplePlugins.jar" />
 			</manifest>
 		</jar>
 
