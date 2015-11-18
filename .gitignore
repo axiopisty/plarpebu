@@ -1,4 +1,15 @@
+# Files that are created from running "ant run"
 doc/javadoc.zip
+player.jar
+plugins/
+preferences/AlbumGrabber.properties
+preferences/AudioInfo.properties
+preferences/Equalizer.properties
+preferences/KarMidiLyrics.properties
+preferences/KaraokeCdg.properties
+preferences/Plaperbu.properties
+preferences/PlayList.properties
+preferences/ProgressBar.properties
 
 # Created by https://www.gitignore.io/api/eclipse
 ### Eclipse ###

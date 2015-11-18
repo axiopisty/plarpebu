@@ -34,7 +34,15 @@
 		<delete failonerror="false" includeemptydirs="true">
 			<fileset dir="${classes.player}" />
 			<fileset dir="${classes.plugins}" />
-		</delete>
+    </delete>
+    <delete file="preferences/AlbumGrabber.properties" />
+    <delete file="preferences/AudioInfo.properties" />
+    <delete file="preferences/Equalizer.properties" />
+    <delete file="preferences/KarMidiLyrics.properties" />
+    <delete file="preferences/KaraokeCdg.properties" />
+    <delete file="preferences/Plaperbu.properties" />
+    <delete file="preferences/PlayList.properties" />
+    <delete file="preferences/ProgressBar.properties" />
 	</target>
 
 	<!-- Init -->
