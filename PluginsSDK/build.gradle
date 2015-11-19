@@ -1,0 +1,11 @@
+
+description = ''
+dependencies {
+  compile files("../includes/libs/basicplayer3.0.jar")
+  compile files("../includes/libs/l2fprod-common-fontchooser.jar")
+  compile files("../includes/libs/skinlf.jar")
+
+  compile project(':Common')
+  compile project(':PluginLoaderAPI')
+//  compile group: 'net.sf.squirrel-sql.thirdparty-non-maven', name: 'skinlf', version:'6.7'
+}

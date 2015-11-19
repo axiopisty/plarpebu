@@ -1,0 +1,6 @@
+
+description = ''
+dependencies {
+  compile files("../includes/libs/albumgrabber.jar")
+  compile project(':PluginsSDK')
+}

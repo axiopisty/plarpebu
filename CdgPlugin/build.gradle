@@ -1,0 +1,6 @@
+
+description = ''
+dependencies {
+  compile project(':PluginsSDK')
+  compile project(':Player')
+}

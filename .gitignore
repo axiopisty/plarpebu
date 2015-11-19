@@ -1,4 +1,4 @@
-# Files that are created from running "ant run"
+# Files that are created from running "gradle *"
 doc/javadoc.zip
 player.jar
 plugins/
@@ -122,3 +122,15 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
+
+
+### Gradle ###
+### Gradle ###
+.gradle
+build/
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar

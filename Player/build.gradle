@@ -1,0 +1,46 @@
+description = ''
+dependencies {
+  compile files("../includes/libs/jbcl.jar") // TODO: Remove the dependency on this jar file
+  compile files("../includes/libs/vorbisspi1.0.2.jar") // TODO: Remove the dependency on this jar file
+  compile files("../includes/libs/jorbis-0.0.15.jar") // TODO: Remove the dependency on this jar file
+  compile files("../includes/libs/jogg-0.0.7.jar") // TODO: Remove the dependency on this jar file
+  compile files("../includes/libs/jmactritonusspi1.74.jar") // TODO: Remove the dependency on this jar file
+  compile files("../includes/libs/jflac-1.2.jar") // TODO: Remove the dependency on this jar file
+  compile files("../includes/libs/chardet.jar") // TODO: Remove the dependency on this jar file
+  compile files("../includes/libs/mp3spi1.9.4.jar") // TODO: Remove the dependency on this jar file
+  compile files("../includes/libs/tritonus_share.jar") // TODO: Remove the dependency on this jar file
+  compile files("../includes/libs/jspeex0.9.7.jar") // TODO: Remove the dependency on this jar file
+  compile files("../includes/libs/jl1.0.jar") // TODO: Remove the dependency on this jar file
+  compile files("../includes/libs/commons-logging-1.1.jar") // TODO: Remove the dependency on this jar file
+  compile files("../includes/libs/jakarta-regexp-1.2.jar") // TODO: Remove the dependency on this jar file
+  compile files("../includes/libs/kj_dsp1.1.jar") // TODO: Remove the dependency on this jar file
+  compile files("../includes/libs/albumgrabber.jar") // TODO: Remove the dependency on this jar file
+
+  compile project(':Common')
+  compile project(':PluginsSDK')
+  compile project(':PluginLoaderAPI')
+  compile project(':BasicPlugins')
+
+//    compile group: 'commons-logging', name: 'commons-logging', version:'1.1.1'
+//    compile group: 'com.googlecode.soundlibs', name: 'tritonus-share', version:'0.3.7-2'
+//    compile group: 'com.googlecode.soundlibs', name: 'mp3spi', version:'1.9.5-1'
+//    compile group: 'net.sourceforge.jchardet', name: 'jchardet', version:'1.0'
+}
+
+task assembleManifestClasspath {
+  doLast {
+      jar {
+          manifest {
+              attributes 'Created-By': "Gradle v${gradle.gradleVersion}",
+                      'Implementation-Title': 'Plarpebu',
+                      'Implementation-Version': "${project.version}",
+                      'Built-By': "${System.getProperty('user.name')}",
+                      'Build-Time-ISO-8601': "${new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")}",
+                      'Main-Class': 'com.plarpebu.Player',
+                      'Class-Path': configurations.runtime.collect{"libs/${it.name}"}.join(' ')
+          }
+    }
+  }
+}
+
+jar.dependsOn assembleManifestClasspath

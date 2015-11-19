@@ -1,0 +1,7 @@
+
+description = ''
+dependencies {
+  compile files('../includes/libs/l2fprod-common-directorychooser.jar')
+  compile project(':Common')
+  compile project(':PluginsSDK')
+}

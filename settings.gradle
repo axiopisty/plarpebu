@@ -1,0 +1,20 @@
+rootProject.name = 'plarpebu'
+include ':Common'
+include ':PluginsSDK'
+include ':PluginLoaderAPI'
+include ':Player'
+include ':AlbumGrabberPlugin'
+include ':BasicPlugins'
+include ':CdgPlugin'
+include ':ExamplePlugins'
+include ':VisualizerPlugin'
+
+project(':Common').projectDir = "$rootDir/Common" as File
+project(':PluginsSDK').projectDir = "$rootDir/PluginsSDK" as File
+project(':PluginLoaderAPI').projectDir = "$rootDir/PluginLoaderAPI" as File
+project(':Player').projectDir = "$rootDir/Player" as File
+project(':AlbumGrabberPlugin').projectDir = "$rootDir/AlbumGrabberPlugin" as File
+project(':BasicPlugins').projectDir = "$rootDir/BasicPlugins" as File
+project(':CdgPlugin').projectDir = "$rootDir/CdgPlugin" as File
+project(':ExamplePlugins').projectDir = "$rootDir/ExamplePlugins" as File
+project(':VisualizerPlugin').projectDir = "$rootDir/VisualizerPlugin" as File

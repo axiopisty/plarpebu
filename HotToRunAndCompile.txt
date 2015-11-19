@@ -1,7 +1,0 @@
-You need the ant tool from jakarta in order to compile/run plarpebu from the source distrib (ant.apache.org) + a jdk 1.5 or superior.
-
-You need to have JAVA_HOME and ANT_HOME set to the install dir o these tools. You need to have the "ant" command in your PATH (ant install dir/bin need to be added to the PATH environment variable).
-
-Type "ant run" to run, "ant clean", "ant compile", etc... look at the build.xml file for all possible targets.
-
-Michel Buffa (micbuffa@gmail.com).

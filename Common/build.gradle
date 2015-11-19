@@ -1,0 +1,5 @@
+
+description = ''
+dependencies {
+    compile files("../includes/libs/basicplayer3.0.jar")
+}
