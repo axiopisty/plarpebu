@@ -18,6 +18,19 @@
 		<fileset dir="${lib}" includes="*.jar"/>
 	</path>
 
+
+	<target name="get-java-version">
+		<condition property="java.version.limit">
+			<or>
+				<equals arg1="${ant.java.version}" arg2="1.5"/>
+				<equals arg1="${ant.java.version}" arg2="1.6"/>
+			</or>
+		</condition>
+	</target>
+	<target name="check-java-version" depends="get-java-version" unless="java.version.limit">
+		<fail message="Unsupported Java version: ${ant.java.version}. Plarpebu is currently compatible only with Java versions 1.5 or 1.6."/>
+	</target>
+
 	<!-- All -->
 	<target name="all" depends="clean, package" description="Clean and package"/>
 
@@ -26,23 +39,23 @@
 
 	<!-- Clean -->
 	<target name="clean" description="Clean">
-		<delete dir="${build}" />
-		<delete file="player.jar" />
-		<delete>
+		<delete dir="${build}" failonerror="false"/>
+		<delete file="player.jar" failonerror="false"/>
+		<delete failonerror="false">
 			<fileset dir="${plugins}" includes="*.jar" />
 		</delete>
 		<delete failonerror="false" includeemptydirs="true">
 			<fileset dir="${classes.player}" />
 			<fileset dir="${classes.plugins}" />
     </delete>
-    <delete file="preferences/AlbumGrabber.properties" />
-    <delete file="preferences/AudioInfo.properties" />
-    <delete file="preferences/Equalizer.properties" />
-    <delete file="preferences/KarMidiLyrics.properties" />
-    <delete file="preferences/KaraokeCdg.properties" />
-    <delete file="preferences/Plaperbu.properties" />
-    <delete file="preferences/PlayList.properties" />
-    <delete file="preferences/ProgressBar.properties" />
+    <delete failonerror="false" file="preferences/AlbumGrabber.properties" />
+    <delete failonerror="false" file="preferences/AudioInfo.properties" />
+    <delete failonerror="false" file="preferences/Equalizer.properties" />
+    <delete failonerror="false" file="preferences/KarMidiLyrics.properties" />
+    <delete failonerror="false" file="preferences/KaraokeCdg.properties" />
+    <delete failonerror="false" file="preferences/Plaperbu.properties" />
+    <delete failonerror="false" file="preferences/PlayList.properties" />
+    <delete failonerror="false" file="preferences/ProgressBar.properties" />
 	</target>
 
 	<!-- Init -->
@@ -52,14 +65,14 @@
 	</target>
 
 	<!-- Compile -->
-	<target name="compile" depends="init" description="Compile">
+	<target name="compile" depends="check-java-version, init" description="Compile">
 		<!-- Compile Player -->
-		<javac encoding="Cp1252" classpathref="project.class.path" debug="true" deprecation="true" destdir="${classes.player}" nowarn="false">
+		<javac encoding="Cp1252" classpathref="project.class.path" debug="true" deprecation="true" destdir="${classes.player}" nowarn="false" includeantruntime="false">
 			<src path="${src.player}" />
 		</javac>
-		
+
 		<!-- Compile Plugins -->
-		<javac encoding="Cp1252" classpathref="project.class.path" debug="true" deprecation="true" destdir="${classes.plugins}" nowarn="false">
+		<javac encoding="Cp1252" classpathref="project.class.path" debug="true" deprecation="true" destdir="${classes.plugins}" nowarn="false" includeantruntime="false">
 			<src path="${src.plugins}" />
 		</javac>
 	</target>
