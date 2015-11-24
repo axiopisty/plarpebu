@@ -23,7 +23,7 @@ was created to fix those problems, and to provide a better environment for colla
     |-- build.gradle         (Gradle build file)
     |-- CdgPlugin            (Plugin module)
     |-- Common               (Plugin module)
-    |-- dist                 (contains files that are included in a distributable release archive)
+    |-- includes             (contains files that are included in a distributable release archive)
     |-- ExamplePlugins       (Plugin module)
     |-- gradlew              (Gradle Wrapper - *nix, osx)
     |-- gradlew.bat          (Gradle Wrapper - Windows)
@@ -38,14 +38,14 @@ was created to fix those problems, and to provide a better environment for colla
 ## How to build the project
 
 ### Prerequisite Software
-1. [Java](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+1. [Java 8+](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 1. [Gradle](http://gradle.org/gradle-download/)
 
 ### Build
       $ gradle clean releasePlarpebu
 
 Running this command will produce a distributable artifact (Plarpebu-\<version\>.zip)
-located in the \<project_root\>build/distributions directory.
+located in the \<project_root\>/build/distributions directory.
 
 ### Install
 

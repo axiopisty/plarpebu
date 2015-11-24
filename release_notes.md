@@ -1,7 +1,7 @@
 
 [Project Home](README.md)
 
-Changes in 1.0.1-SNAPSHOT
+Changes in 2.0.0-SNAPSHOT
 ---------------------
 * Project to build with Java 8.
 * Project to build with Gradle.
