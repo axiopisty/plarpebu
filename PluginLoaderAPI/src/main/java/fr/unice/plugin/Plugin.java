@@ -5,10 +5,11 @@ package fr.unice.plugin;
  * Classes which implement this interface must provide also a constructor
  * without parameters (implicitly or not).
  *
- * @author  Richard Grin (from the version of Michel Buffa)
+ * @author Richard Grin (from the version of Michel Buffa)
  * @version 2.0 7/12/02
  */
 public interface Plugin {
+
   /**
    * @return plugin name.
    */
@@ -16,18 +17,21 @@ public interface Plugin {
 
   /**
    * The type of the plugin must be a subtype of return type.
+   *
    * @return plugin type
    */
   public Class getPluginType();
 
   /**
    * Returns a description of the plugin.
+   *
    * @return the description
    */
   public String getDescription();
 
   /**
    * Returns the version of the plugin.
+   *
    * @return the version.
    */
   public String getVersion();
@@ -39,7 +43,7 @@ public interface Plugin {
    * of the key.
    * @return properties in the Map.
    */
-//  public Map getProperties();
+  //  public Map getProperties();
 
   /**
    * Indicate if the plugin can process an object.
@@ -48,6 +52,7 @@ public interface Plugin {
    * According to the model of the JDBC drivers.
    * The PluginManager can ask to several plugins of the same type
    * whether they can process an object.
+   *
    * @return true if the plugin can process the object.
    */
   public boolean canProcess(Object object);
@@ -71,8 +76,9 @@ public interface Plugin {
    *   return true;
    * }
    * </pre>
-   * @param type type type of the plugin. No constraint if null.
-   * @param name name of the plugin. No constraint if null.
+   *
+   * @param type   type type of the plugin. No constraint if null.
+   * @param name   name of the plugin. No constraint if null.
    * @param object object the plugin can process. No constraint if null.
    * @return true if the plugin matches the constraints.
    */
@@ -93,6 +99,6 @@ public interface Plugin {
    * @return
    */
   // For another iteration if it's necessary.
-//  public boolean matches(Class type, String name,
-//                         Object object, Map properties);
+  //  public boolean matches(Class type, String name,
+  //                         Object object, Map properties);
 }

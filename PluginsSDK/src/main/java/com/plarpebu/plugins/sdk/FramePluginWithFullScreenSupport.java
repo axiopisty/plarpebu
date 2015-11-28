@@ -11,196 +11,173 @@ import javax.swing.JRootPane;
 /**
  * This class adds to the FramePlugin class support for hardware fullscreen mode. This mode can be
  * entered by double clicking on the Jframe.
- * 
+ *
  * @author not attributable
  * @version 1.0
  */
-abstract public class FramePluginWithFullScreenSupport extends JFrameWithPreferences
-{
-	private boolean windowedMode = true;
+abstract public class FramePluginWithFullScreenSupport extends JFrameWithPreferences {
 
-	private boolean hardwareAcceleratedFullScreenModeSupported = true;
+  private boolean windowedMode = true;
 
-	private int oldPosX;
+  private boolean hardwareAcceleratedFullScreenModeSupported = true;
 
-	private int oldPosY;
+  private int oldPosX;
 
-	private int oldWidth;
+  private int oldPosY;
 
-	private int oldHeight;
+  private int oldWidth;
 
-	DisplayMode userDisplayMode = null;
+  private int oldHeight;
 
-	private static DisplayMode[] BEST_DISPLAY_MODES = new DisplayMode[]
-	{ new DisplayMode(640, 480, 32, 0), new DisplayMode(640, 480, 16, 0),
-	         new DisplayMode(640, 480, 8, 0) };
+  DisplayMode userDisplayMode = null;
 
-	private GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+  private static DisplayMode[] BEST_DISPLAY_MODES = new DisplayMode[] {
+    new DisplayMode(640, 480, 32, 0),
+    new DisplayMode(640, 480, 16, 0),
+    new DisplayMode(640, 480, 8, 0)
+  };
 
-	private GraphicsDevice myDevice = env.getDefaultScreenDevice();
+  private GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
 
-	private DisplayMode oldDisplayMode = myDevice.getDisplayMode();
+  private GraphicsDevice myDevice = env.getDefaultScreenDevice();
 
-	private int oldWindowDecorationStyle;
+  private DisplayMode oldDisplayMode = myDevice.getDisplayMode();
 
-	/**
-	 * Constructor
-	 */
-	public FramePluginWithFullScreenSupport(String title)
-	{
-		super(title);
-		
-		// Mouse listener for double click detection
-		addMouseListener(new MyMouseListener());
-	}
+  private int oldWindowDecorationStyle;
 
-	public class MyMouseListener extends MouseAdapter
-	{
-		public void mouseClicked(MouseEvent e)
-		{
-			if (e.getClickCount() == 2)
-			{
-				// Switching to/from fullScreen/windowed mode
-				switchFullScreenWindowedMode();
-			}
-		}
-	}
+  /**
+   * Constructor
+   */
+  public FramePluginWithFullScreenSupport(String title) {
+    super(title);
 
-	private void switchFullScreenWindowedMode()
-	{
-		if (windowedMode)
-		{
-			System.out.println("Go TO FULL SCREEN");
-			// Go to full screen
-			try
-			{
-				// go fullscreen
-				goToFullScreen();
-			}
-			catch (Exception ex)
-			{
-				ex.printStackTrace();
-				goToWindowedMode();
-			}
-		}
-		else
-		{
-			goToWindowedMode();
-		}
-	}
+    // Mouse listener for double click detection
+    addMouseListener(new MyMouseListener());
+  }
 
-	protected void goToFullScreen()
-	{
-		if (!hardwareAcceleratedFullScreenModeSupported)
-			return;
+  public class MyMouseListener extends MouseAdapter {
 
-		// Store old pos and size
-		oldPosX = getX();
-		oldPosY = getY();
-		oldWidth = getWidth();
-		oldHeight = getHeight();
+    public void mouseClicked(MouseEvent e) {
+      if(e.getClickCount() == 2) {
+        // Switching to/from fullScreen/windowed mode
+        switchFullScreenWindowedMode();
+      }
+    }
+  }
 
-		if (windowedMode)
-		{
-			// No borders, close buttons etc...
-			// displayDecorations(false);
-			// remove all decorations before going full screen
-			oldWindowDecorationStyle = getRootPane().getWindowDecorationStyle();
+  private void switchFullScreenWindowedMode() {
+    if(windowedMode) {
+      System.out.println("Go TO FULL SCREEN");
+      // Go to full screen
+      try {
+        // go fullscreen
+        goToFullScreen();
+      } catch(Exception ex) {
+        ex.printStackTrace();
+        goToWindowedMode();
+      }
+    } else {
+      goToWindowedMode();
+    }
+  }
 
-			getRootPane().setWindowDecorationStyle(JRootPane.NONE);
-			// displayDecorations(false);
-			setIgnoreRepaint(true);
-			myDevice.setFullScreenWindow(FramePluginWithFullScreenSupport.this);
-			if (myDevice.isDisplayChangeSupported())
-			{
-				if (userDisplayMode == null)
-				{
-					chooseBestDisplayMode(myDevice);
-				}
-				else
-				{
-					myDevice.setDisplayMode(userDisplayMode);
+  protected void goToFullScreen() {
+    if(!hardwareAcceleratedFullScreenModeSupported) {
+      return;
+    }
 
-				}
-			}
-			// we can't modify full screen options while in full screen
-			windowedMode = false;
-		}
-	}
+    // Store old pos and size
+    oldPosX = getX();
+    oldPosY = getY();
+    oldWidth = getWidth();
+    oldHeight = getHeight();
 
-	public void displayDecorations(boolean flag)
-	{
-		dispose();
-		// must be displayable (disposed) to call this...
-		setUndecorated(!flag);
-		pack();
-	}
+    if(windowedMode) {
+      // No borders, close buttons etc...
+      // displayDecorations(false);
+      // remove all decorations before going full screen
+      oldWindowDecorationStyle = getRootPane().getWindowDecorationStyle();
 
-	public static void chooseBestDisplayMode(GraphicsDevice device)
-	{
-		DisplayMode best = getBestDisplayMode(device);
-		if (best != null)
-		{
-			device.setDisplayMode(best);
-		}
-	}
+      getRootPane().setWindowDecorationStyle(JRootPane.NONE);
+      // displayDecorations(false);
+      setIgnoreRepaint(true);
+      myDevice.setFullScreenWindow(FramePluginWithFullScreenSupport.this);
+      if(myDevice.isDisplayChangeSupported()) {
+        if(userDisplayMode == null) {
+          chooseBestDisplayMode(myDevice);
+        } else {
+          myDevice.setDisplayMode(userDisplayMode);
 
-	private static DisplayMode getBestDisplayMode(GraphicsDevice device)
-	{
-		for (int x = 0; x < BEST_DISPLAY_MODES.length; x++)
-		{
-			DisplayMode[] modes = device.getDisplayModes();
-			for (int i = 0; i < modes.length; i++)
-			{
-				if (modes[i].getWidth() == BEST_DISPLAY_MODES[x].getWidth()
-				         && modes[i].getHeight() == BEST_DISPLAY_MODES[x].getHeight()
-				         && modes[i].getBitDepth() == BEST_DISPLAY_MODES[x].getBitDepth())
-				{
-					return BEST_DISPLAY_MODES[x];
-				}
-			}
-		}
-		return null;
-	}
+        }
+      }
+      // we can't modify full screen options while in full screen
+      windowedMode = false;
+    }
+  }
 
-	protected void goToWindowedMode()
-	{
-		if (!hardwareAcceleratedFullScreenModeSupported)
-			return;
+  public void displayDecorations(boolean flag) {
+    dispose();
+    // must be displayable (disposed) to call this...
+    setUndecorated(!flag);
+    pack();
+  }
 
-		if (!windowedMode)
-		{
-			// Go back to the old display mode, windowed, with decorations...
-			myDevice.setDisplayMode(oldDisplayMode);
-			myDevice.setFullScreenWindow(null);
-			// panelLyrics.setWindowedMode(true);
-			// displayDecorations(true);
+  public static void chooseBestDisplayMode(GraphicsDevice device) {
+    DisplayMode best = getBestDisplayMode(device);
+    if(best != null) {
+      device.setDisplayMode(best);
+    }
+  }
 
-			// restore decorations
-			getRootPane().setWindowDecorationStyle(oldWindowDecorationStyle);
-			// displayDecorations(true);
+  private static DisplayMode getBestDisplayMode(GraphicsDevice device) {
+    for(int x = 0; x < BEST_DISPLAY_MODES.length; x++) {
+      DisplayMode[] modes = device.getDisplayModes();
+      for(int i = 0; i < modes.length; i++) {
+        if(modes[i].getWidth() == BEST_DISPLAY_MODES[x].getWidth() && modes[i].getHeight() == BEST_DISPLAY_MODES[x]
+          .getHeight() && modes[i].getBitDepth() == BEST_DISPLAY_MODES[x].getBitDepth()) {
+          return BEST_DISPLAY_MODES[x];
+        }
+      }
+    }
+    return null;
+  }
 
-			restorePositionAndSize();
-			setIgnoreRepaint(false);
+  protected void goToWindowedMode() {
+    if(!hardwareAcceleratedFullScreenModeSupported) {
+      return;
+    }
 
-			setVisible(true);
-			// !!!
+    if(!windowedMode) {
+      // Go back to the old display mode, windowed, with decorations...
+      myDevice.setDisplayMode(oldDisplayMode);
+      myDevice.setFullScreenWindow(null);
+      // panelLyrics.setWindowedMode(true);
+      // displayDecorations(true);
 
-			// de-iconify the main interface of the player
-			// controllerMp3.getPlayerUI().setToOriginalSize();
+      // restore decorations
+      getRootPane().setWindowDecorationStyle(oldWindowDecorationStyle);
+      // displayDecorations(true);
 
-			// setUndecorated(true);
-			// we can only modify full screen options while in window mode
-			windowedMode = true;
-		}
-	}
+      restorePositionAndSize();
+      setIgnoreRepaint(false);
 
-	private void restorePositionAndSize()
-	{
-		// no hardware acceleration mode, just restore the window to its
-		// previous pos and size
-		setLocation(oldPosX, oldPosY);
-		setSize(oldWidth, oldHeight);
-	}
+      setVisible(true);
+      // !!!
+
+      // de-iconify the main interface of the player
+      // controllerMp3.getPlayerUI().setToOriginalSize();
+
+      // setUndecorated(true);
+      // we can only modify full screen options while in window mode
+      windowedMode = true;
+    }
+  }
+
+  private void restorePositionAndSize() {
+    // no hardware acceleration mode, just restore the window to its
+    // previous pos and size
+    setLocation(oldPosX, oldPosY);
+    setSize(oldWidth, oldHeight);
+  }
 
 }

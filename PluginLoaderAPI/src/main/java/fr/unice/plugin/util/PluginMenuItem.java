@@ -2,15 +2,18 @@ package fr.unice.plugin.util;
 
 import javax.swing.JMenuItem;
 import javax.swing.Icon;
+
 import fr.unice.plugin.*;
 
 /**
  * MenuItem which keep a reference to a plugin instance.
  * Has it to be public or not?
+ *
  * @author Richard Grin
  * @version 1.0
  */
 public class PluginMenuItem extends JMenuItem {
+
   private Plugin plugin;
 
   public PluginMenuItem() {
@@ -22,8 +25,7 @@ public class PluginMenuItem extends JMenuItem {
   }
 
   /**
-   *
-   * @param text text of the item
+   * @param text   text of the item
    * @param plugin plugin instance
    */
   public PluginMenuItem(String text, Plugin plugin) {

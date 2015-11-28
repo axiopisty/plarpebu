@@ -20,57 +20,55 @@ import java.util.Arrays;
  * <p>
  * Company:
  * </p>
- * 
+ *
  * @author not attributable
  * @version $Id
  */
 
-public class CdgMemoryPreset
-{
-	// Color refers to a color to clear the screen to. The entire screen should
-	// be cleared to this color.
-	// Only lower 4 bits are used, mask with 0x0F
-	private static byte color;
+public class CdgMemoryPreset {
 
-	private static byte repeat;
+  // Color refers to a color to clear the screen to. The entire screen should
+  // be cleared to this color.
+  // Only lower 4 bits are used, mask with 0x0F
+  private static byte color;
 
-	private static byte[] filler = new byte[14];
+  private static byte repeat;
 
-	public static boolean clearScreen(byte[] data, byte[] pixels)
-	{
-		// data is the 16 bytes array of the cdg chunk.
+  private static byte[] filler = new byte[14];
 
-		// For these, only the lower 4 bits are used
-		color = (byte) (data[0] & 0x0F);
-		repeat = (byte) (data[1] & 0x0F);
+  public static boolean clearScreen(byte[] data, byte[] pixels) {
+    // data is the 16 bytes array of the cdg chunk.
 
-		if (repeat != 0)
-			return false;
+    // For these, only the lower 4 bits are used
+    color = (byte) (data[0] & 0x0F);
+    repeat = (byte) (data[1] & 0x0F);
 
-		// Only the lower 6 bits of
-		// each data byte of the filler are used. Everything should be anded
-		// with 0x3F.
-		for (int i = 0; i < 14; i++)
-		{
-			filler[i] = (byte) (data[2 + i] & 0x3F);
-		}
+    if(repeat != 0) {
+      return false;
+    }
 
-		// System.out.println("Clear the screen with color = " + color);
-		/*
-		 * for (int i = 0; i < 216 * 300; i++) { pixels[i] = color; }
+    // Only the lower 6 bits of
+    // each data byte of the filler are used. Everything should be anded
+    // with 0x3F.
+    for(int i = 0; i < 14; i++) {
+      filler[i] = (byte) (data[2 + i] & 0x3F);
+    }
+
+    // System.out.println("Clear the screen with color = " + color);
+    /*
+     * for (int i = 0; i < 216 * 300; i++) { pixels[i] = color; }
 		 */
-		clearScreen(pixels, color);
-		return true;
-	}
+    clearScreen(pixels, color);
+    return true;
+  }
 
-	public static void clearScreen(byte[] pixels, byte color)
-	{
-		// System.out.println("Clear the screen with color = " + color);
-		/*
-		 * for (int i = 0; i < 216 * 300; i++) { pixels[i] = color; }
+  public static void clearScreen(byte[] pixels, byte color) {
+    // System.out.println("Clear the screen with color = " + color);
+    /*
+     * for (int i = 0; i < 216 * 300; i++) { pixels[i] = color; }
 		 */
 
-		Arrays.fill(pixels, color);
-	}
+    Arrays.fill(pixels, color);
+  }
 
 }

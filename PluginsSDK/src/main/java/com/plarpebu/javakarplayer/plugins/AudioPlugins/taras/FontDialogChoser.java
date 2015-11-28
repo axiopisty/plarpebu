@@ -25,90 +25,79 @@ import com.plarpebu.SkinMgr;
  * <p>
  * Company:
  * </p>
- * 
+ *
  * @author not attributable
  * @version 1.0
  */
-public class FontDialogChoser extends JDialog
-{
-	JPanel panel1 = new JPanel();
+public class FontDialogChoser extends JDialog {
 
-	BorderLayout borderLayout1 = new BorderLayout();
+  JPanel panel1 = new JPanel();
 
-	JPanel jPanel1 = new JPanel();
+  BorderLayout borderLayout1 = new BorderLayout();
 
-	JButton jButton1 = new JButton();
+  JPanel jPanel1 = new JPanel();
 
-	JFontChooser fc = new JFontChooser();
+  JButton jButton1 = new JButton();
 
-	/**
-	 * Constructor
-	 * 
-	 * @param frame
-	 * @param title
-	 * @param modal
-	 */
-	public FontDialogChoser(Frame frame, String title, boolean modal)
-	{
-		super(frame, title, modal);
-		try
-		{
-			SkinMgr.getInstance().addComponent(this);
-			
-			jbInit();
-			panel1.add(fc, BorderLayout.CENTER);
-			setSize(640, 400);
-		}
-		catch (Exception ex)
-		{
-			ex.printStackTrace();
-		}
-	}
+  JFontChooser fc = new JFontChooser();
 
-	public FontDialogChoser()
-	{
-		this(null, "", false);
-	}
+  /**
+   * Constructor
+   *
+   * @param frame
+   * @param title
+   * @param modal
+   */
+  public FontDialogChoser(Frame frame, String title, boolean modal) {
+    super(frame, title, modal);
+    try {
+      SkinMgr.getInstance().addComponent(this);
 
-	private void jbInit() throws Exception
-	{
-		panel1.setLayout(borderLayout1);
-		this.setModal(true);
-		this.setTitle("Please Select Font");
-		jButton1.setText("Ok");
-		jButton1.addActionListener(new FontDialogChoser_jButton1_actionAdapter(this));
-		getContentPane().add(panel1);
-		panel1.add(jPanel1, BorderLayout.SOUTH);
-		jPanel1.add(jButton1, null);
-	}
+      jbInit();
+      panel1.add(fc, BorderLayout.CENTER);
+      setSize(640, 400);
+    } catch(Exception ex) {
+      ex.printStackTrace();
+    }
+  }
 
-	public Font getSelectedFont()
-	{
-		return fc.getSelectedFont();
-	}
+  public FontDialogChoser() {
+    this(null, "", false);
+  }
 
-	public void setSelectedFont(Font f)
-	{
-		fc.setSelectedFont(f);
-	}
+  private void jbInit() throws Exception {
+    panel1.setLayout(borderLayout1);
+    this.setModal(true);
+    this.setTitle("Please Select Font");
+    jButton1.setText("Ok");
+    jButton1.addActionListener(new FontDialogChoser_jButton1_actionAdapter(this));
+    getContentPane().add(panel1);
+    panel1.add(jPanel1, BorderLayout.SOUTH);
+    jPanel1.add(jButton1, null);
+  }
 
-	void jButton1_actionPerformed(ActionEvent e)
-	{
-		setVisible(false);
-	}
+  public Font getSelectedFont() {
+    return fc.getSelectedFont();
+  }
+
+  public void setSelectedFont(Font f) {
+    fc.setSelectedFont(f);
+  }
+
+  void jButton1_actionPerformed(ActionEvent e) {
+    setVisible(false);
+  }
 }
 
-class FontDialogChoser_jButton1_actionAdapter implements java.awt.event.ActionListener
-{
-	FontDialogChoser adaptee;
+class FontDialogChoser_jButton1_actionAdapter implements java.awt.event.ActionListener {
 
-	FontDialogChoser_jButton1_actionAdapter(FontDialogChoser adaptee)
-	{
-		this.adaptee = adaptee;
-	}
+  FontDialogChoser adaptee;
 
-	public void actionPerformed(ActionEvent e)
-	{
-		adaptee.jButton1_actionPerformed(e);
-	}
+  FontDialogChoser_jButton1_actionAdapter(FontDialogChoser adaptee) {
+    this.adaptee = adaptee;
+  }
+
+  public void actionPerformed(ActionEvent e) {
+    adaptee.jButton1_actionPerformed(e);
+  }
 }

@@ -21,17 +21,16 @@ public final class PlarpebuUtil {
     File root = null;
     try {
       CodeSource codeSource = PlarpebuUtil.class.getProtectionDomain().getCodeSource();
-      root = new File(
-        URLDecoder.decode(
-          new File(codeSource.getLocation().toURI().getPath())
-            .getParentFile()
-            .getParentFile()
-            .getPath()
-          ,"UTF-8"
-        )
-      );
+      root = new File(URLDecoder.decode(new File(
+        codeSource
+          .getLocation()
+          .toURI()
+          .getPath()
+      ).getParentFile()
+       .getParentFile()
+       .getPath(), "UTF-8"));
       opApplicationRoot = Optional.of(root);
-    } catch (Throwable t) {
+    } catch(Throwable t) {
       t.printStackTrace();
     }
     return root;
@@ -47,7 +46,7 @@ public final class PlarpebuUtil {
       fileHandler = new FileHandler(logFile);
       SimpleFormatter formatter = new SimpleFormatter();
       fileHandler.setFormatter(formatter);
-    } catch (SecurityException | IOException e) {
+    } catch(SecurityException | IOException e) {
       e.printStackTrace();
     }
   }

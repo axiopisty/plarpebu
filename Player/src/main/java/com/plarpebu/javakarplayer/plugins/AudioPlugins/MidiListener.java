@@ -13,13 +13,12 @@ package com.plarpebu.javakarplayer.plugins.AudioPlugins;
  * <p>
  * Company:
  * </p>
- * 
+ *
  * @author Michel Buffa (buffa@unice.fr)
  * @version $Id
  */
 
-public interface MidiListener
-{
+public interface MidiListener {
 
-	public void setCurrentPosition(long pos);
+  public void setCurrentPosition(long pos);
 }

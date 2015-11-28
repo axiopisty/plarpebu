@@ -24,103 +24,89 @@ import javax.swing.JPanel;
  * <p>
  * Company:
  * </p>
- * 
+ *
  * @author not attributable
  * @version 1.0
  */
 
-public class DefilPanel extends JPanel
-{
-	BorderLayout borderLayout1 = new BorderLayout();
+public class DefilPanel extends JPanel {
 
-	String msg = "";
+  BorderLayout borderLayout1 = new BorderLayout();
 
-	int x_coord = 0;
+  String msg = "";
 
-	int y_coord = 0;
+  int x_coord = 0;
 
-	Image img = null; // image en mémoire
+  int y_coord = 0;
 
-	Graphics gi = null; // contexte graphique pour l'image
+  Image img = null; // image en mï¿½moire
 
-	int len = 0; // longueur du message
+  Graphics gi = null; // contexte graphique pour l'image
 
-	public DefilPanel(String s)
-	{
-		msg = s;
-		setFont(new Font("Atomic Clock Radio"/* "TimesRoman" */, Font.BOLD, 24));
-		try
-		{
-			jbInit();
-		}
-		catch (Exception ex)
-		{
-			ex.printStackTrace();
-		}
-	}
+  int len = 0; // longueur du message
 
-	void jbInit() throws Exception
-	{
-		this.setLayout(borderLayout1);
-		this.setBackground(SystemColor.controlText);
-		this.setSize(new Dimension(100, 30));
+  public DefilPanel(String s) {
+    msg = s;
+    setFont(new Font("Atomic Clock Radio"/* "TimesRoman" */, Font.BOLD, 24));
+    try {
+      jbInit();
+    } catch(Exception ex) {
+      ex.printStackTrace();
+    }
+  }
 
-	}
+  void jbInit() throws Exception {
+    this.setLayout(borderLayout1);
+    this.setBackground(SystemColor.controlText);
+    this.setSize(new Dimension(100, 30));
 
-	public void setMsgPosX(int new_x)
-	{
-		x_coord = new_x;
-	}
+  }
 
-	public void setMsgPosY(int new_y)
-	{
-		y_coord = new_y;
-	}
+  public void setMsgPosX(int new_x) {
+    x_coord = new_x;
+  }
 
-	public int getMsgPosX()
-	{
-		return x_coord;
-	}
+  public void setMsgPosY(int new_y) {
+    y_coord = new_y;
+  }
 
-	public int getMsgPosY()
-	{
-		return y_coord;
-	}
+  public int getMsgPosX() {
+    return x_coord;
+  }
 
-	public int getMsgLength()
-	{
-		return len;
-	}
+  public int getMsgPosY() {
+    return y_coord;
+  }
 
-	public void setMsgLength(int v)
-	{
-		len = v;
-	}
+  public int getMsgLength() {
+    return len;
+  }
 
-	public void setString(String s)
-	{
-		msg = s;
-		len = 0;
-	}
+  public void setMsgLength(int v) {
+    len = v;
+  }
 
-	/**
-	 * La méthode Paint qui permet d'afficher tous les composants et qui permet notamment par son
-	 * éxiqtence l'appel à la méthode repaint()
-	 */
-	public void paintComponent(Graphics g)
-	{
-		super.paintComponent(g);
-		if (len == 0)
-		{ // calcul des mesures du text
-			FontMetrics fm = g.getFontMetrics();
-			len = fm.stringWidth(msg);
-			x_coord = getSize().width;
-			y_coord = (getSize().height - fm.getHeight()) / 2 + fm.getAscent();
-		}
+  public void setString(String s) {
+    msg = s;
+    len = 0;
+  }
 
-		g.setColor(Color.white);
-		// System.out.println("x = " + x_coord + " y = " + y_coord);
-		g.drawString(msg, x_coord, y_coord);
-	}
+  /**
+   * La mï¿½thode Paint qui permet d'afficher tous les composants et qui permet notamment par son
+   * ï¿½xiqtence l'appel ï¿½ la mï¿½thode repaint()
+   */
+  public void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    if(len == 0) { // calcul des mesures du text
+      FontMetrics fm = g.getFontMetrics();
+      len = fm.stringWidth(msg);
+      x_coord = getSize().width;
+      y_coord = (getSize().height - fm.getHeight()) / 2 + fm.getAscent();
+    }
+
+    g.setColor(Color.white);
+    // System.out.println("x = " + x_coord + " y = " + y_coord);
+    g.drawString(msg, x_coord, y_coord);
+  }
 
 }

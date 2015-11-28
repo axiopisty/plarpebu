@@ -6,28 +6,27 @@ import javax.sound.midi.MidiEvent;
 /**
  * Represents syllables of text
  */
-class Syllable
-{
-	public static final int ST_COMMENT = 0;
+class Syllable {
 
-	public static final int ST_LYRICS = 5;
+  public static final int ST_COMMENT = 0;
 
-	public static final int ST_TEXT = 1;
+  public static final int ST_LYRICS = 5;
 
-	public static final int ST_COPYRIGHT = 2;
+  public static final int ST_TEXT = 1;
 
-	public int line;
+  public static final int ST_COPYRIGHT = 2;
 
-	public int track;
+  public int line;
 
-	public String text;
+  public int track;
 
-	public int type;
+  public String text;
 
-	public MidiEvent me;
+  public int type;
 
-	int getMsgType()
-	{
-		return ((MetaMessage) me.getMessage()).getType();
-	}
+  public MidiEvent me;
+
+  int getMsgType() {
+    return ((MetaMessage) me.getMessage()).getType();
+  }
 }

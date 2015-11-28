@@ -20,9 +20,9 @@ import static com.plarpebu.common.PlarpebuUtil.configureLogToFile;
  * Mais de nouvelle Si les plugins ont chang�, un client peut reconstruire le menu. En ce cas, les
  * anciennes entr�es li�es aux plugins sont enlev�es et les nouvelles sont ajout�es au m�me endroit
  * dans le menu.
- * <P>
+ * <p>
  * Exemple d'utilisation :
- * 
+ * <p>
  * <pre>
  *   pluginManager = PluginManager.getPluginManager(
  *       &quot;file:repplugin/plugins.jar&quot;);
@@ -44,94 +44,85 @@ import static com.plarpebu.common.PlarpebuUtil.configureLogToFile;
  *     fenetreDessin.setDessinateur((Dessinateur)arg);
  *   }
  * </pre>
- * 
+ *
  * @author Richard Grin
  * @version 1.0
  */
-public class PluginMenuItemFactory
-{
-	/**
-	 * Le menu g�r� par cette instance.
-	 */
-	private JMenu menu;
+public class PluginMenuItemFactory {
 
-	/**
-	 * Le chargeur de classes charge les plugins.
-	 */
-	private PluginManager loader;
+  /**
+   * Le menu g�r� par cette instance.
+   */
+  private JMenu menu;
 
-	/**
-	 * L'actionListener qui va �couter les entr�es du menu des plugins.
-	 */
-	private ActionListener listener;
+  /**
+   * Le chargeur de classes charge les plugins.
+   */
+  private PluginManager loader;
 
-	private static Logger logger = configureLogToFile(Logger.getLogger("player.test.PluginMenu"));
+  /**
+   * L'actionListener qui va �couter les entr�es du menu des plugins.
+   */
+  private ActionListener listener;
 
-	/**
-	 * Construit une instance qui concerne un certain menu. Ce menu aura des choix qui permettront de
-	 * s�lectionner un plugin ou un autre.
-	 * 
-	 * @param menu
-	 *           le menu g�r� par cette instance.
-	 * @param loader
-	 *           le chargeur de classes des plugins.
-	 * @param listener
-	 *           l'actionDeListener qui va �couter les entr�es du menu.
-	 */
-	public PluginMenuItemFactory(JMenu menu, PluginManager loader, ActionListener listener)
-	{
-		this.menu = menu;
-		this.loader = loader;
-		this.listener = listener;
-	}
+  private static Logger logger = configureLogToFile(Logger.getLogger("player.test.PluginMenu"));
 
-	/**
-	 * Construit le menu des plugins.
-	 * 
-	 * @param type
-	 *           type des plugins utilis�s pour construire le menu. Si null, tous les types de plugin
-	 *           seront utilis�s pour construire le menu.
-	 * @return le menu construit avec les plugins.
-	 */
-	public void buildMenu(Class type)
-	{
-		if (loader == null)
-		{
-			return;
-		}
-		logger.info("Construction du menu des PLUGINS");
+  /**
+   * Construit une instance qui concerne un certain menu. Ce menu aura des choix qui permettront de
+   * s�lectionner un plugin ou un autre.
+   *
+   * @param menu     le menu g�r� par cette instance.
+   * @param loader   le chargeur de classes des plugins.
+   * @param listener l'actionDeListener qui va �couter les entr�es du menu.
+   */
+  public PluginMenuItemFactory(JMenu menu, PluginManager loader, ActionListener listener) {
+    this.menu = menu;
+    this.loader = loader;
+    this.listener = listener;
+  }
 
-		// Enl�ve les entr�es pr�c�dentes s'il y en avait
-		menu.removeAll();
+  /**
+   * Construit le menu des plugins.
+   *
+   * @param type type des plugins utilis�s pour construire le menu. Si null, tous les types de plugin
+   *             seront utilis�s pour construire le menu.
+   * @return le menu construit avec les plugins.
+   */
+  public void buildMenu(Class type) {
+    if(loader == null) {
+      return;
+    }
+    logger.info("Construction du menu des PLUGINS");
 
-		// R�cup�re les instances d�j� charg�es
+    // Enl�ve les entr�es pr�c�dentes s'il y en avait
+    menu.removeAll();
 
-		Plugin[] instancesPlugins = loader.getPluginInstances(type);
-		logger.info("Nombre de plugins trouv�s :" + instancesPlugins.length);
-		PluginMenuItem item;
-		// On ajoute une entr�e par instance de plugin
-		for (int i = 0; i < instancesPlugins.length; i++)
-		{
-			Plugin plugin = instancesPlugins[i];
+    // R�cup�re les instances d�j� charg�es
 
-			String mi = plugin.getName();
-			item = new PluginMenuItem(mi);
-			item.setPlugin(instancesPlugins[i]);
-			menu.add(item);
+    Plugin[] instancesPlugins = loader.getPluginInstances(type);
+    logger.info("Nombre de plugins trouv�s :" + instancesPlugins.length);
+    PluginMenuItem item;
+    // On ajoute une entr�e par instance de plugin
+    for(int i = 0; i < instancesPlugins.length; i++) {
+      Plugin plugin = instancesPlugins[i];
 
-			// menu.add(mi);
-			item.addActionListener(listener);
+      String mi = plugin.getName();
+      item = new PluginMenuItem(mi);
+      item.setPlugin(instancesPlugins[i]);
+      menu.add(item);
 
-		}
-	}
+      // menu.add(mi);
+      item.addActionListener(listener);
 
-	/**
-	 * l'accesseur de la donnee JMenu
-	 * 
-	 * @return le JMenu
-	 */
-	public JMenu getMenu()
-	{
-		return menu;
-	}
+    }
+  }
+
+  /**
+   * l'accesseur de la donnee JMenu
+   *
+   * @return le JMenu
+   */
+  public JMenu getMenu() {
+    return menu;
+  }
 }

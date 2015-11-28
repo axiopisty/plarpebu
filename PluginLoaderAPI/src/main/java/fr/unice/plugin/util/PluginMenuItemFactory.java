@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.logging.Logger;
 import java.awt.Component;
+
 import fr.unice.plugin.*;
 
 import static com.plarpebu.common.PlarpebuUtil.configureLogToFile;
@@ -19,7 +20,7 @@ import static com.plarpebu.common.PlarpebuUtil.configureLogToFile;
  * When buildMenu is called, the plugin entries are added
  * at a location given by the int parameter n.
  * If plugin have changed, the menu can be rebuilt.
- * <P>
+ * <p>
  * Example:
  * <pre>
  * pluginManager = PluginManager.getPluginManager(
@@ -42,10 +43,12 @@ import static com.plarpebu.common.PlarpebuUtil.configureLogToFile;
  *   fenetreDessin.setDrawing((Drawing)arg);
  * }
  * </pre>
+ *
  * @author Richard Grin
  * @version 1.0
  */
 public class PluginMenuItemFactory extends Observable implements ActionListener {
+
   /**
    * Menu managed by this instance.
    */
@@ -55,6 +58,7 @@ public class PluginMenuItemFactory extends Observable implements ActionListener 
 
   /**
    * menu will have entries to select one plugin or another.
+   *
    * @param menu menu managed by this instance.
    */
   public PluginMenuItemFactory(JMenu menu) {
@@ -63,24 +67,24 @@ public class PluginMenuItemFactory extends Observable implements ActionListener 
 
   /**
    * Builds the menu.
+   *
    * @param type type of the plugins used by the menu.
-   * @param n index where plugin entries are inserted.
+   * @param n    index where plugin entries are inserted.
    * @return built menu.
    */
   public void buildMenu(Class type, int n) {
     PluginManager pluginManager = PluginManager.getPluginManager();
-    if (pluginManager == null) {
+    if(pluginManager == null) {
       return;
     }
     logger.info("Build the plugin menu");
 
     Plugin[] instancesPlugins = pluginManager.getPluginInstances(type);
-//    Plugin[] instancesPlugins = pluginManager.getPluginInstances();
-    logger.info("Number of plugins found:"
-                       + instancesPlugins.length);
+    //    Plugin[] instancesPlugins = pluginManager.getPluginInstances();
+    logger.info("Number of plugins found:" + instancesPlugins.length);
 
     // Add one entry per plugin
-    for (int i = 0; i < instancesPlugins.length; i++) {
+    for(int i = 0; i < instancesPlugins.length; i++) {
       Plugin plugin = instancesPlugins[i];
       String nomPlugin = plugin.getName();
       PluginMenuItem mi = new PluginMenuItem(nomPlugin, plugin);
@@ -107,6 +111,7 @@ public class PluginMenuItemFactory extends Observable implements ActionListener 
    * currently registered with the type.
    * If there is no plugin entry, the new entries are added at the end of
    * the menu.
+   *
    * @param type type of the plugins
    */
   public void rebuildMenu(Class type) {
@@ -115,20 +120,19 @@ public class PluginMenuItemFactory extends Observable implements ActionListener 
     // Keep the index of the last plugin entry.
     int firstPluginMenuItemNumber = n;
     // entries are removed beginning with the last plugin entry
-    for (int i = n - 1; i >= 0; i--) {
+    for(int i = n - 1; i >= 0; i--) {
       Component menuItem = menu.getMenuComponent(i);
-      if (! (menuItem instanceof PluginMenuItem)) {
+      if(!(menuItem instanceof PluginMenuItem)) {
         // not a plugin entry
         continue;
       }
-      Plugin plugin = ((PluginMenuItem)menuItem).getPlugin();
-      if (type != null) {
-        if (plugin.getPluginType() == type) {
+      Plugin plugin = ((PluginMenuItem) menuItem).getPlugin();
+      if(type != null) {
+        if(plugin.getPluginType() == type) {
           menu.remove(i);
           firstPluginMenuItemNumber = i;
         }
-      }
-      else {
+      } else {
         menu.remove(i);
         firstPluginMenuItemNumber = i;
       }
@@ -142,7 +146,7 @@ public class PluginMenuItemFactory extends Observable implements ActionListener 
    */
   public void actionPerformed(ActionEvent e) {
     Plugin chosenPlugin;
-    chosenPlugin = ((PluginMenuItem)e.getSource()).getPlugin();
+    chosenPlugin = ((PluginMenuItem) e.getSource()).getPlugin();
     // observers are notified
     setChanged();
     notifyObservers(chosenPlugin);

@@ -13,14 +13,14 @@ package com.plarpebu.plugins.sdk;
  * <p>
  * Company:
  * </p>
- * 
+ *
  * @author not attributable
  * @version 1.0
  */
 
-public interface Iconifiable
-{
-	public void minimize();
+public interface Iconifiable {
 
-	public void setToOriginalSize();
+  public void minimize();
+
+  public void setToOriginalSize();
 }

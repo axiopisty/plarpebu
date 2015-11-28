@@ -5,10 +5,12 @@ import java.net.URL;
 /**
  * Information about a plugin instance:
  * the instance and the URL from which it was loaded.
+ *
  * @todo Add the modification time (to allow reloading only if the version is
  * not the same).
  */
 class PluginInfo {
+
   private Plugin pluginInstance;
   private URL loadingUrl;
 
@@ -26,12 +28,12 @@ class PluginInfo {
   }
 
   public boolean equals(Object object) {
-    if (object.getClass() != this.getClass()) {
+    if(object.getClass() != this.getClass()) {
       return false;
     }
     PluginInfo anotherPluginInfo = (PluginInfo) object;
-    if (this.loadingUrl.equals(anotherPluginInfo.loadingUrl)
-        && this.pluginInstance.equals(anotherPluginInfo.pluginInstance)) {
+    if(this.loadingUrl.equals(anotherPluginInfo.loadingUrl) && this.pluginInstance
+      .equals(anotherPluginInfo.pluginInstance)) {
       return true;
     }
     return false;

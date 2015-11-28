@@ -29,16 +29,16 @@ dependencies {
 
 task assembleManifestClasspath {
   doLast {
-      jar {
-          manifest {
-              attributes 'Created-By': "Gradle v${gradle.gradleVersion}",
-                      'Implementation-Title': 'Plarpebu',
-                      'Implementation-Version': "${project.version}",
-                      'Built-By': "${System.getProperty('user.name')}",
-                      'Build-Time-ISO-8601': "${new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")}",
-                      'Main-Class': 'com.plarpebu.Player',
-                      'Class-Path': configurations.runtime.collect{"libs/${it.name}"}.join(' ')
-          }
+    jar {
+      manifest {
+        attributes 'Created-By': "Gradle v${gradle.gradleVersion}",
+          'Implementation-Title': 'Plarpebu',
+          'Implementation-Version': "${project.version}",
+          'Built-By': "${System.getProperty('user.name')}",
+          'Build-Time-ISO-8601': "${new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")}",
+          'Main-Class': 'com.plarpebu.Player',
+          'Class-Path': configurations.runtime.collect { "libs/${it.name}" }.join(' ')
+      }
     }
   }
 }

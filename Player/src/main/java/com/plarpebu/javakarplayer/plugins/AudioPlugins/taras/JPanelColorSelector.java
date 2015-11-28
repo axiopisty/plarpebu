@@ -22,52 +22,44 @@ import javax.swing.JPanel;
  * <p>
  * Company:
  * </p>
- * 
+ *
  * @author not attributable
  * @version 1.0
  */
-public class JPanelColorSelector extends JPanel
-{
-	BorderLayout borderLayout1 = new BorderLayout();
+public class JPanelColorSelector extends JPanel {
 
-	public JPanelColorSelector()
-	{
-		try
-		{
-			jbInit();
-		}
-		catch (Exception ex)
-		{
-			ex.printStackTrace();
-		}
-	}
+  BorderLayout borderLayout1 = new BorderLayout();
 
-	private void jbInit() throws Exception
-	{
-		this.setBorder(BorderFactory.createLineBorder(Color.black));
-		this.addMouseListener(new JPanelColorSelector_this_mouseAdapter(this));
-		this.setLayout(borderLayout1);
-	}
+  public JPanelColorSelector() {
+    try {
+      jbInit();
+    } catch(Exception ex) {
+      ex.printStackTrace();
+    }
+  }
 
-	void this_mouseClicked(MouseEvent e)
-	{
-		Color color = JColorChooser.showDialog(this, null, getBackground());
-		setBackground(color);
-	}
+  private void jbInit() throws Exception {
+    this.setBorder(BorderFactory.createLineBorder(Color.black));
+    this.addMouseListener(new JPanelColorSelector_this_mouseAdapter(this));
+    this.setLayout(borderLayout1);
+  }
+
+  void this_mouseClicked(MouseEvent e) {
+    Color color = JColorChooser.showDialog(this, null, getBackground());
+    setBackground(color);
+  }
 
 }
 
-class JPanelColorSelector_this_mouseAdapter extends MouseAdapter
-{
-	JPanelColorSelector adaptee;
+class JPanelColorSelector_this_mouseAdapter extends MouseAdapter {
 
-	JPanelColorSelector_this_mouseAdapter(JPanelColorSelector adaptee)
-	{
-		this.adaptee = adaptee;
-	}
+  JPanelColorSelector adaptee;
 
-	public void mouseClicked(MouseEvent e)
-	{
-		adaptee.this_mouseClicked(e);
-	}
+  JPanelColorSelector_this_mouseAdapter(JPanelColorSelector adaptee) {
+    this.adaptee = adaptee;
+  }
+
+  public void mouseClicked(MouseEvent e) {
+    adaptee.this_mouseClicked(e);
+  }
 }

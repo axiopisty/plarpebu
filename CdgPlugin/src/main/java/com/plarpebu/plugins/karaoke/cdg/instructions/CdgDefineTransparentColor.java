@@ -15,13 +15,13 @@ package com.plarpebu.plugins.karaoke.cdg.instructions;
  * <p>
  * Company:
  * </p>
- * 
+ *
  * @author Michel Buffa (buffa@unice.fr)
  * @version $Id
  */
 
-public class CdgDefineTransparentColor
-{
-	public CdgDefineTransparentColor(byte[] data)
-	{}
+public class CdgDefineTransparentColor {
+
+  public CdgDefineTransparentColor(byte[] data) {
+  }
 }

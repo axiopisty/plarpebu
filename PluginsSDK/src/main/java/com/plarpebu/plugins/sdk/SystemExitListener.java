@@ -5,8 +5,8 @@ package com.plarpebu.plugins.sdk;
  * Title: SystemExitListener
  * </p>
  * <p>
- * Description: Le SystemExitListener sert ˆ signaler un appel ˆ System.exit(). Juste avant de
- * sortir de la JVM la fonction exiting est appelŽe.
+ * Description: Le SystemExitListener sert ï¿½ signaler un appel ï¿½ System.exit(). Juste avant de
+ * sortir de la JVM la fonction exiting est appelï¿½e.
  * </p>
  * <p>
  * Copyright: Copyright (c) 2003
@@ -14,15 +14,15 @@ package com.plarpebu.plugins.sdk;
  * <p>
  * Company:
  * </p>
- * 
+ *
  * @author Julien Charles
  * @version 1.0
  */
 
-public interface SystemExitListener
-{
-	/**
-	 * Fonction appelŽe avant la fin du programme.
-	 */
-	public void exiting();
+public interface SystemExitListener {
+
+  /**
+   * Fonction appelï¿½e avant la fin du programme.
+   */
+  public void exiting();
 }

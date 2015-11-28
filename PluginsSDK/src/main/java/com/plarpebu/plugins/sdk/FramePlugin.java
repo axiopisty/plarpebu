@@ -4,58 +4,52 @@ package com.plarpebu.plugins.sdk;
  * La classe FramePlugin est la classe mere de tous les plugins qui se rajoutent en creeant une
  * nouvelle fenetre. Elle etend JFrame et doit implementer bien evidemment playerPlugin. Cette
  * classe est logiquement abstraite et nous servira pour le polymorphisme.
- * 
+ *
  * @author ARNAUD & PEPINO
  */
-abstract public class FramePlugin extends JFrameWithPreferences implements PlayerPlugin
-{
-	private String preferencesDir = "preferences";
+abstract public class FramePlugin extends JFrameWithPreferences implements PlayerPlugin {
 
-	private String preferenceFileName = getName() + ".properties";
+  private String preferencesDir = "preferences";
 
-	private String defaultPreferencesFilename = "default" + getName() + ".properties";
+  private String preferenceFileName = getName() + ".properties";
 
-	public FramePlugin(String title)
-	{
-		super(title);
-		
-		// Specify the dir and filenames for preferences files
-		setPreferencesFileNames(preferencesDir, preferenceFileName, defaultPreferencesFilename);
-	}
+  private String defaultPreferencesFilename = "default" + getName() + ".properties";
 
-	/**
-	 * Cette fonction retourne le type du plugin.
-	 * 
-	 * @return la classe du plugin.
-	 */
-	public Class getPluginType()
-	{
-		return FramePlugin.class;
-	}
+  public FramePlugin(String title) {
+    super(title);
 
-	/**
-	 * Cette fonction permet d'obtenir une description du plugin
-	 * 
-	 * @return la description du plugin
-	 */
-	public String getDescription()
-	{
-		return "no Description";
-	}
+    // Specify the dir and filenames for preferences files
+    setPreferencesFileNames(preferencesDir, preferenceFileName, defaultPreferencesFilename);
+  }
 
-	public boolean canProcess(Object o)
-	{
-		return true;
-	}
+  /**
+   * Cette fonction retourne le type du plugin.
+   *
+   * @return la classe du plugin.
+   */
+  public Class getPluginType() {
+    return FramePlugin.class;
+  }
 
-	public boolean matches(Class type, String name, Object object)
-	{
-		return true;
-	}
+  /**
+   * Cette fonction permet d'obtenir une description du plugin
+   *
+   * @return la description du plugin
+   */
+  public String getDescription() {
+    return "no Description";
+  }
 
-	public String getVersion()
-	{
-		return "v1.0";
-	}
+  public boolean canProcess(Object o) {
+    return true;
+  }
+
+  public boolean matches(Class type, String name, Object object) {
+    return true;
+  }
+
+  public String getVersion() {
+    return "v1.0";
+  }
 
 }

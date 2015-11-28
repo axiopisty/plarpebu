@@ -26,247 +26,225 @@ import com.plarpebu.util.UserInterfaceUtil;
 /**
  * Playlist Configuration UI
  */
-public class Tools extends JFrame implements ActionListener, ItemListener, PropertyChangeListener
-{
-	private Container pane = null;
+public class Tools extends JFrame implements ActionListener, ItemListener, PropertyChangeListener {
 
-	private JPanel fontPanel;
+  private Container pane = null;
 
-	private JPanel cbPanel;
+  private JPanel fontPanel;
 
-	private JPanel itemPanel;
+  private JPanel cbPanel;
 
-	private JPanel itemPanel2;
+  private JPanel itemPanel;
 
-	private JLabel fgILabel;
+  private JPanel itemPanel2;
 
-	private JLabel bgILabel;
+  private JLabel fgILabel;
 
-	private JLabel fgSLabel;
+  private JLabel bgILabel;
 
-	private JLabel bgSLabel;
+  private JLabel fgSLabel;
 
-	private JCheckBox cb1;
+  private JLabel bgSLabel;
 
-	private JCheckBox cb2;
+  private JCheckBox cb1;
 
-	private JCheckBox cb3;
+  private JCheckBox cb2;
 
-	private JCheckBox cb4;
+  private JCheckBox cb3;
 
-	private ColorControl fgI = null;
+  private JCheckBox cb4;
 
-	private ColorControl bgI = null;
+  private ColorControl fgI = null;
 
-	private ColorControl fgS = null;
+  private ColorControl bgI = null;
 
-	private ColorControl bgS = null;
+  private ColorControl fgS = null;
 
-	private boolean change = false;
+  private ColorControl bgS = null;
 
-	private PlayListPlugin playlist = null;
+  private boolean change = false;
 
-	private FontDialogChoser fc = new FontDialogChoser();
+  private PlayListPlugin playlist = null;
 
-	private JButton chooseFontButton;
+  private FontDialogChoser fc = new FontDialogChoser();
 
-	/**
-	 * Constructor
-	 * 
-	 * @param pl
-	 */
-	public Tools(PlayListPlugin pl)
-	{
-		super("Playlist Configuration");
-		playlist = pl;
-		try
-		{
-			jbInit();
-		}
-		catch (Exception ex)
-		{
-			ex.printStackTrace();
-		}
-		
-		SkinMgr.getInstance().addComponent(this);
-	}
+  private JButton chooseFontButton;
 
-	/**
-	 * Initialize
-	 * 
-	 * @throws Exception
-	 */
-	void jbInit() throws Exception
-	{
+  /**
+   * Constructor
+   *
+   * @param pl
+   */
+  public Tools(PlayListPlugin pl) {
+    super("Playlist Configuration");
+    playlist = pl;
+    try {
+      jbInit();
+    } catch(Exception ex) {
+      ex.printStackTrace();
+    }
 
-		pane = getContentPane();
-		pane.setLayout(new GridLayout(4, 0));
+    SkinMgr.getInstance().addComponent(this);
+  }
 
-		fontPanel = new JPanel(new GridLayout(3, 2));
-		fontPanel.setBorder(BorderFactory.createTitledBorder("Font"));
+  /**
+   * Initialize
+   *
+   * @throws Exception
+   */
+  void jbInit() throws Exception {
 
-		chooseFontButton = new JButton("Choose Font");
-		chooseFontButton.addActionListener(this);
+    pane = getContentPane();
+    pane.setLayout(new GridLayout(4, 0));
 
-		fontPanel.add(chooseFontButton);
+    fontPanel = new JPanel(new GridLayout(3, 2));
+    fontPanel.setBorder(BorderFactory.createTitledBorder("Font"));
 
-		cb1 = new JCheckBox("Include SubFolders for Drag and Drop", true);
-		cb1.addItemListener(this);
-		cb1.setSelected(playlist.isIncludeSubFolderForDragAndDrop());
+    chooseFontButton = new JButton("Choose Font");
+    chooseFontButton.addActionListener(this);
 
-		cb2 = new JCheckBox("Show Player Buttons in StatusBar", true);
-		cb2.addItemListener(this);
-		cb2.setSelected(playlist.isShowPlayerButtonsInStatusBar());
+    fontPanel.add(chooseFontButton);
 
-		cb3 = new JCheckBox("Single Song Mode", false);
-		cb3.addItemListener(this);
-		cb3.setSelected(playlist.isSingleSongMode());
+    cb1 = new JCheckBox("Include SubFolders for Drag and Drop", true);
+    cb1.addItemListener(this);
+    cb1.setSelected(playlist.isIncludeSubFolderForDragAndDrop());
 
-		cb4 = new JCheckBox("Show Line Numbers in PlayList", false);
-		cb4.addItemListener(this);
-		cb4.setSelected(playlist.isShowLineNumbersInPlayList());
+    cb2 = new JCheckBox("Show Player Buttons in StatusBar", true);
+    cb2.addItemListener(this);
+    cb2.setSelected(playlist.isShowPlayerButtonsInStatusBar());
 
-		cbPanel = new JPanel(new GridLayout(4, 0));
-		cbPanel.add(cb1);
-		cbPanel.add(cb2);
-		cbPanel.add(cb3);
-		cbPanel.add(cb4);
+    cb3 = new JCheckBox("Single Song Mode", false);
+    cb3.addItemListener(this);
+    cb3.setSelected(playlist.isSingleSongMode());
 
-		itemPanel = new JPanel(new GridLayout(2, 2));
-		itemPanel.setBorder(BorderFactory.createTitledBorder("All Items Style"));
+    cb4 = new JCheckBox("Show Line Numbers in PlayList", false);
+    cb4.addItemListener(this);
+    cb4.setSelected(playlist.isShowLineNumbersInPlayList());
 
-		fgILabel = new JLabel("  Text Color : ");
-		fgI = new ColorControl(this);
-		fgI.addPropertyChangeListener(this);
+    cbPanel = new JPanel(new GridLayout(4, 0));
+    cbPanel.add(cb1);
+    cbPanel.add(cb2);
+    cbPanel.add(cb3);
+    cbPanel.add(cb4);
 
-		bgILabel = new JLabel("  Background Color : ");
-		bgI = new ColorControl(this);
-		bgI.addPropertyChangeListener(this);
+    itemPanel = new JPanel(new GridLayout(2, 2));
+    itemPanel.setBorder(BorderFactory.createTitledBorder("All Items Style"));
 
-		itemPanel.add(fgILabel);
-		itemPanel.add(fgI);
-		itemPanel.add(bgILabel);
-		itemPanel.add(bgI);
+    fgILabel = new JLabel("  Text Color : ");
+    fgI = new ColorControl(this);
+    fgI.addPropertyChangeListener(this);
 
-		itemPanel2 = new JPanel(new GridLayout(2, 2));
-		itemPanel2.setBorder(BorderFactory.createTitledBorder("Selected Item Style"));
+    bgILabel = new JLabel("  Background Color : ");
+    bgI = new ColorControl(this);
+    bgI.addPropertyChangeListener(this);
 
-		fgSLabel = new JLabel("  Text Color : ");
-		fgS = new ColorControl(this);
-		fgS.setPreferredSize(new Dimension(30, 30));
-		fgS.addPropertyChangeListener(this);
+    itemPanel.add(fgILabel);
+    itemPanel.add(fgI);
+    itemPanel.add(bgILabel);
+    itemPanel.add(bgI);
 
-		bgSLabel = new JLabel("  Background Color: ");
-		bgS = new ColorControl(this);
-		bgS.setPreferredSize(new Dimension(30, 30));
-		bgS.addPropertyChangeListener(this);
+    itemPanel2 = new JPanel(new GridLayout(2, 2));
+    itemPanel2.setBorder(BorderFactory.createTitledBorder("Selected Item Style"));
 
-		itemPanel2.add(fgSLabel);
-		itemPanel2.add(fgS);
-		itemPanel2.add(bgSLabel);
-		itemPanel2.add(bgS);
+    fgSLabel = new JLabel("  Text Color : ");
+    fgS = new ColorControl(this);
+    fgS.setPreferredSize(new Dimension(30, 30));
+    fgS.addPropertyChangeListener(this);
 
-		pane.setLayout(new GridLayout(4, 0));
-		pane.add(fontPanel);
-		pane.add(cbPanel);
-		pane.add(itemPanel);
-		pane.add(itemPanel2);
-		this.setSize(300, 400);
-		UserInterfaceUtil.centerFrame(this);
-	}
+    bgSLabel = new JLabel("  Background Color: ");
+    bgS = new ColorControl(this);
+    bgS.setPreferredSize(new Dimension(30, 30));
+    bgS.addPropertyChangeListener(this);
 
-	/**
-	 * ActionListener callback
-	 */
-	public void actionPerformed(ActionEvent e)
-	{
-		// Called by the "choose font" button
-		fc.setSelectedFont(playlist.getPlaylistFont());
-		fc.setVisible(true);
-		Font f = fc.getSelectedFont();
-		if (f != null)
-		{
-			playlist.setPlayListFont(f);
-		}
-	}
+    itemPanel2.add(fgSLabel);
+    itemPanel2.add(fgS);
+    itemPanel2.add(bgSLabel);
+    itemPanel2.add(bgS);
 
-	public void setChange(boolean b)
-	{
-		change = b;
-	}
+    pane.setLayout(new GridLayout(4, 0));
+    pane.add(fontPanel);
+    pane.add(cbPanel);
+    pane.add(itemPanel);
+    pane.add(itemPanel2);
+    this.setSize(300, 400);
+    UserInterfaceUtil.centerFrame(this);
+  }
 
-	/**
-	 * itemStateChanged
-	 * 
-	 * @param e
-	 *           ItemEvent
-	 */
-	public void itemStateChanged(ItemEvent e)
-	{
-		Object list = e.getSource();
+  /**
+   * ActionListener callback
+   */
+  public void actionPerformed(ActionEvent e) {
+    // Called by the "choose font" button
+    fc.setSelectedFont(playlist.getPlaylistFont());
+    fc.setVisible(true);
+    Font f = fc.getSelectedFont();
+    if(f != null) {
+      playlist.setPlayListFont(f);
+    }
+  }
 
-		// Include SubFolders for Drag and Drop
-		if (list == cb1)
-		{
-			playlist.setIncludeSubFolderForDragAndDrop(cb1.isSelected());
-		}
-		// Show Player Buttons in StatusBar
-		else if (list == cb2)
-		{
-			playlist.setShowPlayerButtonsInStatusBar(cb2.isSelected());
-		}
-		// Single Song Mode changed, update playlist prefs
-		else if (list == cb3)
-		{
-			playlist.setSingleSongMode(cb3.isSelected());
-		}
-		// Show Line Numbers in PlayList
-		else if (list == cb4)
-		{
-			playlist.setShowLineNumbersInPlayList(cb4.isSelected());
-		}
-	}
+  public void setChange(boolean b) {
+    change = b;
+  }
 
-	/**
-	 * propertyChange
-	 * 
-	 * @param evt
-	 *           PropertyChangeEvent
-	 */
-	public void propertyChange(PropertyChangeEvent evt)
-	{
-		if (change)
-		{
-			if (evt.getSource() == fgI)
-				playlist.setPlayListFg(fgI.getBackground());
-			else if (evt.getSource() == bgI)
-				playlist.setPlayListBg(bgI.getBackground());
-			else if (evt.getSource() == fgS)
-			{
-				playlist.setPlayListSelectionFg(fgS.getBackground());
-			}
-			else if (evt.getSource() == bgS)
-				playlist.setPlayListSelectionBg(bgS.getBackground());
-		}
-	}
+  /**
+   * itemStateChanged
+   *
+   * @param e ItemEvent
+   */
+  public void itemStateChanged(ItemEvent e) {
+    Object list = e.getSource();
 
-	public void setBgColor(Color bgColor)
-	{
-		bgI.setBackground(bgColor);
-	}
+    // Include SubFolders for Drag and Drop
+    if(list == cb1) {
+      playlist.setIncludeSubFolderForDragAndDrop(cb1.isSelected());
+    }
+    // Show Player Buttons in StatusBar
+    else if(list == cb2) {
+      playlist.setShowPlayerButtonsInStatusBar(cb2.isSelected());
+    }
+    // Single Song Mode changed, update playlist prefs
+    else if(list == cb3) {
+      playlist.setSingleSongMode(cb3.isSelected());
+    }
+    // Show Line Numbers in PlayList
+    else if(list == cb4) {
+      playlist.setShowLineNumbersInPlayList(cb4.isSelected());
+    }
+  }
 
-	public void setFgColor(Color fgColor)
-	{
-		fgI.setBackground(fgColor);
-	}
+  /**
+   * propertyChange
+   *
+   * @param evt PropertyChangeEvent
+   */
+  public void propertyChange(PropertyChangeEvent evt) {
+    if(change) {
+      if(evt.getSource() == fgI) {
+        playlist.setPlayListFg(fgI.getBackground());
+      } else if(evt.getSource() == bgI) {
+        playlist.setPlayListBg(bgI.getBackground());
+      } else if(evt.getSource() == fgS) {
+        playlist.setPlayListSelectionFg(fgS.getBackground());
+      } else if(evt.getSource() == bgS) {
+        playlist.setPlayListSelectionBg(bgS.getBackground());
+      }
+    }
+  }
 
-	public void setSelectionFgColor(Color selectionFgColor)
-	{
-		fgS.setBackground(selectionFgColor);
-	}
+  public void setBgColor(Color bgColor) {
+    bgI.setBackground(bgColor);
+  }
 
-	public void setSelectionBgColor(Color selectionBgColor)
-	{
-		bgS.setBackground(selectionBgColor);
-	}
+  public void setFgColor(Color fgColor) {
+    fgI.setBackground(fgColor);
+  }
+
+  public void setSelectionFgColor(Color selectionFgColor) {
+    fgS.setBackground(selectionFgColor);
+  }
+
+  public void setSelectionBgColor(Color selectionBgColor) {
+    bgS.setBackground(selectionBgColor);
+  }
 }

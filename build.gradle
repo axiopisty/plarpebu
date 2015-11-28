@@ -1,4 +1,4 @@
-allprojects  {
+allprojects {
   group = 'com.plarpebu'
   version = '2.0.0-SNAPSHOT'
 
@@ -25,28 +25,28 @@ task releasePlarpebu(
   type: Zip,
   description: "Builds a distributable zip file containing Plarpebu."
 ) {
-    def zipFile = project.name.capitalize()
-    into("$zipFile-${project.version}") {
-        from file('includes')
-        exclude 'libs'
+  def zipFile = project.name.capitalize()
+  into("$zipFile-${project.version}") {
+    from file('includes')
+    exclude 'libs'
+  }
+  into("$zipFile-${project.version}/libs") {
+    from project(':Player').configurations.runtime
+  }
+  into("$zipFile-${project.version}") {
+    from file("${project(':Player').buildDir}/libs")
+    rename { "player.jar" }
+  }
+  into("$zipFile-${project.version}/plugins") {
+    from fileTree(dir: '.').filter {
+      it.getName().endsWith(".jar") &&
+        (it.getName().contains('AlbumGrabberPlugin') ||
+          it.getName().contains('BasicPlugins') ||
+          it.getName().contains('CdgPlugin') ||
+          it.getName().contains('ExamplePlugins'))
     }
-    into("$zipFile-${project.version}/libs") {
-        from project(':Player').configurations.runtime
-    }
-    into("$zipFile-${project.version}") {
-        from file("${project(':Player').buildDir}/libs")
-        rename{"player.jar"}
-    }
-    into("$zipFile-${project.version}/plugins") {
-        from fileTree(dir: '.').filter {
-            it.getName().endsWith(".jar") &&
-              (it.getName().contains('AlbumGrabberPlugin') ||
-                it.getName().contains('BasicPlugins') ||
-                it.getName().contains('CdgPlugin') ||
-                it.getName().contains('ExamplePlugins'))
-        }
-    }
-    archiveName = "$zipFile-${project.version}.zip"
+  }
+  archiveName = "$zipFile-${project.version}.zip"
 }
 
 releasePlarpebu.dependsOn(":AlbumGrabberPlugin:build")

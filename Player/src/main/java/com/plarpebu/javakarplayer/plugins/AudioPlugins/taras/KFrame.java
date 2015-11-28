@@ -5,42 +5,38 @@ import java.util.Vector;
 /**
  * Represents formatted frame
  */
-class KFrame
-{
-	public long start, end, to_next_key_frame, to_prev_key_frame;
+class KFrame {
 
-	public int first_line;
+  public long start, end, to_next_key_frame, to_prev_key_frame;
 
-	public Vector sung;
+  public int first_line;
 
-	public Vector clear;
+  public Vector sung;
 
-	boolean scrolled;
+  public Vector clear;
 
-	public KFrame()
-	{
-		sung = new Vector();
-		clear = new Vector();
-	}
+  boolean scrolled;
 
-	public String toString()
-	{
-		String str = "[" + start + ", " + end + "), first line = " + first_line + "\n";
+  public KFrame() {
+    sung = new Vector();
+    clear = new Vector();
+  }
 
-		for (int i = 0; i < sung.size(); ++i)
-		{
-			Syllable syl = (Syllable) sung.elementAt(i);
-			str += syl.text;
-		}
+  public String toString() {
+    String str = "[" + start + ", " + end + "), first line = " + first_line + "\n";
 
-		str += "\n\n";
+    for(int i = 0; i < sung.size(); ++i) {
+      Syllable syl = (Syllable) sung.elementAt(i);
+      str += syl.text;
+    }
 
-		for (int i = 0; i < clear.size(); ++i)
-		{
-			Syllable syl = (Syllable) clear.elementAt(i);
-			str += syl.text;
-		}
+    str += "\n\n";
 
-		return str;
-	}
+    for(int i = 0; i < clear.size(); ++i) {
+      Syllable syl = (Syllable) clear.elementAt(i);
+      str += syl.text;
+    }
+
+    return str;
+  }
 }

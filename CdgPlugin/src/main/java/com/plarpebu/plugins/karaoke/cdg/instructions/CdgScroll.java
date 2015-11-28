@@ -23,26 +23,24 @@ package com.plarpebu.plugins.karaoke.cdg.instructions;
  * left: SCmd HScroll === ======= 0 1 0 2 0 3 0 4 0 5 0 6 2 0 (repeat) You can create the effect of
  * an infinite panorama by continually loading in new tiles into the border area and scrolling them
  * into view.
- * 
+ *
  * @author Michel Buffa (buffa@unice.fr)
  */
-public class CdgScroll
-{
-	// private byte color;
+public class CdgScroll {
+  // private byte color;
 
-	// private byte hScroll;
+  // private byte hScroll;
 
-	// private byte vScroll;
+  // private byte vScroll;
 
-	public CdgScroll(byte[] data)
-	{
-	// data is the 16 bytes array of the cdg chunk.
+  public CdgScroll(byte[] data) {
+    // data is the 16 bytes array of the cdg chunk.
 
-	// Only 4 lower bits are used
-	// color = (byte) (data[0] & 0x0F);
+    // Only 4 lower bits are used
+    // color = (byte) (data[0] & 0x0F);
 
-	// Only lower 6 bits are used
-	// hScroll = (byte) (data[1] & 0x3F);
-	// vScroll = (byte) (data[2] & 0x3F);
-	}
+    // Only lower 6 bits are used
+    // hScroll = (byte) (data[1] & 0x3F);
+    // vScroll = (byte) (data[2] & 0x3F);
+  }
 }

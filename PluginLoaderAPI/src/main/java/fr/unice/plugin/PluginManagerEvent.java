@@ -3,6 +3,7 @@ package fr.unice.plugin;
 import java.util.EventObject;
 
 public class PluginManagerEvent extends EventObject {
+
   Plugin plugin;
 
   public PluginManagerEvent(Plugin plugin) {

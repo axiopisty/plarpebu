@@ -19,32 +19,30 @@ import java.util.Arrays;
  * <p>
  * Company:
  * </p>
- * 
+ *
  * @author Michel Buffa (buffa@unice.fr)
  * @version $Id
  */
 
-public class CdgBorderPreset
-{
-	static byte color;
+public class CdgBorderPreset {
 
-	static final int WIDTH = 300;
+  static byte color;
 
-	// byte []filler = new byte[15];
+  static final int WIDTH = 300;
 
-	public static void drawBorder(byte[] data, byte[] pixels)
-	{
-		// data is the 16 bytes array of the cdg chunk.
-		// For this one, only the lower 4 bits are used
-		color = (byte) (data[0] & 0x0F);
+  // byte []filler = new byte[15];
 
-		Arrays.fill(pixels, 0, 12 * WIDTH, color); // top
-		Arrays.fill(pixels, 204 * WIDTH, (204 * WIDTH) + (12 * WIDTH), color); // bottom
+  public static void drawBorder(byte[] data, byte[] pixels) {
+    // data is the 16 bytes array of the cdg chunk.
+    // For this one, only the lower 4 bits are used
+    color = (byte) (data[0] & 0x0F);
 
-		for (int i = 12; i < 204; i++)
-		{ // sides
-			Arrays.fill(pixels, i * WIDTH, (i * WIDTH) + 6, color); // left
-			Arrays.fill(pixels, i * WIDTH + 294, ((i * WIDTH) + 294) + 6, color); // right
-		}
-	}
+    Arrays.fill(pixels, 0, 12 * WIDTH, color); // top
+    Arrays.fill(pixels, 204 * WIDTH, (204 * WIDTH) + (12 * WIDTH), color); // bottom
+
+    for(int i = 12; i < 204; i++) { // sides
+      Arrays.fill(pixels, i * WIDTH, (i * WIDTH) + 6, color); // left
+      Arrays.fill(pixels, i * WIDTH + 294, ((i * WIDTH) + 294) + 6, color); // right
+    }
+  }
 }

@@ -7,85 +7,84 @@ import java.awt.Image;
 /**
  * Set of properties used by the player
  */
-public class KaraokeProperties
-{
-	public static final int BACKGROUND_PLAIN = 0;
+public class KaraokeProperties {
 
-	public static final int BACKGROUND_GRADIANT = 1;
+  public static final int BACKGROUND_PLAIN = 0;
 
-	public static final int BACKGROUND_IMAGE = 2;
+  public static final int BACKGROUND_GRADIANT = 1;
 
-	public int backgroundType = BACKGROUND_GRADIANT;
+  public static final int BACKGROUND_IMAGE = 2;
 
-	public String fontFace, charset;
+  public int backgroundType = BACKGROUND_GRADIANT;
 
-	public int style;
+  public String fontFace, charset;
 
-	public int width, height;
+  public int style;
 
-	public Color bgColor;
+  public int width, height;
 
-	public Color syllabesNotSungYetColor;
+  public Color bgColor;
 
-	public Color syllabeToSingColor;
+  public Color syllabesNotSungYetColor;
 
-	public Color ribbonColor;
+  public Color syllabeToSingColor;
 
-	public Color startGradiantColor, endGradiantColor;
+  public Color ribbonColor;
 
-	public Color shadowColor;
+  public Color startGradiantColor, endGradiantColor;
 
-	public Color outlineColor;
+  public Color shadowColor;
 
-	public Color sungSyllabesColor;
+  public Color outlineColor;
 
-	public int lines, cols, readLine, ribbonWidth;
+  public Color sungSyllabesColor;
 
-	public boolean displayShadow;
+  public int lines, cols, readLine, ribbonWidth;
 
-	public boolean displayOutline;
+  public boolean displayShadow;
 
-	public int outlineWidth = 3;
+  public boolean displayOutline;
 
-	public boolean autodetectCharset;
+  public int outlineWidth = 3;
 
-	public int charsetHint = 0;
+  public boolean autodetectCharset;
 
-	public String bgImageFilename = "noImage";
+  public int charsetHint = 0;
 
-	public boolean antiAliasedText;
+  public String bgImageFilename = "noImage";
 
-	Image bgImage;
+  public boolean antiAliasedText;
 
-	/**
-	 * Default karaoke properties
-	 */
-	public final int backgroundMode = 0;
+  Image bgImage;
 
-	public KaraokeProperties()
-	{
-		fontFace = "Comic sans MS";
-		style = Font.PLAIN;
-		charset = "ISO8859_1"; // "windows-1251";
-		width = 800;
-		height = 600;
-		bgColor = Color.blue;
-		syllabesNotSungYetColor = Color.yellow;
-		sungSyllabesColor = Color.red;
-		syllabeToSingColor = Color.green;
-		ribbonColor = Color.red;
-		startGradiantColor = new Color(0, 0, 255);
-		endGradiantColor = new Color(0, 0, 50);
-		shadowColor = Color.black;
-		outlineColor = Color.black;
-		lines = 6; // 6
-		cols = 50; // 35
-		readLine = 1;
-		ribbonWidth = 4;
-		bgImage = null;
-		displayShadow = true;
-		displayOutline = true;
-		autodetectCharset = false;
-		antiAliasedText = false;
-	}
+  /**
+   * Default karaoke properties
+   */
+  public final int backgroundMode = 0;
+
+  public KaraokeProperties() {
+    fontFace = "Comic sans MS";
+    style = Font.PLAIN;
+    charset = "ISO8859_1"; // "windows-1251";
+    width = 800;
+    height = 600;
+    bgColor = Color.blue;
+    syllabesNotSungYetColor = Color.yellow;
+    sungSyllabesColor = Color.red;
+    syllabeToSingColor = Color.green;
+    ribbonColor = Color.red;
+    startGradiantColor = new Color(0, 0, 255);
+    endGradiantColor = new Color(0, 0, 50);
+    shadowColor = Color.black;
+    outlineColor = Color.black;
+    lines = 6; // 6
+    cols = 50; // 35
+    readLine = 1;
+    ribbonWidth = 4;
+    bgImage = null;
+    displayShadow = true;
+    displayOutline = true;
+    autodetectCharset = false;
+    antiAliasedText = false;
+  }
 }

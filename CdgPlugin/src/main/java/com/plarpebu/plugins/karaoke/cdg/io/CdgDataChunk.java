@@ -24,171 +24,157 @@ import java.awt.Color;
  * <p>
  * Company:
  * </p>
- * 
+ *
  * @author Michel Buffa (buffa@unice.fr)
  * @version $Id
  */
 
-public class CdgDataChunk
-{
-	// Here are the 24 bytes of the cdg chunk
-	private byte cdgCommand;
+public class CdgDataChunk {
 
-	private byte cdgInstruction;
+  // Here are the 24 bytes of the cdg chunk
+  private byte cdgCommand;
 
-	private byte[] parityP = new byte[2];
+  private byte cdgInstruction;
 
-	private byte[] cdgData = new byte[16];
+  private byte[] parityP = new byte[2];
 
-	private byte[] parityQ = new byte[4];
+  private byte[] cdgData = new byte[16];
 
-	// its offset in the file
-	private int offset;
+  private byte[] parityQ = new byte[4];
 
-	// The current colormap
-	private static Color[] colormap = new Color[16];
+  // its offset in the file
+  private int offset;
 
-	// All the constants used for the cdgInstruction
-	// Set the screen to a particular color.
-	public static byte CDG_MEMORY_PRESET = 1;
+  // The current colormap
+  private static Color[] colormap = new Color[16];
 
-	// Set the border of the screen to a particular color.
-	public static byte CDG_BORDER_PRESET = 2;
+  // All the constants used for the cdgInstruction
+  // Set the screen to a particular color.
+  public static byte CDG_MEMORY_PRESET = 1;
 
-	// Load a 12 x 6, 2 color tile and display it normally.
-	public static byte CDG_TILE_NORMAL = 6;
+  // Set the border of the screen to a particular color.
+  public static byte CDG_BORDER_PRESET = 2;
 
-	// Scroll the image, filling in the new area with a color.
-	public static byte CDG_SCROLL_PRESET = 20;
+  // Load a 12 x 6, 2 color tile and display it normally.
+  public static byte CDG_TILE_NORMAL = 6;
 
-	// Scroll the image, rotating the bits back around.
-	public static byte CDG_SCROLL_COPY = 24;
+  // Scroll the image, filling in the new area with a color.
+  public static byte CDG_SCROLL_PRESET = 20;
 
-	// Define a specific color as being transparent.
-	public static byte CDG_DEF_TRANS_COLOR = 28;
+  // Scroll the image, rotating the bits back around.
+  public static byte CDG_SCROLL_COPY = 24;
 
-	// Load in the lower 8 entries of the color table.
-	public static byte CDG_LOAD_COL_TABLE_LOW = 30;
+  // Define a specific color as being transparent.
+  public static byte CDG_DEF_TRANS_COLOR = 28;
 
-	// Load in the upper 8 entries of the color table.
-	public static byte CDG_LOAD_COL_TABLE_HIGH = 31;
+  // Load in the lower 8 entries of the color table.
+  public static byte CDG_LOAD_COL_TABLE_LOW = 30;
 
-	// Load a 12 x 6, 2 color tile and display it using the XOR method.
-	public static byte CDG_TILE_XOR = 38;
+  // Load in the upper 8 entries of the color table.
+  public static byte CDG_LOAD_COL_TABLE_HIGH = 31;
 
-	public CdgDataChunk(byte[] data, int offset)
-	{
-		this.offset = offset;
+  // Load a 12 x 6, 2 color tile and display it using the XOR method.
+  public static byte CDG_TILE_XOR = 38;
 
-		// Initialize attributes from the 24 bytes data array
-		// For the command and instruction, only the lower 6 bits are relevant,
-		// that's why we and them with ox3f
-		cdgCommand = (byte) (data[offset + 0] & 0x3f);
-		cdgInstruction = (byte) (data[offset + 1] & 0x3f);
-		parityP[0] = data[offset + 2];
-		parityP[1] = data[offset + 3];
+  public CdgDataChunk(byte[] data, int offset) {
+    this.offset = offset;
 
-		// The 16 bytes data chunk
-		for (int i = 0; i < 16; i++)
-		{
-			cdgData[i] = data[offset + 4 + i];
-		}
+    // Initialize attributes from the 24 bytes data array
+    // For the command and instruction, only the lower 6 bits are relevant,
+    // that's why we and them with ox3f
+    cdgCommand = (byte) (data[offset + 0] & 0x3f);
+    cdgInstruction = (byte) (data[offset + 1] & 0x3f);
+    parityP[0] = data[offset + 2];
+    parityP[1] = data[offset + 3];
 
-		parityQ[0] = data[offset + 20];
-		parityQ[0] = data[offset + 21];
-		parityQ[0] = data[offset + 22];
-		parityQ[0] = data[offset + 23];
-	}
+    // The 16 bytes data chunk
+    for(int i = 0; i < 16; i++) {
+      cdgData[i] = data[offset + 4 + i];
+    }
 
-	public byte getCdgCommand()
-	{
-		return cdgCommand;
-	}
+    parityQ[0] = data[offset + 20];
+    parityQ[0] = data[offset + 21];
+    parityQ[0] = data[offset + 22];
+    parityQ[0] = data[offset + 23];
+  }
 
-	public byte[] getCdgData()
-	{
-		return cdgData;
-	}
+  public byte getCdgCommand() {
+    return cdgCommand;
+  }
 
-	public byte getCdgInstruction()
-	{
-		return cdgInstruction;
-	}
+  public byte[] getCdgData() {
+    return cdgData;
+  }
 
-	public byte[] getParityP()
-	{
-		return parityP;
-	}
+  public byte getCdgInstruction() {
+    return cdgInstruction;
+  }
 
-	public byte[] getParityQ()
-	{
-		return parityQ;
-	}
+  public byte[] getParityP() {
+    return parityP;
+  }
 
-	public String timeOffset()
-	{
-		// As guessed from the EditCDG software, it seems that a decimal
-		// offset of 7200 corresponds to 1000 ms, so here we go !
-		long ms = (offset * 10) / 72;
+  public byte[] getParityQ() {
+    return parityQ;
+  }
 
-		long seconds = ms / 1000;
-		long remainingMs = ms % 1000;
+  public String timeOffset() {
+    // As guessed from the EditCDG software, it seems that a decimal
+    // offset of 7200 corresponds to 1000 ms, so here we go !
+    long ms = (offset * 10) / 72;
 
-		long minutes = seconds / 60;
-		long remainingSeconds = seconds % 60;
+    long seconds = ms / 1000;
+    long remainingMs = ms % 1000;
 
-		return "" + minutes + ":" + remainingSeconds + ":" + remainingMs;
-	}
+    long minutes = seconds / 60;
+    long remainingSeconds = seconds % 60;
 
-	public String toString()
-	{
-		String description = "";
+    return "" + minutes + ":" + remainingSeconds + ":" + remainingMs;
+  }
 
-		if (cdgCommand == 9)
-		{
-			// Then we've got a cdg instruction there... note : cdgCommand and
-			// cdgInstruction have been already anded with 0x3f in order to keep
-			// only the lower six bits, which are relevants
-			// description += "dec file offset : " + offset + " time : " +
-			// timeOffset() + "\t";
+  public String toString() {
+    String description = "";
 
-			if (cdgInstruction == CDG_MEMORY_PRESET)
-				description += "Memory Preset";
-			else if (cdgInstruction == CDG_BORDER_PRESET)
-				description += "Border Preset";
-			else if (cdgInstruction == CDG_TILE_NORMAL)
-				description += "Tile Block(normal)";
-			else if (cdgInstruction == CDG_SCROLL_PRESET)
-				description += "Scroll Preset";
-			else if (cdgInstruction == CDG_SCROLL_COPY)
-				description += "Scroll Copy";
-			else if (cdgInstruction == CDG_DEF_TRANS_COLOR)
-				description += "Def trans color";
-			else if (cdgInstruction == CDG_LOAD_COL_TABLE_LOW)
-			{
-				description += "Load color table (entries 0-7)";
-			}
-			else if (cdgInstruction == CDG_LOAD_COL_TABLE_HIGH)
-			{
-				description += "Load color table (entries 8-15)";
-			}
-			else if (cdgInstruction == CDG_TILE_XOR)
-				description += "Tile Block(xor)";
-		}
+    if(cdgCommand == 9) {
+      // Then we've got a cdg instruction there... note : cdgCommand and
+      // cdgInstruction have been already anded with 0x3f in order to keep
+      // only the lower six bits, which are relevants
+      // description += "dec file offset : " + offset + " time : " +
+      // timeOffset() + "\t";
 
-		return description;
-	}
+      if(cdgInstruction == CDG_MEMORY_PRESET) {
+        description += "Memory Preset";
+      } else if(cdgInstruction == CDG_BORDER_PRESET) {
+        description += "Border Preset";
+      } else if(cdgInstruction == CDG_TILE_NORMAL) {
+        description += "Tile Block(normal)";
+      } else if(cdgInstruction == CDG_SCROLL_PRESET) {
+        description += "Scroll Preset";
+      } else if(cdgInstruction == CDG_SCROLL_COPY) {
+        description += "Scroll Copy";
+      } else if(cdgInstruction == CDG_DEF_TRANS_COLOR) {
+        description += "Def trans color";
+      } else if(cdgInstruction == CDG_LOAD_COL_TABLE_LOW) {
+        description += "Load color table (entries 0-7)";
+      } else if(cdgInstruction == CDG_LOAD_COL_TABLE_HIGH) {
+        description += "Load color table (entries 8-15)";
+      } else if(cdgInstruction == CDG_TILE_XOR) {
+        description += "Tile Block(xor)";
+      }
+    }
 
-	public void display()
-	{
-		String description = toString();
+    return description;
+  }
 
-		if (!description.equals(""))
-			System.out.println(description);
-	}
+  public void display() {
+    String description = toString();
 
-	public Color[] getColormap()
-	{
-		return colormap;
-	}
+    if(!description.equals("")) {
+      System.out.println(description);
+    }
+  }
+
+  public Color[] getColormap() {
+    return colormap;
+  }
 }

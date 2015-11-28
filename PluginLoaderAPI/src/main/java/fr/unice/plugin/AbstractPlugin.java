@@ -3,27 +3,29 @@ package fr.unice.plugin;
 /**
  * Minimal implementation of Plugin.
  * canProcess returns always true.
+ *
  * @author Richard Grin
  */
 public abstract class AbstractPlugin implements Plugin {
 
   /**
    * Default implementation of matches.
-   * @todo ?? use a regular expression for name?
+   *
    * @param type
    * @param name
    * @param object
    * @return true if types are identical, names are equal,
    * and if the plugin can process the object.
+   * @todo ?? use a regular expression for name?
    */
   public boolean matches(Class type, String name, Object object) {
-    if (type != null && type != this.getPluginType()) {
+    if(type != null && type != this.getPluginType()) {
       return false;
     }
-    if (name != null && ! name.equals(this.getName())) {
+    if(name != null && !name.equals(this.getName())) {
       return false;
     }
-    if (object != null && ! this.canProcess(object)) {
+    if(object != null && !this.canProcess(object)) {
       return false;
     }
     return true;
@@ -31,6 +33,7 @@ public abstract class AbstractPlugin implements Plugin {
 
   /**
    * Return always true: know how to process all objects.
+   *
    * @param object
    * @return true
    */
@@ -39,13 +42,11 @@ public abstract class AbstractPlugin implements Plugin {
   }
 
   public String getDescription() {
-    return "Plugin; type: " + getPluginType() + "; name: " + getName()
-        + "; can process all objects.";
+    return "Plugin; type: " + getPluginType() + "; name: " + getName() + "; can process all objects.";
   }
 
   public String getVersion() {
     return "";
   }
-
 
 }

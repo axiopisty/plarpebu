@@ -28,242 +28,206 @@ import com.plarpebu.plugins.sdk.PanelPlugin;
 /**
  * Stop PLay Seek Plugin
  */
-public class StopPlaySeekPlugin extends PanelPlugin implements BasicPlayerListener, ActionListener,
-         MouseListener
-{
-	public static final String NAME = "Stop Play Seek Plugin";
+public class StopPlaySeekPlugin extends PanelPlugin implements BasicPlayerListener, ActionListener, MouseListener {
 
-	private JButton play = null;
+  public static final String NAME = "Stop Play Seek Plugin";
 
-	private JButton stop = null;
+  private JButton play = null;
 
-	private JButton pause = null;
+  private JButton stop = null;
 
-	private JButton next = null;
+  private JButton pause = null;
 
-	private JButton prev = null;
+  private JButton next = null;
 
-	private JButton add = null;
+  private JButton prev = null;
 
-	private JSlider slider = null;
+  private JButton add = null;
 
-	// private JLabel seekLB = null;
+  private JSlider slider = null;
 
-	private DefaultBoundedRangeModel model = null;
+  // private JLabel seekLB = null;
 
-	private int modelscale = 1000;
+  private DefaultBoundedRangeModel model = null;
 
-	private JPanel panelButton = null;
+  private int modelscale = 1000;
 
-	private boolean isFirst = true;
+  private JPanel panelButton = null;
 
-	// Audio
-	private int byteslength = -1;
+  private boolean isFirst = true;
 
-	private BasicController controller = null;
+  // Audio
+  private int byteslength = -1;
 
-	private static boolean paused = false;
+  private BasicController controller = null;
 
-	/**
-	 * Constructor
-	 * @throws HeadlessException
-	 */
-	public StopPlaySeekPlugin() throws HeadlessException
-	{
-		initUI();
-	}
+  private static boolean paused = false;
 
-	/**
-	 * Initialize UI
-	 */
-	public void initUI()
-	{
-		model = new DefaultBoundedRangeModel(0, 1, 0, modelscale);
-		// seekLB = new JLabel("Seek : ");
-		slider = new JSlider(model);
-		slider.setPreferredSize(new Dimension(50, 20));
-		slider.setPaintTicks(true);
-		slider.setMajorTickSpacing(50);
-		slider.setMinorTickSpacing(10);
-		slider.addMouseListener(this);
+  /**
+   * Constructor
+   *
+   * @throws HeadlessException
+   */
+  public StopPlaySeekPlugin() throws HeadlessException {
+    initUI();
+  }
 
-		Box b = Box.createVerticalBox();
-		// this.setLayout(new GridLayout(2, 0));
-		panelButton = new JPanel();
+  /**
+   * Initialize UI
+   */
+  public void initUI() {
+    model = new DefaultBoundedRangeModel(0, 1, 0, modelscale);
+    // seekLB = new JLabel("Seek : ");
+    slider = new JSlider(model);
+    slider.setPreferredSize(new Dimension(50, 20));
+    slider.setPaintTicks(true);
+    slider.setMajorTickSpacing(50);
+    slider.setMinorTickSpacing(10);
+    slider.addMouseListener(this);
 
-		prev = SwingUtils.addButton(panelButton, "prev", "prev", "/icons/big/bigPrev.gif");
-		prev.addActionListener(this);
+    Box b = Box.createVerticalBox();
+    // this.setLayout(new GridLayout(2, 0));
+    panelButton = new JPanel();
 
-		play = SwingUtils.addButton(panelButton, "play", "play", "/icons/big/bigPlay.gif");
-		play.addActionListener(this);
+    prev = SwingUtils.addButton(panelButton, "prev", "prev", "/icons/big/bigPrev.gif");
+    prev.addActionListener(this);
 
-		pause = SwingUtils.addButton(panelButton, "pause", "pause", "/icons/big/bigPause.gif");
-		pause.addActionListener(this);
+    play = SwingUtils.addButton(panelButton, "play", "play", "/icons/big/bigPlay.gif");
+    play.addActionListener(this);
 
-		stop = SwingUtils.addButton(panelButton, "stop", "stop", "/icons/big/bigStop.gif");
-		stop.addActionListener(this);
+    pause = SwingUtils.addButton(panelButton, "pause", "pause", "/icons/big/bigPause.gif");
+    pause.addActionListener(this);
 
-		next = SwingUtils.addButton(panelButton, "next", "next", "/icons/big/bigNext.gif");
-		next.addActionListener(this);
+    stop = SwingUtils.addButton(panelButton, "stop", "stop", "/icons/big/bigStop.gif");
+    stop.addActionListener(this);
 
-		add = SwingUtils.addButton(panelButton, "add", "add file", "/icons/big/bigEject.gif");
-		add.addActionListener(this);
+    next = SwingUtils.addButton(panelButton, "next", "next", "/icons/big/bigNext.gif");
+    next.addActionListener(this);
 
-		slider.setEnabled(false);
-		b.add(slider);
-		b.add(Box.createRigidArea(new Dimension(1, 3)));
-		b.add(panelButton);
-		this.add(b);
-	}
+    add = SwingUtils.addButton(panelButton, "add", "add file", "/icons/big/bigEject.gif");
+    add.addActionListener(this);
 
-	public String getName()
-	{
-		return NAME;
-	}
-	
-	public void actionPerformed(ActionEvent e)
-	{
-		try
-		{
-			if (e.getSource() == play)
-			{
-				if (false && isFirst)
-				{
-					File f = PlayListPlugin.getFileSelected();
-					controller.open(f);
-					isFirst = false;
-					PlayListPlugin.setPlaying(true);
-				}
-				controller.play();
-				slider.setEnabled(true);
-			}
-			else if (e.getSource() == stop)
-			{
-				controller.stop();
-				model.setValue(0);
-				slider.setEnabled(false);
-				PlayListPlugin.setPlaying(false);
-			}
-			else if (e.getSource() == next)
-			{
-				controller.stop();
-				model.setValue(0);
-				PlayListPlugin.getNext();
+    slider.setEnabled(false);
+    b.add(slider);
+    b.add(Box.createRigidArea(new Dimension(1, 3)));
+    b.add(panelButton);
+    this.add(b);
+  }
 
-			}
-			else if (e.getSource() == prev)
-			{
-				controller.stop();
-				model.setValue(0);
-				PlayListPlugin.getPrev();
-			}
+  public String getName() {
+    return NAME;
+  }
 
-			else if (e.getSource() == pause)
-			{
-				if (paused == true)
-				{
-					controller.resume();
-					paused = false;
-				}
-				else
-				{
-					controller.pause();
-					paused = true;
-				}
-			}
-			else if (e.getSource() == add)
-			{
-				JFileChooser fc = new JFileChooser();
-				fc.setMultiSelectionEnabled(false);
-				fc.setDialogTitle("Add a file");
-				fc.showOpenDialog(this);
-				File file = fc.getSelectedFile();
-				if (file != null)
-				{
-					controller.open(file);
-					// if (Player.isActivate()) {
-					PlayListPlugin.addElementToPlayList(file.getAbsolutePath());
-					// }
-				}
-			}
+  public void actionPerformed(ActionEvent e) {
+    try {
+      if(e.getSource() == play) {
+        if(false && isFirst) {
+          File f = PlayListPlugin.getFileSelected();
+          controller.open(f);
+          isFirst = false;
+          PlayListPlugin.setPlaying(true);
+        }
+        controller.play();
+        slider.setEnabled(true);
+      } else if(e.getSource() == stop) {
+        controller.stop();
+        model.setValue(0);
+        slider.setEnabled(false);
+        PlayListPlugin.setPlaying(false);
+      } else if(e.getSource() == next) {
+        controller.stop();
+        model.setValue(0);
+        PlayListPlugin.getNext();
 
-		}
-		catch (BasicPlayerException e1)
-		{
-			e1.printStackTrace();
-		}
-	}
+      } else if(e.getSource() == prev) {
+        controller.stop();
+        model.setValue(0);
+        PlayListPlugin.getPrev();
+      } else if(e.getSource() == pause) {
+        if(paused == true) {
+          controller.resume();
+          paused = false;
+        } else {
+          controller.pause();
+          paused = true;
+        }
+      } else if(e.getSource() == add) {
+        JFileChooser fc = new JFileChooser();
+        fc.setMultiSelectionEnabled(false);
+        fc.setDialogTitle("Add a file");
+        fc.showOpenDialog(this);
+        File file = fc.getSelectedFile();
+        if(file != null) {
+          controller.open(file);
+          // if (Player.isActivate()) {
+          PlayListPlugin.addElementToPlayList(file.getAbsolutePath());
+          // }
+        }
+      }
 
-	public void mouseEntered(MouseEvent e)
-	{}
+    } catch(BasicPlayerException e1) {
+      e1.printStackTrace();
+    }
+  }
 
-	public void mouseExited(MouseEvent e)
-	{}
+  public void mouseEntered(MouseEvent e) {
+  }
 
-	public void mousePressed(MouseEvent e)
-	{}
+  public void mouseExited(MouseEvent e) {
+  }
 
-	public void mouseClicked(MouseEvent e)
-	{}
+  public void mousePressed(MouseEvent e) {
+  }
 
-	public void mouseReleased(MouseEvent e)
-	{
-		if (e.getSource() == slider)
-		{
-			try
-			{
-				long skp = -1;
-				// synchronized (model) {
-				skp = (long) ((model.getValue() * 1.0f / modelscale * 1.0f) * byteslength);
-				// }
-				controller.seek(skp);
-			}
-			catch (BasicPlayerException e1)
-			{
-				e1.printStackTrace();
-			}
-		}
-	}
+  public void mouseClicked(MouseEvent e) {
+  }
 
-	public void setController(BasicController controller)
-	{
-		this.controller = controller;
-	}
+  public void mouseReleased(MouseEvent e) {
+    if(e.getSource() == slider) {
+      try {
+        long skp = -1;
+        // synchronized (model) {
+        skp = (long) ((model.getValue() * 1.0f / modelscale * 1.0f) * byteslength);
+        // }
+        controller.seek(skp);
+      } catch(BasicPlayerException e1) {
+        e1.printStackTrace();
+      }
+    }
+  }
 
-	public void opened(Object stream, Map properties)
-	{
-		slider.setEnabled(true);
-		if (properties.containsKey("audio.length.bytes"))
-		{
-			byteslength = ((Integer) properties.get("audio.length.bytes")).intValue();
-		}
-	}
+  public void setController(BasicController controller) {
+    this.controller = controller;
+  }
 
-	public void stateUpdated(BasicPlayerEvent event)
-	{
-		System.out.println("Player Event : " + event);
-	}
+  public void opened(Object stream, Map properties) {
+    slider.setEnabled(true);
+    if(properties.containsKey("audio.length.bytes")) {
+      byteslength = ((Integer) properties.get("audio.length.bytes")).intValue();
+    }
+  }
 
-	public void progress(int bytesread, long microseconds, byte[] pcmdata, Map properties)
-	{
+  public void stateUpdated(BasicPlayerEvent event) {
+    System.out.println("Player Event : " + event);
+  }
 
-		float progress = bytesread * 1.0f / this.byteslength * 1.0f;
-		model.setValue((int) (progress * modelscale));
-	}
+  public void progress(int bytesread, long microseconds, byte[] pcmdata, Map properties) {
 
-	/**
-	 * getPlugin
-	 * 
-	 * @return playerPlugin
-	 */
-	public BasicPlayerListener getPlugin()
-	{
-		return this;
-	}
+    float progress = bytesread * 1.0f / this.byteslength * 1.0f;
+    model.setValue((int) (progress * modelscale));
+  }
 
-	public String getVersion()
-	{
-		return "v1.0";
-	}
+  /**
+   * getPlugin
+   *
+   * @return playerPlugin
+   */
+  public BasicPlayerListener getPlugin() {
+    return this;
+  }
+
+  public String getVersion() {
+    return "v1.0";
+  }
 
 }

@@ -30,53 +30,49 @@ import com.plarpebu.plugins.sdk.SystemExitListener;
  * Dans les {@link ReflectPermission}: <tt>suppressAccessChecks</tt>.<br>
  * Toutes les {@link FilePermission} et {@link LoggingPermission} sont permises.
  * </p>
- * Au moment de la sortie du programme, le SecurityManager le signal ˆ tous les SystemExitListener.<br>
+ * Au moment de la sortie du programme, le SecurityManager le signal ï¿½ tous les SystemExitListener.<br>
  * <p>
  * Copyright: Copyright (c) 2003-2004
  * </p>
  * <p>
  * Company:
  * </p>
- * 
+ *
  * @author Julien Charles
  * @version 1.0
  */
-public class ExitListenerSecurityManager extends SecurityManager
-{
-	private boolean bCanExit;
+public class ExitListenerSecurityManager extends SecurityManager {
 
-	private ArrayList exitListeners;
+  private boolean bCanExit;
 
-	/**
-	 * Constructeur: l'acc&egrave;s est permis a la fonction exit par d&eacute;faut.
-	 */
-	public ExitListenerSecurityManager()
-	{
-		super();
-		bCanExit = true;
-		exitListeners = new ArrayList();
-	}
+  private ArrayList exitListeners;
 
-	/**
-	 * Ajoute un SystemExitListener au sŽcurity manager.
-	 * 
-	 * @param listener
-	 *           le ExitListener ˆ ajouter.
-	 */
-	public void addSystemExitListener(SystemExitListener listener)
-	{
-		exitListeners.add(listener);
-	}
+  /**
+   * Constructeur: l'acc&egrave;s est permis a la fonction exit par d&eacute;faut.
+   */
+  public ExitListenerSecurityManager() {
+    super();
+    bCanExit = true;
+    exitListeners = new ArrayList();
+  }
 
-	/**
-	 * garantit un certain nombre de permissions de base.
-	 */
-	public void checkPermission(Permission perm)
-	{
-		/*
-		 * if // Les permissions du Runtime (perm.getName().equals("createClassLoader") ||
+  /**
+   * Ajoute un SystemExitListener au sï¿½curity manager.
+   *
+   * @param listener le ExitListener ï¿½ ajouter.
+   */
+  public void addSystemExitListener(SystemExitListener listener) {
+    exitListeners.add(listener);
+  }
+
+  /**
+   * garantit un certain nombre de permissions de base.
+   */
+  public void checkPermission(Permission perm) {
+    /*
+     * if // Les permissions du Runtime (perm.getName().equals("createClassLoader") ||
 		 * perm.getName().equals("setIO") || perm.getName().equals(
-		 * "accessClassInPackage.sun.reflect") || // Les permissions de sécurité...
+		 * "accessClassInPackage.sun.reflect") || // Les permissions de sï¿½curitï¿½...
 		 * perm.getName().equals( "getProperty.networkaddress.cache.ttl") || perm.getName().equals(
 		 * "getProperty.networkaddress.cache.negative.ttl" ) || // Les permissions de Property
 		 * perm.getName().equals("sun.net.inetaddr.ttl") || perm.getName().equals("file.encoding")) {
@@ -86,77 +82,69 @@ public class ExitListenerSecurityManager extends SecurityManager
 		 * instanceof ReflectPermission) && perm.getName().equals("suppressAccessChecks")) { } else {
 		 * super.checkPermission(perm); }
 		 */
-		return;
-	}
+    return;
+  }
 
-	/**
-	 * permet cet acc&egrave;s quel que soit l'argument.
-	 */
-	public void checkDelete(String file)
-	{
-		return;
-	}
+  /**
+   * permet cet acc&egrave;s quel que soit l'argument.
+   */
+  public void checkDelete(String file) {
+    return;
+  }
 
-	/**
-	 * permet cet acc&egrave;s quel que soit l'argument.
-	 */
-	public void checkRead(String file)
-	{
-		return;
-	}
+  /**
+   * permet cet acc&egrave;s quel que soit l'argument.
+   */
+  public void checkRead(String file) {
+    return;
+  }
 
-	/**
-	 * permet cet acc&egrave;s quel que soit l'argument.
-	 */
-	public void checkRead(FileDescriptor fd)
-	{
-		return;
-	}
+  /**
+   * permet cet acc&egrave;s quel que soit l'argument.
+   */
+  public void checkRead(FileDescriptor fd) {
+    return;
+  }
 
-	/**
-	 * permet cet acc&egrave;s quel que soit l'argument.
-	 */
-	public void checkWrite(String file)
-	{
-		return;
-	}
+  /**
+   * permet cet acc&egrave;s quel que soit l'argument.
+   */
+  public void checkWrite(String file) {
+    return;
+  }
 
-	/**
-	 * permet cet acc&egrave;s quel que soit l'argument.
-	 */
-	public void checkWrite(FileDescriptor fd)
-	{
-		return;
-	}
+  /**
+   * permet cet acc&egrave;s quel que soit l'argument.
+   */
+  public void checkWrite(FileDescriptor fd) {
+    return;
+  }
 
-	/**
-	 * Si la fonction {@link #denyExit} a &eacute;t&eacute; appel&eacute;e avant cette fonction,
-	 * cette derni&egrave;re renvoit une {@link SecurityException}.
-	 */
-	public void checkExit(int status)
-	{
-		Iterator iter = exitListeners.listIterator();
-		while (iter.hasNext())
-		{
-			((SystemExitListener) iter.next()).exiting();
-		}
-		if (!bCanExit)
-			throw new SecurityException((new Integer(status)).toString());
-	}
+  /**
+   * Si la fonction {@link #denyExit} a &eacute;t&eacute; appel&eacute;e avant cette fonction,
+   * cette derni&egrave;re renvoit une {@link SecurityException}.
+   */
+  public void checkExit(int status) {
+    Iterator iter = exitListeners.listIterator();
+    while(iter.hasNext()) {
+      ((SystemExitListener) iter.next()).exiting();
+    }
+    if(!bCanExit) {
+      throw new SecurityException((new Integer(status)).toString());
+    }
+  }
 
-	/**
-	 * Interdit de sortir de la JVM par {@link System#exit(int)}.
-	 */
-	public void denyExit()
-	{
-		bCanExit = false;
-	}
+  /**
+   * Interdit de sortir de la JVM par {@link System#exit(int)}.
+   */
+  public void denyExit() {
+    bCanExit = false;
+  }
 
-	/**
-	 * Permet de sortir de la JVM par {@link System#exit(int)}.
-	 */
-	public void permitExit()
-	{
-		bCanExit = true;
-	}
+  /**
+   * Permet de sortir de la JVM par {@link System#exit(int)}.
+   */
+  public void permitExit() {
+    bCanExit = true;
+  }
 }

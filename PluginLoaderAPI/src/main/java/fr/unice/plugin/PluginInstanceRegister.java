@@ -20,11 +20,13 @@ import static com.plarpebu.common.PlarpebuUtil.configureLogToFile;
  * Contains only one instance of each class.
  * Hide the structure used to store the plugin instances
  * (choice is not clear; a Map for the moment).
+ *
  * @author Richard Grin
  * @version 1.0
  */
 
 class PluginInstanceRegister {
+
   /**
    * The key of the Map is the qualified name of the class of the plugin,
    * the value is the PluginInfo which contains the plugin and the URL from
@@ -45,21 +47,22 @@ class PluginInstanceRegister {
    * Don't register an instance if a plugin of the same class is already
    * registered, even if the plugin has been loaded from another URL.
    * ** Is this rule good??? **
+   *
    * @param instances plugin instances to register.
    */
   void register(List instances) {
-    for (int i = 0; i< instances.size(); i++) {
+    for(int i = 0; i < instances.size(); i++) {
       Object instance = instances.get(i);
-      if (instance instanceof PluginInfo) {
+      if(instance instanceof PluginInfo) {
         /* Don't register a pluginInfo if a plugin of the same class is already
            registered. */
-        register((PluginInfo)instance);
+        register((PluginInfo) instance);
       }
     }
   }
 
   void register(PluginInfo[] instances) {
-    for (int i=0; i<instances.length; i++) {
+    for(int i = 0; i < instances.length; i++) {
       register(instances[i]);
     }
   }
@@ -68,6 +71,7 @@ class PluginInstanceRegister {
    * Register a PluginInfo instance.
    * Don't register an instance if a plugin of the same class is already
    * registered, even if the plugin has been loaded from another URL.
+   *
    * @param instance instance to register.
    * @return true if the instance has been registered
    */
@@ -75,13 +79,11 @@ class PluginInstanceRegister {
     /*
      Only one instance for one plugin class qualified name. Good choice??
     */
-    String className =
-        ((PluginInfo)instance).getPluginInstance().getClass().getName();
-    if (! pluginInstances.containsKey(className)) {
+    String className = ((PluginInfo) instance).getPluginInstance().getClass().getName();
+    if(!pluginInstances.containsKey(className)) {
       pluginInstances.put(className, instance);
       return true;
-    }
-    else {
+    } else {
       return false;
     }
   }
@@ -89,10 +91,11 @@ class PluginInstanceRegister {
   /**
    * Returns all the plugin instances registered, with a type, name and
    * which can process an object.
-   * @param type type of the searched plugin. Any type if null.
-   * @param name name of the searched plugin. Any name if null.
+   *
+   * @param type   type of the searched plugin. Any type if null.
+   * @param name   name of the searched plugin. Any name if null.
    * @param object the instance must be able to process this objet. Don't
-   * do any selection if null.
+   *               do any selection if null.
    * @return a fully filled array (no null elements) of searched plugin instances.
    * The type of the array is "type"[] where "type" is the first parameter
    * of the method (if not null).
@@ -100,32 +103,31 @@ class PluginInstanceRegister {
   Plugin[] getPluginInstances(Class type, String name, Object object) {
     logger.info("type=" + type + "; name=" + name + "; object=" + object);
     ArrayList instances = new ArrayList();
-//    Iterator it = pluginInstances.values().pluginInfos.iterator();
+    //    Iterator it = pluginInstances.values().pluginInfos.iterator();
     Iterator it = getPluginInfoIterator();
-    while (it.hasNext()) {
-      Plugin instance =
-          ((PluginInfo)it.next()).getPluginInstance();
+    while(it.hasNext()) {
+      Plugin instance = ((PluginInfo) it.next()).getPluginInstance();
       logger.info("instance examin�e=" + instance);
-      if (instance.matches(type, name, object)) {
+      if(instance.matches(type, name, object)) {
         logger.info("instance qui convient=" + instance);
         instances.add(instance);
       }
     }
     // Le tableau renvoy� a le type pass� en param�tre
-    if (type == null) {
+    if(type == null) {
       return (Plugin[]) (instances.toArray(new Plugin[0]));
-    }
-    else {
+    } else {
       // Create an array whose type is parameter type
-      Plugin[] array = (Plugin[])Array.newInstance(type, instances.size());
-      return (Plugin[])instances.toArray(array);
+      Plugin[] array = (Plugin[]) Array.newInstance(type, instances.size());
+      return (Plugin[]) instances.toArray(array);
     }
     // If one doesn't want to use reflexivity, replace the previous if by :
-//    return (Plugin[]) (instances.toArray(new Plugin[0]));
+    //    return (Plugin[]) (instances.toArray(new Plugin[0]));
   }
 
   /**
    * Return all the plugin instances registered.
+   *
    * @return a full array (no null elements) of the plugin instances.
    */
   Plugin[] getPluginInstances() {
@@ -140,7 +142,6 @@ class PluginInstanceRegister {
     return getPluginInstances(type, name, null);
   }
 
-
   Plugin[] getPluginInstances(Class type, Object object) {
     return getPluginInstances(type, null, object);
   }
@@ -153,6 +154,7 @@ class PluginInstanceRegister {
    * Unregister plugin instances loaded from some URLs.
    * These instances will be still used by those which have got
    * a reference of them but they will not be available for others.
+   *
    * @param urls array filled with URLs.
    * @return plugin instances removed.
    */
@@ -161,10 +163,10 @@ class PluginInstanceRegister {
   List unregisterPluginInstancesFrom(URL[] urls) {
     List removedPlugins = new ArrayList();
     Iterator it = pluginInstances.keySet().iterator();
-    while (it.hasNext()) {
-      PluginInfo pluginInfo = (PluginInfo)it.next();
-      for (int i = 0; i < urls.length; i++) {
-        if (pluginInfo.getLoadingUrl().equals(urls[i])) {
+    while(it.hasNext()) {
+      PluginInfo pluginInfo = (PluginInfo) it.next();
+      for(int i = 0; i < urls.length; i++) {
+        if(pluginInfo.getLoadingUrl().equals(urls[i])) {
           pluginInstances.remove(pluginInfo);
           removedPlugins.add(pluginInfo.getPluginInstance());
         } // if
@@ -180,6 +182,7 @@ class PluginInstanceRegister {
   /**
    * This method isolates the choice of a data structure for registering
    * plugin information.
+   *
    * @return an iterator for iterating all the pluginInfo instances.
    */
   private Iterator getPluginInfoIterator() {
