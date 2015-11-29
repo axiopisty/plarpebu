@@ -24,6 +24,16 @@ import fr.unice.plugin.PluginManagerListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @deprecated - There is a better, non-buggy, way to do this. For example, currently
+ * this splash screen will only work properly if the main application (Player.main)
+ * does not properly launch the GUI using SwingUtilities.invokeLater. This is a big
+ * problem and indicates that there is much work to do on this project to get the
+ * threading to work properly.
+ *
+ * @link https://docs.oracle.com/javase/tutorial/uiswing/misc/splashscreen.html
+ */
+@Deprecated
 public class SplashScreen extends JWindow implements PluginManagerListener {
 
   private final static Logger logger = LoggerFactory.getLogger(SplashScreen.class);

@@ -107,8 +107,34 @@ public class Player extends JFrameWithPreferences
 
   /**
    * La fonction main : point d'entree du lecteur. Elle lance le Player.
+   *
+   * TODO:
+   *
+   * This application incorrectly launches the GUI on the main application
+   * thread. This is problematic and buggy! It needs to be changed to use the
+   * {@link javax.swing.SwingUtilities#invokeLater(Runnable) invokeLater} method.
+   *
+   * This will take considerable work though because it means that the application
+   * is not designed to work properly for multiple threads. As an example, the first
+   * problem that occurs if we properly launch the GUI on the EDT by using
+   * SwingUtilities, the splash screen stops working correctly - and that is just
+   * a minor issue!
+   *
+   * @link http://docs.oracle.com/javase/tutorial/uiswing/concurrency/index.html
    */
   public static void main(String[] args) throws MalformedURLException {
+    logExceptionsThatMightOccurOnOtherThreads();
+//    SwingUtilities.invokeLater(Player::createAndShowGui);
+    createAndShowGui();
+  }
+
+  private static void logExceptionsThatMightOccurOnOtherThreads() {
+    Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
+      logger.error("Unexpected exception occurred on thread '" + t.getName() + "': " + e.getMessage(), e);
+    });
+  }
+
+  private static void createAndShowGui() {
     try {
       Player player = new Player();
       player.setVisible(true);
@@ -124,7 +150,7 @@ public class Player extends JFrameWithPreferences
    * @throws MalformedURLException
    */
   public Player() throws MalformedURLException {
-    super("Plarpebu v1.0.1-SNAPSHOT");
+    super("Plarpebu v2.0.0-SNAPSHOT");
 
     // Read preferences
     setPreferencesFileNames("preferences", "Plaperbu.properties", "defaultPlaperbu.properties");
