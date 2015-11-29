@@ -48,8 +48,8 @@ import javazoom.jlgui.basicplayer.BasicPlayerException;
 import javazoom.jlgui.basicplayer.BasicPlayerListener;
 import javazoom.spi.PropertiesContainer;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tritonus.share.sampled.TAudioFormat;
 import org.tritonus.share.sampled.file.TAudioFileFormat;
 
@@ -84,7 +84,7 @@ public class BasicMP3Player extends BasicPlayer implements BasicController, Runn
 
   private long threadSleep = -1;
 
-  private static Log log = LogFactory.getLog(BasicPlayer.class);
+  private static Logger logger = LoggerFactory.getLogger(BasicMP3Player.class);
 
   /**
    * These variables are used to distinguish stopped, paused, playing states. We need them to
@@ -193,7 +193,7 @@ public class BasicMP3Player extends BasicPlayer implements BasicController, Runn
    * Open file to play.
    */
   public void open(File file) throws BasicPlayerException {
-    log.info("open(" + file + ")");
+    logger.info("open(" + file + ")");
     if(file != null) {
       m_dataSource = file;
       initAudioInputStream();
@@ -204,7 +204,7 @@ public class BasicMP3Player extends BasicPlayer implements BasicController, Runn
    * Open URL to play.
    */
   public void open(URL url) throws BasicPlayerException {
-    log.info("open(" + url + ")");
+    logger.info("open(" + url + ")");
     if(url != null) {
       m_dataSource = url;
       initAudioInputStream();
@@ -215,7 +215,7 @@ public class BasicMP3Player extends BasicPlayer implements BasicController, Runn
    * Open inputstream to play.
    */
   public void open(InputStream inputStream) throws BasicPlayerException {
-    log.info("open(" + inputStream + ")");
+    logger.info("open(" + inputStream + ")");
     if(inputStream != null) {
       m_dataSource = inputStream;
       initAudioInputStream();
@@ -288,11 +288,7 @@ public class BasicMP3Player extends BasicPlayer implements BasicController, Runn
       }
       m_status = OPENED;
       notifyEvent(BasicPlayerEvent.OPENED, getEncodedStreamPosition(), -1, null);
-    } catch(LineUnavailableException e) {
-      throw new BasicPlayerException(e);
-    } catch(UnsupportedAudioFileException e) {
-      throw new BasicPlayerException(e);
-    } catch(IOException e) {
+    } catch(LineUnavailableException | UnsupportedAudioFileException | IOException e) {
       throw new BasicPlayerException(e);
     }
   }
@@ -325,7 +321,7 @@ public class BasicMP3Player extends BasicPlayer implements BasicController, Runn
    * Inits Audio ressources from AudioSystem.<br>
    */
   protected void initLine() throws LineUnavailableException {
-    log.info("initLine()");
+    logger.info("initLine()");
     if(m_line == null) {
       createLine();
     }
@@ -352,21 +348,21 @@ public class BasicMP3Player extends BasicPlayer implements BasicController, Runn
    * will use some default value for the buffer size.
    */
   private void createLine() throws LineUnavailableException {
-    log.info("Create Line");
+    logger.info("Create Line");
     if(m_line == null) {
       AudioFormat sourceFormat = m_audioInputStream.getFormat();
-      log.info("Create Line : Source format : " + sourceFormat.toString());
+      logger.info("Create Line : Source format : " + sourceFormat.toString());
       AudioFormat targetFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, sourceFormat
         .getSampleRate(), 16, sourceFormat.getChannels(), sourceFormat.getChannels() * 2, sourceFormat
         .getSampleRate(), false);
-      log.info("Create Line : Target format: " + targetFormat);
+      logger.info("Create Line : Target format: " + targetFormat);
       // Keep a reference on encoded stream to progress notification.
       m_encodedaudioInputStream = m_audioInputStream;
       try {
         // Get total length in bytes of the encoded stream.
         encodedLength = m_encodedaudioInputStream.available();
       } catch(IOException e) {
-        log.error("Cannot get m_encodedaudioInputStream.available()", e);
+        logger.error("Cannot get m_encodedaudioInputStream.available(): " + e.getMessage(), e);
       }
       // Create decoded stream.
       m_audioInputStream = AudioSystem.getAudioInputStream(targetFormat, m_audioInputStream);
@@ -377,20 +373,20 @@ public class BasicMP3Player extends BasicPlayer implements BasicController, Runn
 			/*-- Display supported controls --*/
       Control[] c = m_line.getControls();
       for(int p = 0; p < c.length; p++) {
-        log.debug("Controls : " + c[p].toString());
+        logger.debug("Controls : " + c[p].toString());
       }
 
 			/*-- Is Gain Control supported ? --*/
       if(m_line.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
         m_gainControl = (FloatControl) m_line.getControl(FloatControl.Type.MASTER_GAIN);
-        log.info("Master Gain Control : [" + m_gainControl.getMinimum() + "," + m_gainControl
+        logger.info("Master Gain Control : [" + m_gainControl.getMinimum() + "," + m_gainControl
           .getMaximum() + "] " + m_gainControl.getPrecision());
       }
 
 			/*-- Is Pan control supported ? --*/
       if(m_line.isControlSupported(FloatControl.Type.PAN)) {
         m_panControl = (FloatControl) m_line.getControl(FloatControl.Type.PAN);
-        log.info("Pan Control : [" + m_panControl.getMinimum() + "," + m_panControl.getMaximum() + "] " + m_panControl
+        logger.info("Pan Control : [" + m_panControl.getMinimum() + "," + m_panControl.getMaximum() + "] " + m_panControl
           .getPrecision());
       }
     }
@@ -407,7 +403,7 @@ public class BasicMP3Player extends BasicPlayer implements BasicController, Runn
         buffersize = m_line.getBufferSize();
       }
       m_line.open(audioFormat, buffersize);
-      log.info("Open Line : BufferSize=" + buffersize);
+      logger.info("Open Line : BufferSize=" + buffersize);
     }
   }
 
@@ -427,7 +423,7 @@ public class BasicMP3Player extends BasicPlayer implements BasicController, Runn
       synchronized(m_audioInputStream) {
         closeStream();
       }
-      log.info("stopPlayback() completed");
+      logger.info("stopPlayback() completed");
     }
   }
 
@@ -441,7 +437,7 @@ public class BasicMP3Player extends BasicPlayer implements BasicController, Runn
         m_line.flush();
         m_line.stop();
         m_status = PAUSED;
-        log.info("pausePlayback() completed");
+        logger.info("pausePlayback() completed");
         notifyEvent(BasicPlayerEvent.PAUSED, getEncodedStreamPosition(), -1, null);
       }
     }
@@ -456,7 +452,7 @@ public class BasicMP3Player extends BasicPlayer implements BasicController, Runn
       if(m_status == PAUSED) {
         m_line.start();
         m_status = PLAYING;
-        log.info("resumePlayback() completed");
+        logger.info("resumePlayback() completed");
         notifyEvent(BasicPlayerEvent.RESUMED, getEncodedStreamPosition(), -1, null);
       }
     }
@@ -470,14 +466,14 @@ public class BasicMP3Player extends BasicPlayer implements BasicController, Runn
       initAudioInputStream();
     }
     if(m_status == OPENED) {
-      log.info("startPlayback called");
+      logger.info("startPlayback called");
       if(!(m_thread == null || !m_thread.isAlive())) {
-        log.info("WARNING: old thread still running!!");
+        logger.info("WARNING: old thread still running!!");
         int cnt = 0;
         while(m_status != OPENED) {
           try {
             if(m_thread != null) {
-              log.info("Waiting ... " + cnt);
+              logger.info("Waiting ... " + cnt);
               cnt++;
               Thread.sleep(1000);
               if(cnt > 2) {
@@ -496,7 +492,7 @@ public class BasicMP3Player extends BasicPlayer implements BasicController, Runn
         throw new BasicPlayerException("Cannot init line", e);
       }
 
-      log.info("Creating new thread");
+      logger.info("Creating new thread");
       m_thread = new Thread(this);
       m_thread.start();
       if(m_line != null) {
@@ -513,7 +509,7 @@ public class BasicMP3Player extends BasicPlayer implements BasicController, Runn
    * Player Status == PAUSED => Waiting for another status.
    */
   public void run() {
-    log.info("Thread Running");
+    logger.info("Thread Running");
     int nBytesRead = 1;
     byte[] abData = new byte[EXTERNAL_BUFFER_SIZE];
     // Lock stream while playing.
@@ -545,7 +541,7 @@ public class BasicMP3Player extends BasicPlayer implements BasicController, Runn
               }
             }
           } catch(IOException e) {
-            log.error("Thread cannot run()", e);
+            logger.error("Thread cannot run(): " + e.getMessage(), e);
             m_status = STOPPED;
             notifyEvent(BasicPlayerEvent.STOPPED, getEncodedStreamPosition(), -1, null);
           }
@@ -554,7 +550,7 @@ public class BasicMP3Player extends BasicPlayer implements BasicController, Runn
             try {
               Thread.sleep(threadSleep);
             } catch(InterruptedException e) {
-              log.error("Thread cannot sleep(" + threadSleep + ")", e);
+              logger.error("Thread cannot sleep(" + threadSleep + "): " + e.getMessage(), e);
             }
           }
         } else {
@@ -562,7 +558,7 @@ public class BasicMP3Player extends BasicPlayer implements BasicController, Runn
           try {
             Thread.sleep(1000);
           } catch(InterruptedException e) {
-            log.error("Thread cannot sleep(1000)", e);
+            logger.error("Thread cannot sleep(1000): " + e.getMessage(), e);
           }
         }
       }
@@ -582,7 +578,7 @@ public class BasicMP3Player extends BasicPlayer implements BasicController, Runn
     }
     m_status = STOPPED;
     notifyEvent(BasicPlayerEvent.STOPPED, getEncodedStreamPosition(), -1, null);
-    log.info("Thread completed");
+    logger.info("Thread completed");
   }
 
   /**
@@ -596,7 +592,7 @@ public class BasicMP3Player extends BasicPlayer implements BasicController, Runn
   protected long skipBytes(long bytes) throws BasicPlayerException {
     long totalSkipped = 0;
     if(m_dataSource instanceof File) {
-      log.info("Bytes to skip : " + bytes);
+      logger.info("Bytes to skip : " + bytes);
       int previousStatus = m_status;
       m_status = SEEKING;
       long skipped = 0;
@@ -609,7 +605,7 @@ public class BasicMP3Player extends BasicPlayer implements BasicController, Runn
             while(totalSkipped < (bytes - SKIP_INACCURACY_SIZE)) {
               skipped = m_audioInputStream.skip(bytes - totalSkipped);
               totalSkipped = totalSkipped + skipped;
-              log.info("Skipped : " + totalSkipped + "/" + bytes);
+              logger.info("Skipped : " + totalSkipped + "/" + bytes);
               if(totalSkipped == -1) {
                 throw new BasicPlayerException("Skip not supported");
               }
@@ -655,8 +651,7 @@ public class BasicMP3Player extends BasicPlayer implements BasicController, Runn
           nEncodedBytes = encodedLength - m_encodedaudioInputStream.available();
         }
       } catch(IOException e) {
-        // log.debug("Cannot get
-        // m_encodedaudioInputStream.available()",e);
+         logger.warn("Cannot get m_encodedaudioInputStream.available(): " + e.getMessage(), e);
       }
     }
     return nEncodedBytes;
@@ -667,11 +662,11 @@ public class BasicMP3Player extends BasicPlayer implements BasicController, Runn
     try {
       if(m_audioInputStream != null) {
         m_audioInputStream.close();
-        log.info("Stream closed");
+        logger.info("Stream closed");
       }
 
     } catch(IOException e) {
-      log.info("Cannot close stream", e);
+      logger.info("Cannot close stream: " + e.getMessage(), e);
     }
   }
 
@@ -803,7 +798,7 @@ public class BasicMP3Player extends BasicPlayer implements BasicController, Runn
    */
   public void setPan(double fPan) throws BasicPlayerException {
     if(hasPanControl()) {
-      log.debug("Pan : " + fPan);
+      logger.debug("Pan : " + fPan);
       m_panControl.setValue((float) fPan);
       notifyEvent(BasicPlayerEvent.PAN, getEncodedStreamPosition(), fPan, null);
     } else {
@@ -820,7 +815,7 @@ public class BasicMP3Player extends BasicPlayer implements BasicController, Runn
       double ampGainDB = ((10.0f / 20.0f) * getMaximumGain()) - getMinimumGain();
       double cste = Math.log(10.0) / 20;
       double valueDB = minGainDB + (1 / cste) * Math.log(1 + (Math.exp(cste * ampGainDB) - 1) * fGain);
-      log.debug("Gain : " + valueDB);
+      logger.debug("Gain : " + valueDB);
       m_gainControl.setValue((float) valueDB);
       notifyEvent(BasicPlayerEvent.GAIN, getEncodedStreamPosition(), fGain, null);
     } else {

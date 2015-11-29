@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 
 import com.l2fprod.common.swing.JFontChooser;
 import com.plarpebu.SkinMgr;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>
@@ -30,6 +32,8 @@ import com.plarpebu.SkinMgr;
  * @version 1.0
  */
 public class FontDialogChoser extends JDialog {
+
+  private final static Logger logger = LoggerFactory.getLogger(FontDialogChoser.class);
 
   JPanel panel1 = new JPanel();
 
@@ -57,7 +61,7 @@ public class FontDialogChoser extends JDialog {
       panel1.add(fc, BorderLayout.CENTER);
       setSize(640, 400);
     } catch(Exception ex) {
-      ex.printStackTrace();
+      logger.warn(ex.getMessage(), ex);
     }
   }
 

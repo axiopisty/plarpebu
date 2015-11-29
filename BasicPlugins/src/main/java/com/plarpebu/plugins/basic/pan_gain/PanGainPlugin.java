@@ -17,11 +17,15 @@ import javazoom.jlgui.basicplayer.BasicPlayerException;
 import javazoom.jlgui.basicplayer.BasicPlayerListener;
 
 import com.plarpebu.plugins.sdk.PanelPlugin;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Pan Gain Plugin
  */
 public class PanGainPlugin extends PanelPlugin implements BasicPlayerListener, MouseListener, MouseMotionListener {
+
+  private final static Logger logger = LoggerFactory.getLogger(PanGainPlugin.class);
 
   public static final String NAME = "Pan Gain";
 
@@ -117,20 +121,20 @@ public class PanGainPlugin extends PanelPlugin implements BasicPlayerListener, M
   }
 
   public void mouseReleased(MouseEvent e) {
-    System.out.println("mouse released");
+    logger.debug("mouse released");
     if(panslider.isEnabled() && gainslider.isEnabled()) {
       try {
         if(e.getSource() == panslider) {
           double pan = panmodel.getValue() * 1.0 / scale * 1.0;
           controller.setPan(pan);
-          System.out.println("controller .setpan");
+          logger.debug("controller .setpan");
         } else if(e.getSource() == gainslider) {
           double gain = gainmodel.getValue() * 1.0 / scale * 1.0;
           controller.setGain(gain);
-          System.out.println("controller.setgain");
+          logger.debug("controller.setgain");
         }
       } catch(BasicPlayerException ex) {
-        ex.printStackTrace();
+        logger.warn(ex.getMessage(), ex);
       }
     }
   }
@@ -155,15 +159,15 @@ public class PanGainPlugin extends PanelPlugin implements BasicPlayerListener, M
       if(e.getSource() == panslider) {
         int pan = panmodel.getValue();
         if(pan < 0) {
-          System.out.println("LEFT: " + -pan + "%");
+          logger.debug("LEFT: " + -pan + "%");
         } else if(pan > 0) {
-          System.out.println("RIGHT : " + pan + "%");
+          logger.debug("RIGHT : " + pan + "%");
         } else {
-          System.out.println("CENTER");
+          logger.debug("CENTER");
         }
       } else if(e.getSource() == gainslider) {
         int gain = gainmodel.getValue();
-        System.out.println("Volume : " + gain + "%");
+        logger.debug("Volume : " + gain + "%");
       }
     }
   }

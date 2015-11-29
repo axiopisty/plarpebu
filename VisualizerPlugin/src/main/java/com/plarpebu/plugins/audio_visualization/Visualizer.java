@@ -21,6 +21,8 @@ import javazoom.jlgui.basicplayer.BasicPlayerEvent;
 import javazoom.jlgui.basicplayer.BasicPlayerListener;
 
 import com.plarpebu.plugins.sdk.FramePlugin;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Visualizer
@@ -29,6 +31,8 @@ import com.plarpebu.plugins.sdk.FramePlugin;
  * @version 1.0
  */
 public class Visualizer extends FramePlugin implements BasicPlayerListener, Runnable, ImageObserver {
+
+  private final static Logger logger = LoggerFactory.getLogger(Visualizer.class);
 
   private BorderLayout borderLayout1 = new BorderLayout();
 
@@ -67,7 +71,7 @@ public class Visualizer extends FramePlugin implements BasicPlayerListener, Runn
     try {
       jbInit();
     } catch(Exception ex) {
-      ex.printStackTrace();
+      logger.warn(ex.getMessage(), ex);
     }
   }
 
@@ -204,6 +208,7 @@ public class Visualizer extends FramePlugin implements BasicPlayerListener, Runn
       try {
         Thread.sleep(50);
       } catch(InterruptedException ex) {
+        logger.warn(ex.getMessage(), ex);
       }
 
       // If told to stop, kill the thread
@@ -221,7 +226,7 @@ public class Visualizer extends FramePlugin implements BasicPlayerListener, Runn
 
     public void mouseClicked(MouseEvent e) {
       if(e.getClickCount() == 2) {
-        System.out.println("on a double click�");
+        logger.debug("on a double click�");
       }
     }
   }

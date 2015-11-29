@@ -22,11 +22,15 @@ import javax.swing.JPanel;
 import com.plarpebu.SkinMgr;
 import com.plarpebu.javakarplayer.plugins.AudioPlugins.taras.FontDialogChoser;
 import com.plarpebu.util.UserInterfaceUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Playlist Configuration UI
  */
 public class Tools extends JFrame implements ActionListener, ItemListener, PropertyChangeListener {
+
+  private final static Logger logger = LoggerFactory.getLogger(Tools.class);
 
   private Container pane = null;
 
@@ -81,7 +85,7 @@ public class Tools extends JFrame implements ActionListener, ItemListener, Prope
     try {
       jbInit();
     } catch(Exception ex) {
-      ex.printStackTrace();
+      logger.warn(ex.getMessage(), ex);
     }
 
     SkinMgr.getInstance().addComponent(this);

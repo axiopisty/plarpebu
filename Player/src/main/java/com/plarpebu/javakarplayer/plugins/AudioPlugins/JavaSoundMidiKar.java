@@ -18,6 +18,8 @@ import javax.sound.midi.Transmitter;
 
 import com.plarpebu.javakarplayer.plugins.AudioPlugins.taras.Karaoke;
 import com.plarpebu.plugins.sdk.Iconifiable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>
@@ -37,6 +39,8 @@ import com.plarpebu.plugins.sdk.Iconifiable;
  * @version $Id
  */
 public class JavaSoundMidiKar implements MetaEventListener {
+
+  private final static Logger logger = LoggerFactory.getLogger(JavaSoundMidiKar.class);
 
   private Sequencer sequencer;
 
@@ -93,7 +97,7 @@ public class JavaSoundMidiKar implements MetaEventListener {
       // For detecting end of song
       sequencer.addMetaEventListener(this);
     } catch(MidiUnavailableException ex) {
-      System.out.println("Your system does not support midi sound !");
+      logger.warn("Your system does not support midi sound: " + ex.getMessage(), ex);
     }
   }
 
@@ -130,30 +134,30 @@ public class JavaSoundMidiKar implements MetaEventListener {
           artist = visualKaraoke.getArtist();
           songTitle = visualKaraoke.getSongTitle();
         } catch(Exception ex1) {
-          System.out.println("Problem with processing the kar file : " + file.toString());
+          logger.warn("Problem with processing the kar file : " + file.toString() + ": " + ex1.getMessage(), ex1);
         }
 
         if(!playingKar) {
           // We do not have a karaoke file, hide the kar lyrics
           // display
-          System.out.println("loadfile, on cache visual karaoke");
+          logger.debug("loadfile, on cache visual karaoke");
           visualKaraoke.setVisible(false);
         }
         return 1;
       } catch(FileNotFoundException e) {
-        e.printStackTrace();
+        logger.warn(e.getMessage(), e);
         return 0;
       } catch(IOException e) {
-        e.printStackTrace();
+        logger.warn(e.getMessage(), e);
         return 0;
       } catch(MidiUnavailableException ex) {
-        System.out.println("Midi not available on this machine");
+        logger.warn("Midi not available on this machine: " + ex.getMessage(), ex);
       } catch(InvalidMidiDataException ex) {
-        System.out.println("InvalidMidiDataException !!!!");
+        logger.warn("InvalidMidiDataException: " + ex.getMessage(), ex);
       }
 
     } else {
-      System.out.println("File format not supported");
+      logger.debug("File format not supported");
     }
     return 0;
   }
@@ -228,10 +232,10 @@ public class JavaSoundMidiKar implements MetaEventListener {
           // CAREFUL, LOW VALUE HERE BREAKS THE SEEK !!!
           sleep(200);
         } catch(Exception exn) {
-          exn.printStackTrace();
+          logger.warn(exn.getMessage(), exn);
         }
       }
-      System.out.println("sequencer is stopped");
+      logger.debug("sequencer is stopped");
     }
   }
 
@@ -254,7 +258,7 @@ public class JavaSoundMidiKar implements MetaEventListener {
 
   public void setPan(double fPan) {
     currentPan = fPan;
-    System.out.println("Dans setPan val = " + (int) (fPan * 127.0));
+    logger.debug("Dans setPan val = " + (int) (fPan * 127.0));
     for(int i = 0; i < channels.length; i++) {
       channels[i].controlChange(10, (int) (fPan * 127.0));
     }

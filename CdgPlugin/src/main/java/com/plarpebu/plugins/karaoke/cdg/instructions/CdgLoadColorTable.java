@@ -45,11 +45,11 @@ public abstract class CdgLoadColorTable {
    *                   the colormap that is going to be half-filled
    */
   public static void setColormap(byte[] data, int startIndex, Color[] colormap) {
-    // System.out.println("CdgLoadColortable voici la colormap de d�part");
+    // logger.debug("CdgLoadColortable voici la colormap de d�part");
     // for (int i = 0; i < colormap.length; i++) {
-    // System.out.println("cm[i] = " + colormap[i]);
+    // logger.debug("cm[i] = " + colormap[i]);
     // }
-    // System.out.println("-------");
+    // logger.debug("-------");
 
     // data is a 16 bytes chunk, should be decoded 2 bytes by 2 bytes
     // Read info at the top of this file
@@ -82,7 +82,7 @@ public abstract class CdgLoadColorTable {
   }
 
   public static void setColormapElement(Color[] colormap, int startIndex, int index, int red, int green, int blue) {
-    // System.out.println("SetColormapElement LOW index=" + (index/2) +" red
+    // logger.debug("SetColormapElement LOW index=" + (index/2) +" red
     // = " + red + " green = " + green + " blue = " +blue);
     colormap[startIndex + index / 2] = new Color(red, green, blue);
   }

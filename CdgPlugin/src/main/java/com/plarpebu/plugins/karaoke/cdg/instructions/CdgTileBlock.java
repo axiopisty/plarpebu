@@ -1,5 +1,8 @@
 package com.plarpebu.plugins.karaoke.cdg.instructions;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.awt.Rectangle;
 
 /**
@@ -28,6 +31,8 @@ import java.awt.Rectangle;
  * @version $Id
  */
 public class CdgTileBlock {
+
+  private final static Logger logger = LoggerFactory.getLogger(CdgTileBlock.class);
 
   private static byte color0;
 
@@ -94,7 +99,7 @@ public class CdgTileBlock {
             }
           }
         } catch(ArrayIndexOutOfBoundsException ex) {
-          System.out.println("Problem in reading tile block");
+          logger.warn("Problem in reading tile block: " + ex.getMessage(), ex);
         }
 
         // Let's go for the next bit !

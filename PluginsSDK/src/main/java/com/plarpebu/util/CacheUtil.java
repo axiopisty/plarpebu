@@ -1,5 +1,8 @@
 package com.plarpebu.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 
 /**
@@ -8,6 +11,8 @@ import java.io.File;
  * @author kmschmidt
  */
 public class CacheUtil {
+
+  private final static Logger logger = LoggerFactory.getLogger(CacheUtil.class);
 
   private static File mp3gCacheDir;
 
@@ -22,7 +27,7 @@ public class CacheUtil {
     if(mp3gCacheDir == null) {
       mp3gCacheDir = new File(getTopLevelCacheDir(), "mp3g");
       if(mp3gCacheDir.exists() == false) {
-        System.out.println("Creating temp dir: " + mp3gCacheDir.getName());
+        logger.debug("Creating temp dir: " + mp3gCacheDir.getName());
         mp3gCacheDir.mkdir();
       }
     }
@@ -39,7 +44,7 @@ public class CacheUtil {
     if(albumCacheDir == null) {
       albumCacheDir = new File(getTopLevelCacheDir(), "album");
       if(albumCacheDir.exists() == false) {
-        System.out.println("Creating temp dir: " + albumCacheDir.getName());
+        logger.debug("Creating temp dir: " + albumCacheDir.getName());
         albumCacheDir.mkdir();
       }
     }
@@ -56,7 +61,7 @@ public class CacheUtil {
     // Make sure plarpebu temp dir exists
     File topLevelCacheDir = new File(System.getProperty("java.io.tmpdir") + "/plarpebu");
     if(topLevelCacheDir.exists() == false) {
-      System.out.println("Creating temp dir: " + topLevelCacheDir.getName());
+      logger.debug("Creating temp dir: " + topLevelCacheDir.getName());
       topLevelCacheDir.mkdir();
     }
     return topLevelCacheDir;

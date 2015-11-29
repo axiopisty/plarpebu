@@ -1,5 +1,8 @@
 package com.plarpebu.javakarplayer.plugins.AudioPlugins.taras;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -30,6 +33,8 @@ import javax.swing.JPanel;
  */
 class KaraokePane extends JPanel {
 
+  private final static Logger logger = LoggerFactory.getLogger(KaraokePane.class);
+
   Vector song = null;
 
   Vector frames = null;
@@ -53,8 +58,6 @@ class KaraokePane extends JPanel {
 
   // For rich text display
   private FontRenderContext frc;
-
-  private Shape sha = null;
 
   private TextLayout textlay = null;
 
@@ -90,7 +93,7 @@ class KaraokePane extends JPanel {
     try {
       jbInit();
     } catch(Exception e) {
-      e.printStackTrace();
+      logger.warn(e.getMessage(), e);
     }
 
     setSize(p.width, p.height);
@@ -110,7 +113,7 @@ class KaraokePane extends JPanel {
         // drawBackground( (Graphics2D) finalImageGraphics);
         discontinuity = true;
         redrawAllAfterResize();
-        // System.out.println("resize");
+        // logger.debug("resize");
       }
     });
   }
@@ -176,7 +179,7 @@ class KaraokePane extends JPanel {
    * @param p karaoke properties
    */
   public void setSong(Vector s, Vector f, KaraokeProperties p) {
-    // System.out.println("=====SetSong====");
+    // logger.debug("=====SetSong====");
     song = s;
     frames = f;
     props = p;
@@ -312,7 +315,7 @@ class KaraokePane extends JPanel {
       }
 
       textlay = new TextLayout(text, font, frc);
-      sha = textlay.getOutline(AffineTransform.getTranslateInstance(x, y));
+      Shape sha;
 
       // Draw shadow
       if(drawShadow) {
@@ -357,7 +360,7 @@ class KaraokePane extends JPanel {
       // anti-aliased !
       setAntiAliasing(g2, false);
     } catch(Exception e) {
-      System.out.println("problem in KaraokePane : drawRichText");
+      logger.warn("problem in KaraokePane : drawRichText: " + e.getMessage(), e);
     }
   }
 
@@ -381,10 +384,10 @@ class KaraokePane extends JPanel {
 
     Graphics2D g2 = (Graphics2D) g;
 
-    // System.out.println("--------- entree paint syllabe ----------");
+    // logger.debug("--------- entree paint syllabe ----------");
     for(int i = 0; i < frame.sung.size(); ++i) {
       Syllable syl = (Syllable) frame.sung.elementAt(i);
-      // System.out.println("syllabe de frame.sung : " + syl.text);
+      // logger.debug("syllabe de frame.sung : " + syl.text);
       while(line < syl.line) {
         y += dy;
         x = dx;
@@ -398,14 +401,14 @@ class KaraokePane extends JPanel {
       // g2.drawString(syl.text, x, y);
 
       if(oldText != null) {
-        // System.out.println("paint syllabe j'efface : " + oldText);
+        // logger.debug("paint syllabe j'efface : " + oldText);
         drawRichText(g2, oldX, oldY, oldText, props.sungSyllabesColor, false);
         redrawPartialImage();
       }
 
       if(i + 1 == frame.sung.size()) {
 
-        // System.out.println("paint syllabe je dessine : " + syl.text);
+        // logger.debug("paint syllabe je dessine : " + syl.text);
         drawRichText(g2, x, y, syl.text, props.syllabeToSingColor, false);
         redrawPartialImage();
       }
@@ -497,7 +500,7 @@ class KaraokePane extends JPanel {
   }
 
   public void paintComponent(Graphics g) {
-    // System.out.println("paint");
+    // logger.debug("paint");
     g.drawImage(finalImage, 0, 0, getWidth(), getHeight(), this);
   }
 
@@ -517,12 +520,12 @@ class KaraokePane extends JPanel {
    * @param g graphics context to draw in
    */
   public synchronized void render() {
-    // System.out.println("--start render--");
+    // logger.debug("--start render--");
     Graphics g = getGraphics();
     Graphics g1 = finalImageGraphics;
 
     if(g == null) {
-      System.out.println("G = NULL");
+      logger.debug("G = NULL");
     }
 
     if(song == null) {
@@ -546,7 +549,7 @@ class KaraokePane extends JPanel {
     } else {
       paintSyllable(g1, frame);
     }
-    // System.out.println("--end render--");
+    // logger.debug("--end render--");
   }
 
   /**
@@ -579,7 +582,7 @@ class KaraokePane extends JPanel {
     if(currentFrame < frames.size()) {
       frame = (KFrame) frames.elementAt(currentFrame);
       if(frame.start <= tick && tick < frame.end) {
-        // System.out.println("SMALL OPTI");
+        // logger.debug("SMALL OPTI");
         // repaint();
         render();
         return;
@@ -593,20 +596,20 @@ class KaraokePane extends JPanel {
       // drawing one frame can take too long and we will have problems.
       // In that case, the comment should be removed
       if(frame.start <= tick && tick < frame.end) {
-        // System.out.println("JE PASSE 0 LA FRAME SUIVANTE");
+        // logger.debug("JE PASSE 0 LA FRAME SUIVANTE");
         ++currentFrame;
         // repaint();
         render();
         return;
       }
     }
-    // System.out.println("Je vais dans FULL SEARCH frame.start = " +
+    // logger.debug("Je vais dans FULL SEARCH frame.start = " +
     // frame.start + " " + "tick = " + tick + "frame.end = " + frame.end);
     /* full search of the frame */
     for(int i = 0; i < frames.size(); ++i) {
       frame = (KFrame) frames.elementAt(i);
       if(frame.start <= tick && tick < frame.end) {
-        // System.out.println("FULL SEARCH frame.start = " + frame.start
+        // logger.debug("FULL SEARCH frame.start = " + frame.start
         // + " " + "tick = " + tick + "frame.end = " + frame.end);
         currentFrame = i;
         // repaint();
@@ -623,7 +626,7 @@ class KaraokePane extends JPanel {
   public void setCurentFont(Font f) {
     String name = f.getFontName();
     int style = f.getStyle();
-    System.out.println("police choisie : " + name);
+    logger.debug("police choisie : " + name);
     props.fontFace = name;
     props.style = style;
 
@@ -648,7 +651,7 @@ class KaraokePane extends JPanel {
     paint(finalImageGraphics, frame);
     paintRibbon(finalImageGraphics, frame);
     paintSyllable(finalImageGraphics, frame);
-    System.out.println("drawWholeBufferWithoutDisplayingIt");
+    logger.debug("drawWholeBufferWithoutDisplayingIt");
     repaint();
   }
 
@@ -736,7 +739,7 @@ class KaraokePane extends JPanel {
     try {
       jbInit();
     } catch(Exception e) {
-      e.printStackTrace();
+      logger.warn(e.getMessage(), e);
     }
   }
 

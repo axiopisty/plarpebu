@@ -1,11 +1,26 @@
 package com.plarpebu;
 
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.GridLayout;
+import com.plarpebu.basicplayer.BasicPlayer;
+import com.plarpebu.basicplayer.CompositePlayer;
+import com.plarpebu.common.PlarpebuUtil;
+import com.plarpebu.plugins.basic.info.InfoPlugin;
+import com.plarpebu.plugins.basic.pan_gain.PanGainPlugin;
+import com.plarpebu.plugins.basic.stop_play_seek.StopPlaySeekPlugin;
+import com.plarpebu.plugins.sdk.FramePlugin;
+import com.plarpebu.plugins.sdk.Iconifiable;
+import com.plarpebu.plugins.sdk.JFrameWithPreferences;
+import com.plarpebu.plugins.sdk.PanelPlugin;
+import com.plarpebu.plugins.sdk.PlayerPlugin;
+import com.plarpebu.util.ExitListenerSecurityManager;
+import fr.unice.plugin.PluginManager;
+import javazoom.jlgui.basicplayer.BasicPlayerListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetDragEvent;
@@ -21,44 +36,11 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.swing.Box;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.WindowConstants;
-
-import com.plarpebu.common.PlarpebuUtil;
-import javazoom.jlgui.basicplayer.BasicPlayerListener;
-
-import com.plarpebu.basicplayer.BasicPlayer;
-import com.plarpebu.basicplayer.CompositePlayer;
-import com.plarpebu.plugins.basic.info.InfoPlugin;
-import com.plarpebu.plugins.basic.pan_gain.PanGainPlugin;
-import com.plarpebu.plugins.basic.stop_play_seek.StopPlaySeekPlugin;
-import com.plarpebu.plugins.sdk.FramePlugin;
-import com.plarpebu.plugins.sdk.Iconifiable;
-import com.plarpebu.plugins.sdk.JFrameWithPreferences;
-import com.plarpebu.plugins.sdk.PanelPlugin;
-import com.plarpebu.plugins.sdk.PlayerPlugin;
-import com.plarpebu.util.ExitListenerSecurityManager;
-
-import fr.unice.plugin.PluginManager;
-
-import static com.plarpebu.common.PlarpebuUtil.configureLogToFile;
 
 /**
  * Main Player
@@ -68,6 +50,8 @@ import static com.plarpebu.common.PlarpebuUtil.configureLogToFile;
  */
 public class Player extends JFrameWithPreferences
   implements DropTargetListener, MouseMotionListener, ComponentListener, Iconifiable {
+
+  private final static Logger logger = LoggerFactory.getLogger(Player.class);
 
   /************************************************************************************************
    * un tableau compose des noms des plugins que l'on veut afficher a l'origine et dont on souhaite
@@ -129,8 +113,7 @@ public class Player extends JFrameWithPreferences
       Player player = new Player();
       player.setVisible(true);
     } catch(Throwable ex) {
-      System.out.println("Error in main: " + ex.toString());
-      ex.printStackTrace();
+      logger.warn(ex.getMessage(), ex);
     }
   }
 
@@ -159,10 +142,6 @@ public class Player extends JFrameWithPreferences
     splashScreen.showSplash();
 
     // NOW WE DO USE R.GRIN's lib for plugins management. Changes by M.Buffa
-
-    // Do not pollute with too many messages. Comment this line for debug
-    Logger logger = configureLogToFile(Logger.getLogger("fr.unice.plugin"));
-    logger.setLevel(Level.ALL);
 
     // Specify the play.jar to load the basic plugins
     pluginManager = PluginManager.getPluginManager();
@@ -352,7 +331,7 @@ public class Player extends JFrameWithPreferences
 
       mb.add(menuSkins);
     } catch(Exception ex) {
-      System.out.println("Error building skins menu" + ex.toString());
+      logger.warn("Error building skins menu: " + ex.toString(), ex);
     }
   }
 
@@ -376,7 +355,7 @@ public class Player extends JFrameWithPreferences
 
       mb.add(menuHelp);
     } catch(Exception ex) {
-      System.out.println("Error building skins menu" + ex.toString());
+      logger.warn("Error building skins menu: " + ex.toString(), ex);
     }
   }
 
@@ -393,9 +372,9 @@ public class Player extends JFrameWithPreferences
       public void actionPerformed(ActionEvent e) {
         JCheckBoxMenuItem cb = (JCheckBoxMenuItem) e.getSource();
         String nameCommand = cb.getActionCommand();
-        // System.out.print( (cb.getState() == true) ? "selectionne" :
+        // logger.debug( (cb.getState() == true) ? "selectionne" :
         // "deseselectionne");
-        System.out.println(" : " + nameCommand);
+        logger.debug(" : " + nameCommand);
 
         PlayerPlugin pp = searchPlugin(nameCommand);
 
@@ -403,7 +382,7 @@ public class Player extends JFrameWithPreferences
           bplayer.addBasicPlayerListener(pp.getPlugin());
           pp.setController(controller);
           // plugAffiche.add(pp);
-          // System.out.println("Ajout ds plug
+          // logger.debug("Ajout ds plug
           // affiche"+plugAffiche.size());
           /*
            * for(int j=0;j<plugAffiche.size();j++) ((Plugin)plugAffiche.get(j)).getName();
@@ -418,7 +397,7 @@ public class Player extends JFrameWithPreferences
           }
         } else {
           // plugAffiche.remove(pp);
-          // System.out.println("Retrait ds plug affiche");
+          // logger.debug("Retrait ds plug affiche");
           if(pp instanceof FramePlugin) {
             ((FramePlugin) pp).setVisible(false);
           } else if(pp instanceof PanelPlugin) {
@@ -447,7 +426,7 @@ public class Player extends JFrameWithPreferences
         for(int i = 0; i < plugins.length; i++) {
           if(plugins[i] instanceof FramePlugin) {
             PluginMenuItem item = (PluginMenuItem) menuPlugins.getItem(i);
-            // System.out.println("setting " + plugins[i].getName()
+            // logger.debug("setting " + plugins[i].getName()
             // + " to " + ((FramePlugin) plugins[i]).isVisible());
             item.setState(((FramePlugin) plugins[i]).isVisible());
           }
@@ -621,21 +600,15 @@ public class Player extends JFrameWithPreferences
               if(file != null && controller.isFileSupported(file)) {
                 // liste.add(file.getAbsolutePath());
                 // reload();
-                // System.out.println("on ajoute le fichier : "
+                // logger.debug("on ajoute le fichier : "
                 // + file.getName());
               }
 
             }
           }
         } else if(data instanceof java.lang.String) {
-          System.out.println("on essaie d'ajouter ");
+          logger.debug("on essaie d'ajouter ");
         }
-      } catch(IOException ioe) {
-        e.dropComplete(false);
-        return;
-      } catch(UnsupportedFlavorException ufe) {
-        e.dropComplete(false);
-        return;
       } catch(Exception ex) {
         e.dropComplete(false);
         return;
@@ -712,20 +685,20 @@ public class Player extends JFrameWithPreferences
   }
 
   public void minimize() {
-    System.out.println("---hide()---");
+    logger.debug("---hide()---");
     setVisible(false);
 
     // For the playlist plugin also (progess bar is seen through the kar cdg
     // windows)
     if(playlist != null) {
-      System.out.println("We hide the playlist");
+      logger.debug("We hide the playlist");
 
       playlist.setVisible(false);
     }
   }
 
   public void setToOriginalSize() {
-    System.out.println("---show()---");
+    logger.debug("---show()---");
     setVisible(true);
     // For the playlist plugin also (progess bar is seen through the kar cdg
     // windows)

@@ -1,5 +1,8 @@
 package com.plarpebu.test.volatile_images;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -12,6 +15,8 @@ import javax.swing.JFrame;
  * Declare a component that draws a volatile image
  */
 class MyComponent extends JFrame {
+
+  private final static Logger logger = LoggerFactory.getLogger(MyComponent.class);
 
   VolatileImage volImage;
 
@@ -66,7 +71,7 @@ class MyComponent extends JFrame {
 
         // Check if it is still valid
         if(!img.contentsLost()) {
-          System.out.println("CONTENT LOST");
+          logger.debug("CONTENT LOST");
           return img;
         }
       } else {
@@ -88,7 +93,7 @@ class MyComponent extends JFrame {
           img.flush();
           img = g.getDeviceConfiguration().createCompatibleVolatileImage(orig.getWidth(null), orig.getHeight(null));
         case VolatileImage.IMAGE_RESTORED:
-          System.out.println("RESTORED");
+          logger.debug("RESTORED");
           // Copy the original image to accelerated image memory
           Graphics2D gc = img.createGraphics();
           gc.drawImage(orig, 0, 0, null);
@@ -99,7 +104,7 @@ class MyComponent extends JFrame {
 
     // The image failed to be drawn after MAX_TRIES;
     // draw with the non-accelerated image
-    System.out.println("SOFT RENDERED");
+    logger.debug("SOFT RENDERED");
     g.drawImage(orig, x, y, null);
     return img;
   }

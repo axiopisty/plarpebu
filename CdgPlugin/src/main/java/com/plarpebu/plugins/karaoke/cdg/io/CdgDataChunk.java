@@ -1,5 +1,8 @@
 package com.plarpebu.plugins.karaoke.cdg.io;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.awt.Color;
 
 /**
@@ -30,6 +33,8 @@ import java.awt.Color;
  */
 
 public class CdgDataChunk {
+
+  private final static Logger logger = LoggerFactory.getLogger(CdgDataChunk.class);
 
   // Here are the 24 bytes of the cdg chunk
   private byte cdgCommand;
@@ -170,7 +175,7 @@ public class CdgDataChunk {
     String description = toString();
 
     if(!description.equals("")) {
-      System.out.println(description);
+      logger.debug(description);
     }
   }
 

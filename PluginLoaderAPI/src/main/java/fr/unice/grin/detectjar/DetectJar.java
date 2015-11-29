@@ -1,5 +1,8 @@
 package fr.unice.grin.detectjar;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.net.URL;
 
 /**
@@ -10,6 +13,8 @@ import java.net.URL;
  * @version 1.0
  */
 public class DetectJar {
+
+  private final static Logger logger = LoggerFactory.getLogger(DetectJar.class);
 
   /**
    * M�thode pour tester : affiche toutes les classes plac�es dans la pile
@@ -31,8 +36,8 @@ public class DetectJar {
     for(int i = 0; i < elements.length; i++) {
       String methode = elements[i].getMethodName();
       String classe = elements[i].getClassName();
-      System.out.println("Classe " + i + " : " + classe);
-      System.out.println("M�thode " + i + " : " + methode);
+      logger.debug("Classe " + i + " : " + classe);
+      logger.debug("M�thode " + i + " : " + methode);
       if(methode.equals("main")) {
         classePrincipale = classe;
       }
@@ -42,14 +47,15 @@ public class DetectJar {
     // � partir du classpath :
     String nomRessource = classePrincipale.replace('.', '/');
     nomRessource = "/" + nomRessource + ".class";
-    System.out.println("nom de la classe comme ressource = " + nomRessource);
+    logger.debug("nom de la classe comme ressource = " + nomRessource);
     URL urlClassePrincipale = null;
     try {
       urlClassePrincipale = Class.forName(classePrincipale).getResource(nomRessource);
-      System.out.println("urlClassePrincipale = " + urlClassePrincipale);
+      logger.debug("urlClassePrincipale = " + urlClassePrincipale);
     } catch(ClassNotFoundException e) {
+      logger.warn(e.getMessage(), e);
     }
-    System.out.println("Protocole = " + urlClassePrincipale.getProtocol());
+    logger.debug("Protocole = " + urlClassePrincipale.getProtocol());
     return urlClassePrincipale;
 
   }
@@ -74,12 +80,13 @@ public class DetectJar {
     // � partir du classpath :
     String nomRessource = classePrincipale.replace('.', '/');
     nomRessource = "/" + nomRessource + ".class";
-    //    System.out.println("nom de la classe comme ressource = " + nomRessource);
+    //    logger.debug("nom de la classe comme ressource = " + nomRessource);
     URL urlClassePrincipale = null;
     try {
       urlClassePrincipale = Class.forName(classePrincipale).getResource(nomRessource);
-      //      System.out.println("urlClassePrincipale = " + urlClassePrincipale);
+      //      logger.debug("urlClassePrincipale = " + urlClassePrincipale);
     } catch(ClassNotFoundException e) {
+      logger.warn(e.getMessage(), e);
     }
     return urlClassePrincipale;
 

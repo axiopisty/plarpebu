@@ -1,24 +1,23 @@
 package fr.unice.plugin;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Enumeration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
+import java.io.InputStreamReader;
+import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.net.JarURLConnection;
-
-import java.util.logging.*;
-import java.io.*;
-import java.util.jar.*;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
-
-import static com.plarpebu.common.PlarpebuUtil.configureLogToFile;
+import java.util.List;
+import java.util.Map;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 /**
  * Load plugin classes from URLs, and create one instance of each class.
@@ -54,14 +53,7 @@ class PluginLoader {
   private List loadedPluginInstances = new ArrayList();
   private String PLUGIN_LIST_FILENAME_IN_JAR = "pluginlist";
 
-  /**
-   * To cut all the messages, put in the main class
-   * Logger logger = Logger.getLogger("fr.unice.plugin.PluginManager");
-   * Logger.getLogger("fr.unice.plugin").setLevel(Level.SEVERE);
-   * To get all the messages, put in the main class
-   * Logger.getLogger("fr.unice.plugin").setLevel(Level.WARNING);
-   */
-  private static Logger logger = configureLogToFile(Logger.getLogger("fr.unice.plugin.PluginLoader"));
+  private static final Logger logger = LoggerFactory.getLogger(PluginLoader.class);
 
   /**
    * Creates an instance which will search the plugins in certain URLs.
@@ -76,7 +68,7 @@ class PluginLoader {
       // the class loader will be created only when needed.
       this.urlInfos.put(urls[i], null);
     }
-    logger.info("urls = " + urls + " Length = " + urls.length);
+    logger.trace("urls = " + urls + " Length = " + urls.length);
   }
 
   PluginLoader() {
@@ -281,7 +273,7 @@ class PluginLoader {
 
     // R�cup�re le chargeur de classe qui va charger les plugins
     ClassLoader cl = getClassLoader(url, false);
-    logger.info("Gets the classLoader that loads from " + url);
+    logger.trace("Gets the classLoader that loads from " + url);
 
     // D�termine si l'URL correspond � un jar, ou � un fichier .class
     // ou � un r�pertoire.
@@ -311,7 +303,7 @@ class PluginLoader {
        * Dans ce cas, la m�thode getUrl de PluginManager aura renvoy� un URL
        * qui commence par jar et on ne sera donc pas ici.
        */
-      logger.info("url.getPath()=" + url.getPath());
+      logger.trace("url.getPath()=" + url.getPath());
       loadPluginsFromDirectory(url, type, cl);
     }
   }
@@ -335,9 +327,8 @@ class PluginLoader {
     String nomUrl = urlBase.getPath().replaceAll("%20", " ");
     File dir = new File(nomUrl);
     if(dir == null || !dir.isDirectory()) {
-      logger
-        .warning("Le r�pertoire specifi� n'est pas correct : " + urlBase + " qui donne le fichier " + dir + ". Il existe ? " + dir
-          .exists());
+      logger.warn("Le r�pertoire specifi� n'est pas correct : " + urlBase + " qui donne le fichier " + dir + ". Il existe ? " + dir
+        .exists());
       return;
     }
 
@@ -346,9 +337,9 @@ class PluginLoader {
     // un URL qui se termine par un "/" pour les r�pertoires.
     // A FAIRE *********
 
-    logger.info("=+=+=+=+=+ Entr�e dans loadPluginsFromDirectory=+=+=+=+");
+    logger.trace("=+=+=+=+=+ Entr�e dans loadPluginsFromDirectory=+=+=+=+");
     loadFromSubdirectory(dir.getPath(), dir, type, cl, urlBase);
-    logger.info("=+=+=+=+=+ Sortie de loadPluginsFromDirectory=+=+=+=+");
+    logger.trace("=+=+=+=+=+ Sortie de loadPluginsFromDirectory=+=+=+=+");
   }
 
   /**
@@ -365,7 +356,7 @@ class PluginLoader {
    *                 Charge tous les plugins si <code>null</code>.
    */
   private void loadFromSubdirectory(String baseName, File dir, Class type, ClassLoader cl, URL urlBase) {
-    logger.info("Chargement dans le sous-r�pertoire " + dir + " avec nom de base " + baseName);
+    logger.trace("Chargement dans le sous-r�pertoire " + dir + " avec nom de base " + baseName);
     // Le " + 1 " pour "inclure" un "/" final dans le nom du r�pertoire de base.
     int baseNameLength = baseName.length() + 1;
     // On parcourt toute l'arborescence � la recherche de classes
@@ -373,7 +364,7 @@ class PluginLoader {
     // Quand on l'a trouv�, on en d�duit son paquetage avec sa position
     // relativement � l'URL de recherche.
     File[] files = dir.listFiles();
-    logger.info("Le listing : " + files);
+    logger.trace("Le listing : " + files);
     // On trie pour que les plugins apparaissent dans le menu
     // par ordre alphab�tique
     //    Arrays.sort(list);
@@ -385,20 +376,20 @@ class PluginLoader {
         continue;
       }
       // it is not a directory
-      logger.info("Examen du fichier " + file.getPath() + ";" + file.getName());
+      logger.trace("Examen du fichier " + file.getPath() + ";" + file.getName());
       String path = file.getPath();
       String qualifiedClassName = getQualifiedName(baseNameLength, path);
       // On obtient une instance de cette classe
       if(qualifiedClassName != null) {
         Plugin plugin = getInstance(qualifiedClassName, type, cl);
         if(plugin != null) {
-          logger.info("Classe " + qualifiedClassName + " est bien un plugin !");
+          logger.trace("Classe " + qualifiedClassName + " est bien un plugin !");
           // To add the last modication time of the file
           //          long lastModificationTime = file.lastModified();
           //          loadedPluginInstances.add(
           //              new PluginInfo(plugin, urlBase, lastModificationTime));
           loadedPluginInstances.add(new PluginInfo(plugin, urlBase));
-          logger.info("Les plugins : " + loadedPluginInstances);
+          logger.debug("Les plugins : " + loadedPluginInstances.stream().map(e -> "\n" + e.toString()));
         }
       }
     } // for
@@ -428,7 +419,7 @@ class PluginLoader {
   //     * Ne se termine pas par un "/" ?? A voir pendant l'ex�cution avec le logger
   //     * et d'un cheminRep �gal � *******
   //     */
-  //    logger.info("Chargement de plugins dans le r�pertoire " +
+  //    logger.trace("Chargement de plugins dans le r�pertoire " +
   //                cheminRep + " du jar ";
   //                url.getFile() + " du jar " + url);
   //
@@ -449,14 +440,14 @@ class PluginLoader {
   //    // sont plac�s directement sous la racine du jar.
   //    int n = fileName.indexOf("!");
   //    String urlFichierJar = fileName.substring(0, n);
-  //    logger.info("Examen du jar " + urlFichierJar);
+  //    logger.trace("Examen du jar " + urlFichierJar);
   //    String nomRepPlugins = fileName.substring(n + 2);
-  //    logger.info("R�pertoire dans le jar : " + nomRepPlugins);
+  //    logger.trace("R�pertoire dans le jar : " + nomRepPlugins);
   //
   //    // R�cup�re les entr�es du fichier jar qui sont dans le r�pertoire
   //    try {
   //      JarURLConnection jc = (JarURLConnection)url.openConnection();
-  //      logger.info("Ouverture connexion sur jar " + url.getPath());
+  //      logger.trace("Ouverture connexion sur jar " + url.getPath());
   //      JarFile jf = jc.getJarFile();
   //      ArrayList classesPlugins = new ArrayList();
   //      Enumeration e = jf.entries();
@@ -466,7 +457,7 @@ class PluginLoader {
   //        // On ne garde que les entr�es qui sont sous le r�pertoire rep.
   //        // On ne veut pas le r�pertoire lui-m�me.
   //        if (nomJe.startsWith(cheminRep) && ! nomJe.equals(cheminRep)) {
-  //          logger.info("Fichier " + nomJe + " trouv� dans " + cheminRep);
+  //          logger.trace("Fichier " + nomJe + " trouv� dans " + cheminRep);
   //          // Le plugin doit �tre sous le r�pertoire.
   //          // Il est plac� dans un r�pertoire qui correspond � son paquetage.
   //          // On va r�cup�rer le nom du paquetage d'apr�s sa position dans
@@ -475,7 +466,7 @@ class PluginLoader {
   //          // On r�cup�re le chemin relatif au r�pertoire de recherche
   //          // (qui correspond au nom du paquetage de la classe).
   //          String finNom = nomJe.substring(cheminRep.length() + 1);
-  //          logger.info("Nom relatif du fichier par rapport � "
+  //          logger.trace("Nom relatif du fichier par rapport � "
   //                      + cheminRep + " = " + finNom);
   //          // Le nom doit se terminer par .class
   //          // et ne pas contenir un "$" (pas une classe interne)
@@ -496,11 +487,11 @@ class PluginLoader {
   //            //            nomJe = nomJe.substring(0, n);
   //            //            String nomClasse = nomJe.replace('/', '.');
   //
-  //            logger.info("Classe " + qualifiedClassName + " trouv�e dans le jar.");
+  //            logger.trace("Classe " + qualifiedClassName + " trouv�e dans le jar.");
   //
   //            Plugin plugin = getInstance(qualifiedClassName, type, cl);
   //            if (plugin != null) {
-  //              logger.info("Classe " + qualifiedClassName + " est bien un plugin !");
+  //              logger.trace("Classe " + qualifiedClassName + " est bien un plugin !");
   //              loadedPluginInstances.add(new PluginInfo(plugin, url));
   //            }
   //        }
@@ -512,10 +503,10 @@ class PluginLoader {
   //      // Collections.sort(plugins);
   //    }
   //    //      catch(MalformedURLException err) {
-  //    //        err.printStackTrace();
+  //            logger.trace(err.getMessage(), err);
   //    //      }
   //    catch (IOException err) {
-  //      err.printStackTrace();
+  //      logger.warn(err.getMessage(), err);
   //    }
   //  }
 
@@ -593,13 +584,13 @@ class PluginLoader {
       urlFichierJar = fileName.substring(0, n);
       nomRepPlugins = fileName.substring(n + 2);
     }
-    logger.info("Searches in the jar " + urlFichierJar);
-    logger.info("Directory in the jar : " + nomRepPlugins);
+    logger.trace("Searches in the jar " + urlFichierJar);
+    logger.trace("Directory in the jar : " + nomRepPlugins);
 
     // R�cup�re les entr�es du fichier jar qui sont dans le r�pertoire
     JarFile jf = null;
     try {
-      logger.info("Open connection of the jar " + url);
+      logger.trace("Open connection of the jar " + url);
       JarURLConnection jc = (JarURLConnection) url.openConnection();
       jf = jc.getJarFile();
       // On recherche si le jar contient le fichier META-INF/pluginslist
@@ -615,7 +606,7 @@ class PluginLoader {
       Enumeration entries = jf.entries();
       while(entries.hasMoreElements()) {
         je = (JarEntry) entries.nextElement();
-        logger.info("Entr�e de jar : " + je);
+        logger.trace("Entr�e de jar : " + je);
 
         if(je.getName().equalsIgnoreCase(nomFichierListePlugin)) {
           pluginListFound = true;
@@ -626,10 +617,10 @@ class PluginLoader {
         // On a trouv� la liste des plugins.
         // On charge tous les plugins dont le nom est dans cette liste
         // et qui sont plac�s dans ce fichier jar.
-        logger.info("pluginlist file found");
+        logger.trace("pluginlist file found");
         loadPluginsInListOfJar(je, jf, type, cl, url);
       } else {
-        logger.info("pluginlist file not found");
+        logger.trace("pluginlist file not found");
         // On n'a pas trouv� la liste des plugins.
         // On essaie tous les fichiers du jar pour voir si ce sont des plugins.
         // On fini de parcourir toutes les entr�es du jar avant de voir
@@ -639,7 +630,7 @@ class PluginLoader {
           je = (JarEntry) entries.nextElement();
           String nomJe = je.getName();
           if(nomJe.startsWith(nomRepPlugins)) {
-            logger.info("Fichier " + nomJe + " trouv� dans " + nomRepPlugins);
+            logger.trace("Fichier " + nomJe + " trouv� dans " + nomRepPlugins);
             // Le plugin doit �tre sous le r�pertoire.
             // Il est plac� dans un r�pertoire qui correspond � son paquetage.
             // On va r�cup�rer le nom du paquetage d'apr�s sa position dans
@@ -656,11 +647,11 @@ class PluginLoader {
               finNom = finNom.substring(0, n);
               String nomClasse = finNom.replace('/', '.');
 
-              logger.info("Classe " + nomClasse + " trouv�e dans le jar.");
+              logger.trace("Classe " + nomClasse + " trouv�e dans le jar.");
 
               Plugin plugin = getInstance(nomClasse, type, cl);
               if(plugin != null) {
-                logger.info("Classe " + nomClasse + " est bien un plugin !");
+                logger.trace("Classe " + nomClasse + " est bien un plugin !");
                 loadedPluginInstances.add(new PluginInfo(plugin, url));
               } // if (plugin != null)
             } // if (finNom ne contient pas de $ et se termine par .class)
@@ -669,7 +660,7 @@ class PluginLoader {
       } // else (pas de liste de plugins dans le jar)
     } // try
     catch(IOException err) {
-      err.printStackTrace();
+      logger.warn(err.getMessage(), err);
     } finally {
       /* Il ne faut pas fermer le jar ici sinon on ne pourra recharger les plugins
        * ou r�cup�rer des images ou d'autres ressources.
@@ -679,7 +670,7 @@ class PluginLoader {
           jf.close();
         }
         catch(IOException ex) {
-          ex.printStackTrace();
+          logger.warn(ex.getMessage(), ex);
         }
       }
       */
@@ -706,7 +697,7 @@ class PluginLoader {
    * @param urlJar URL of the jar in which the plugins are searched.
    */
   private void loadPluginsInListOfJar(JarEntry je, JarFile jf, Class type, ClassLoader cl, URL urlJar) throws IOException {
-    logger.info("*****Start loadPluginsInListOfJar(" + je + ", " + jf + ", " + type + ", " + cl + ", " + urlJar + ")");
+    logger.trace("*****Start loadPluginsInListOfJar(" + je + ", " + jf + ", " + type + ", " + cl + ", " + urlJar + ")");
     // Lecture ligne � ligne de l'entr�e
     BufferedReader br = new BufferedReader(new InputStreamReader(jf.getInputStream(je)));
     // Nom de fichier du jar dans lequel on va chercher les plugins.
@@ -717,20 +708,20 @@ class PluginLoader {
       // ou le nom d'un fichier .class du jar.
       if(fileName.endsWith(".class")) {
         fileName = fileName.substring(0, fileName.length() - 6);
-        logger.info("Chargement de " + fileName);
+        logger.trace("Chargement de " + fileName);
         // Cas o� le plugin est donn� par son fichier .class
         // On demande au chargeur de classe de le charger.
         // En effet, le chargeur de classe cherche dans ce jar
         // et il suffit donc de lui donner le nom de la classe.
         Plugin plugin = getInstance(fileName, type, cl);
         if(plugin != null) {
-          logger.info("Classe " + fileName + " est bien un plugin !");
+          logger.trace("Classe " + fileName + " est bien un plugin !");
           loadedPluginInstances.add(new PluginInfo(plugin, urlJar));
         } // if plugin != null
       } // if nom se termine par .class
       else { // On suppose que fileName est un nom de r�pertoire du jar
         // On recherche les plugins dans ce r�pertoire du jar
-        logger.info("**Les plugins sont dans le r�pertoire " + fileName);
+        logger.trace("**Les plugins sont dans le r�pertoire " + fileName);
         // Si le nom de r�pertoire ne se termine pas par un "/", on l'ajoute
         if(!fileName.endsWith("/")) {
           fileName += "/";
@@ -756,8 +747,7 @@ class PluginLoader {
    * to an extern class.
    */
   private String getQualifiedName(int baseNameLength, String classPath) {
-    logger
-      .info("Compute the qualified name " + classPath + " by removing " + baseNameLength + " characters at the beginning");
+    logger.trace("Compute the qualified name " + classPath + " by removing " + baseNameLength + " characters at the beginning");
     // Un plugin ne peut �tre une classe interne
     if((!classPath.endsWith(".class")) || (classPath.indexOf('$') != -1)) {
       return null;
@@ -769,7 +759,7 @@ class PluginLoader {
     // mais pas s'il est dans un jar. A VOIR !!!!!!!!
     classPath = classPath.substring(baseNameLength).replace(File.separatorChar, '.');
     // On enl�ve le .class final pour avoir le nom de la classe
-    logger.info("Nom complet de la classe : " + classPath);
+    logger.trace("Nom complet de la classe : " + classPath);
     return classPath.substring(0, classPath.lastIndexOf('.'));
   }
 
@@ -808,43 +798,17 @@ class PluginLoader {
    */
   private Plugin getInstance(String nomClasse, Class type, ClassLoader cl) {
     try {
-      // C'est ici que se passe le chargement de la classe par le
-      // chargeur de classes.
-      logger.info("Loading of the class " + nomClasse + " by " + this + " which search in the URLs " + this.urlInfos);
       Class c = cl.loadClass(nomClasse);
-      Plugin plugin = null;
-      try {
-        // On cr�e une instance de la classe
-        plugin = (Plugin) c.newInstance();
-      } catch(ClassCastException e) {
-        //Le fichier  n'est pas un plugin 'Plugin'
-        logger.warning("Class " + nomClasse + " is not a plugin");
-        return null;
-      } catch(InstantiationException e) {
-        logger.info("Class " + nomClasse + " cannot be instancied");
-        return null;
-      } catch(IllegalAccessException e) {
-        logger.warning("No access to the class " + nomClasse);
-        return null;
-      } catch(NoClassDefFoundError e) {
-        logger.warning("Error while defining " + nomClasse + " (name of the package?");
-        return null;
-      } // Fin des catchs pour newInstance
-
-      // Tests if the plugin has the good type
+      Plugin plugin = (Plugin) c.newInstance();
       if(type == null || type.isInstance(plugin)) {
-        logger.info("Plugin with the name " + plugin.getName() + " found.");
+        logger.debug("Plugin with the name " + plugin.getName() + " found.");
         return plugin;
       } else {
-        logger.info("Plugin with the name " + plugin.getName() + " has not the good type " + type.getName());
+        logger.debug("Plugin with the name " + plugin.getName() + " has not the good type " + type.getName());
         return null;
       }
-
-    } catch(ClassNotFoundException e) {
-      logger.warning("Class " + nomClasse + " cannot be found");
-      return null;
-    } catch(NoClassDefFoundError e) {
-      logger.warning("Error while defining " + nomClasse + " (name of the package?");
+    } catch(ClassCastException | InstantiationException | IllegalAccessException | NoClassDefFoundError | ClassNotFoundException e) {
+      logger.trace(e.getMessage(), e);
       return null;
     } // Fin des catchs pour loadClass
   }
@@ -901,14 +865,10 @@ class PluginLoader {
    * @param cl        chargeur de classes qui charge la classe des plugins.
    */
   private void loadFromJarWithDirectory(URL url, String cheminRep, Class type, ClassLoader cl) {
-    logger.info("loadFromJarWithDirectory : URL du jar dans lequel on cherche : " + url);
-    logger.info("R�pertoire du jar dans lequel on cherche : " + cheminRep);
+    logger.trace("Searching: " + url + " in directory: " + cheminRep);
     int lCheminRep = cheminRep.length();
-    logger.info("Longueur chemin � retirer au d�but des noms d'entr�es du jar = " + lCheminRep);
-
     JarFile jf = null;
     try {
-      logger.info("Ouverture connexion sur jar " + url);
       JarURLConnection jc = (JarURLConnection) url.openConnection();
       jf = jc.getJarFile();
       JarEntry je = null;
@@ -919,7 +879,7 @@ class PluginLoader {
         String nomJe = je.getName();
         if(nomJe.startsWith(cheminRep)) {
           // On a trouv� une entr�e plac�e dans le bon r�pertoire
-          logger.info("Fichier " + nomJe + " trouv� dans " + cheminRep);
+          logger.trace("Fichier " + nomJe + " trouv� dans " + cheminRep);
           /* Le plugin doit �tre sous le r�pertoire qui correspond � son
            * paquetage.
            * On va donc r�cup�rer le nom du paquetage d'apr�s sa position dans
@@ -945,11 +905,11 @@ class PluginLoader {
             // Il faut enlever le r�pertoire de base devant le nom de l'entr�e
             nomClasse = nomClasse.substring(lCheminRep);
 
-            logger.info("Classe " + nomClasse + " trouv�e dans le jar.");
+            logger.trace("Classe " + nomClasse + " trouv�e dans le jar.");
 
             Plugin plugin = getInstance(nomClasse, type, cl);
             if(plugin != null) {
-              logger.info("Classe " + nomClasse + " est bien un plugin !");
+              logger.trace("Classe " + nomClasse + " est bien un plugin !");
               // Add last modification time of the entry in the pluginInfo
               //              long lastModificationTime = je.getTime();
               //              loadedPluginInstances.add(
@@ -961,7 +921,7 @@ class PluginLoader {
       } // while (e.hasMoreElements())
     } // try
     catch(IOException err) {
-      err.printStackTrace();
+      logger.warn(err.getMessage(), err);
     } finally {
       /* Jar must not be closed here else it will not be possible to reload
        * plugins or get images or other resources.
@@ -971,7 +931,7 @@ class PluginLoader {
       //          jf.close();
       //        }
       //        catch(IOException ex) {
-      //          ex.printStackTrace();
+      //          logger.warn(ex.getMessage(), ex);
       //        }
       //      }
     } // finally
@@ -1032,7 +992,7 @@ class PluginLoader {
     // Gets the jar entries in the url
     JarFile jf = null;
     try {
-      logger.info("Open a connection with jar " + url);
+      logger.trace("Open a connection with jar " + url);
       JarURLConnection jc = (JarURLConnection) url.openConnection();
       jf = jc.getJarFile();
       JarEntry je = null;
@@ -1040,7 +1000,7 @@ class PluginLoader {
       Enumeration entries = jf.entries();
       while(entries.hasMoreElements()) {
         je = (JarEntry) entries.nextElement();
-        logger.info("Entry of jar : " + je);
+        logger.trace("Entry of jar : " + je);
         if(je.getName().equalsIgnoreCase(nomFichierListePlugin)) {
           pluginListFound = true;
           break;
@@ -1049,18 +1009,18 @@ class PluginLoader {
       if(pluginListFound) {
         // List of plugins file found.
         // All the plugins in that list are loaded.
-        logger.info("pluginlist found");
+        logger.trace("pluginlist found");
         loadPluginsInListOfJar(je, jf, type, cl, url);
       } else {
         /* List of plugins file not found.
          * Plugins are searched in the jar, with "" as the base directory.
          */
-        logger.info("pluginlist not found");
+        logger.trace("pluginlist not found");
         loadFromJarWithDirectory(url, "", type, cl);
       } // else (List of plugins file not found)
     } // try
     catch(IOException err) {
-      err.printStackTrace();
+      logger.warn(err.getMessage(), err);
     } finally {
       /* Don't close the jar here, else it will not be possible to load any
        * resources from the jar.
@@ -1071,7 +1031,7 @@ class PluginLoader {
       //          jf.close();
       //        }
       //        catch(IOException ex) {
-      //          ex.printStackTrace();
+//                logger.warn(ex.getMessage(), ex);
       //        }
       //      }
     }

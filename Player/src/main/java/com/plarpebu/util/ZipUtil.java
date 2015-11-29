@@ -1,5 +1,8 @@
 package com.plarpebu.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -15,6 +18,8 @@ import javax.swing.JOptionPane;
  * @author kmschmidt
  */
 public class ZipUtil {
+
+  private final static Logger logger = LoggerFactory.getLogger(ZipUtil.class);
 
   /**
    * Unzip a "Zipped MP3G" file to a temp location and return the MP3 File object
@@ -61,7 +66,7 @@ public class ZipUtil {
         FileOutputStream fos = new FileOutputStream(mp3File);
         InputStream is = zipFile.getInputStream(mp3Entry);
 
-        System.out.println("Writing temp file: " + mp3File.getName());
+        logger.debug("Writing temp file: " + mp3File.getName());
         byte[] buffer = new byte[1024];
         int size;
         while((size = is.read(buffer, 0, 1024)) != -1) {
@@ -78,7 +83,7 @@ public class ZipUtil {
         FileOutputStream fos = new FileOutputStream(cdgFile);
         InputStream is = zipFile.getInputStream(cdgEntry);
 
-        System.out.println("Writing temp file: " + cdgFile.getName());
+        logger.debug("Writing temp file: " + cdgFile.getName());
         byte[] buffer = new byte[1024];
         int size;
         while((size = is.read(buffer, 0, 1024)) != -1) {

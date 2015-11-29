@@ -21,6 +21,8 @@ import com.bluedragontavern.albumgrabber.Album;
 import com.bluedragontavern.albumgrabber.allmusic.AlbumSearch;
 import com.plarpebu.plugins.sdk.FramePlugin;
 import com.plarpebu.util.CacheUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Album grabber plugin
@@ -28,6 +30,8 @@ import com.plarpebu.util.CacheUtil;
  * @author kmschmidt
  */
 public class AlbumGrabberPlugin extends FramePlugin implements ActionListener, BasicPlayerListener {
+
+  private final static Logger logger = LoggerFactory.getLogger(AlbumGrabberPlugin.class);
 
   private Album album = null;
 
@@ -97,7 +101,7 @@ public class AlbumGrabberPlugin extends FramePlugin implements ActionListener, B
       st = new RechercheThread(album, imageLabel, this);
       st.start();
     } catch(Exception ex) {
-      ex.printStackTrace();
+      logger.warn(ex.getMessage(), ex);
     }
   }
 
@@ -112,11 +116,12 @@ public class AlbumGrabberPlugin extends FramePlugin implements ActionListener, B
         try {
           File albumCacheDir = CacheUtil.getAlbumCacheDir();
           album = new Album(albumCacheDir, auteur, albumTitle);
-          System.out.println("auteur : " + auteur + " album " + albumTitle);
+          logger.debug("auteur : " + auteur + " album " + albumTitle);
 
           st = new RechercheThread(album, imageLabel, this);
           st.start();
         } catch(Exception ex) {
+          logger.warn(ex.getMessage(), ex);
         }
       }
     }
@@ -187,7 +192,7 @@ public class AlbumGrabberPlugin extends FramePlugin implements ActionListener, B
         label.setIcon(new ImageIcon(album.getImageBytes()));
         frame.pack();
       } catch(Exception ex) {
-        System.out.println("Album non trouve");
+        logger.debug("Album non trouve", ex);
       }
     }
   }

@@ -1,5 +1,8 @@
 package com.plarpebu.plugins.sdk;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -16,6 +19,8 @@ import javax.swing.JRootPane;
  * @version 1.0
  */
 abstract public class FramePluginWithFullScreenSupport extends JFrameWithPreferences {
+
+  private final static Logger logger = LoggerFactory.getLogger(FramePluginWithFullScreenSupport.class);
 
   private boolean windowedMode = true;
 
@@ -67,13 +72,13 @@ abstract public class FramePluginWithFullScreenSupport extends JFrameWithPrefere
 
   private void switchFullScreenWindowedMode() {
     if(windowedMode) {
-      System.out.println("Go TO FULL SCREEN");
+      logger.debug("Go TO FULL SCREEN");
       // Go to full screen
       try {
         // go fullscreen
         goToFullScreen();
       } catch(Exception ex) {
-        ex.printStackTrace();
+        logger.warn(ex.getMessage(), ex);
         goToWindowedMode();
       }
     } else {

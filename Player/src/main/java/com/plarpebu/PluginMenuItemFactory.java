@@ -1,14 +1,12 @@
 package com.plarpebu;
 
-import java.awt.event.ActionListener;
-import java.util.logging.Logger;
-
-import javax.swing.JMenu;
-
 import fr.unice.plugin.Plugin;
 import fr.unice.plugin.PluginManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import static com.plarpebu.common.PlarpebuUtil.configureLogToFile;
+import javax.swing.*;
+import java.awt.event.ActionListener;
 
 /**
  * Classe qui met dans un menu des items li�es aux plugins d�j� charg�s. Une instance de cette
@@ -65,7 +63,7 @@ public class PluginMenuItemFactory {
    */
   private ActionListener listener;
 
-  private static Logger logger = configureLogToFile(Logger.getLogger("player.test.PluginMenu"));
+  private static final Logger logger = LoggerFactory.getLogger(PluginMenuItemFactory.class);
 
   /**
    * Construit une instance qui concerne un certain menu. Ce menu aura des choix qui permettront de
@@ -92,7 +90,7 @@ public class PluginMenuItemFactory {
     if(loader == null) {
       return;
     }
-    logger.info("Construction du menu des PLUGINS");
+    logger.trace("Construction du menu des PLUGINS");
 
     // Enl�ve les entr�es pr�c�dentes s'il y en avait
     menu.removeAll();
@@ -100,7 +98,7 @@ public class PluginMenuItemFactory {
     // R�cup�re les instances d�j� charg�es
 
     Plugin[] instancesPlugins = loader.getPluginInstances(type);
-    logger.info("Nombre de plugins trouv�s :" + instancesPlugins.length);
+    logger.debug("Nombre de plugins trouv�s :" + instancesPlugins.length);
     PluginMenuItem item;
     // On ajoute une entr�e par instance de plugin
     for(int i = 0; i < instancesPlugins.length; i++) {

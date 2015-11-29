@@ -1,19 +1,18 @@
 package com.plarpebu;
 
-import java.awt.Component;
+import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
+import com.plarpebu.common.PlarpebuUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.FilenameFilter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Logger;
-
-import javax.swing.SwingUtilities;
-
-import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
-import com.plarpebu.common.PlarpebuUtil;
 
 /**
  * Skin Manager
@@ -21,7 +20,7 @@ import com.plarpebu.common.PlarpebuUtil;
 public class SkinMgr {
 
   // Logger
-  private static Logger logger = Logger.getAnonymousLogger();
+  private static Logger logger = LoggerFactory.getLogger(SkinMgr.class);
 
   // Singelton instance
   private static SkinMgr instance = null;
@@ -62,7 +61,7 @@ public class SkinMgr {
       skins.add(fullSkinNames[i].substring(0, fullSkinNames[i].lastIndexOf(".zip")));
     }
 
-    logger.info("Available skins: " + skins);
+    logger.debug("Available skins: " + skins);
   }
 
   /**
@@ -91,7 +90,7 @@ public class SkinMgr {
       // Update the components
       updateComponents();
     } catch(Exception ex) {
-      logger.severe("Could not set skin: " + ex.toString());
+      logger.warn("Could not set skin: " + ex.toString() + ": " + ex.getMessage(), ex);
     }
   }
 
@@ -112,7 +111,7 @@ public class SkinMgr {
 
     while(iter.hasNext()) {
       Component c = (Component) iter.next();
-      logger.info("Updating component: " + c.getName());
+      logger.debug("Updating component: " + c.getName());
       SwingUtilities.updateComponentTreeUI(c);
     }
   }

@@ -44,6 +44,8 @@ import javax.swing.event.ChangeEvent;
 import com.borland.jbcl.layout.XYConstraints;
 import com.borland.jbcl.layout.XYLayout;
 import com.plarpebu.SkinMgr;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>
@@ -64,6 +66,8 @@ import com.plarpebu.SkinMgr;
  */
 
 public class PreferencesDialog extends JDialog implements PropertyChangeListener {
+
+  private final static Logger logger = LoggerFactory.getLogger(PreferencesDialog.class);
 
   Border border1;
 
@@ -255,7 +259,7 @@ public class PreferencesDialog extends JDialog implements PropertyChangeListener
       // setSize(420, 600);
       pack();
     } catch(Exception ex) {
-      ex.printStackTrace();
+      logger.warn(ex.getMessage(), ex);
     }
   }
 
@@ -677,7 +681,7 @@ public class PreferencesDialog extends JDialog implements PropertyChangeListener
     if(jRadioButtonGradiant.isSelected()) {
       if(karaokePane != null) {
         karaokePane.props.backgroundType = KaraokeProperties.BACKGROUND_GRADIANT;
-        System.out.println("gradiant appelle redraw");
+        logger.debug("gradiant appelle redraw");
         karaokePane.redrawAll();
       }
     }
@@ -693,7 +697,7 @@ public class PreferencesDialog extends JDialog implements PropertyChangeListener
     if(jRadioButtonMonochrome.isSelected()) {
       if(karaokePane != null) {
         karaokePane.props.backgroundType = KaraokeProperties.BACKGROUND_PLAIN;
-        System.out.println("monoi appelle redraw");
+        logger.debug("monoi appelle redraw");
         karaokePane.redrawAll();
       }
     }
@@ -705,7 +709,7 @@ public class PreferencesDialog extends JDialog implements PropertyChangeListener
       if(karaokePane != null) {
         if(karaokePane.props.bgImage != null) {
           karaokePane.props.backgroundType = KaraokeProperties.BACKGROUND_IMAGE;
-          System.out.println("image appelle redraw");
+          logger.debug("image appelle redraw");
           karaokePane.redrawAll();
         }
       }
@@ -741,11 +745,12 @@ public class PreferencesDialog extends JDialog implements PropertyChangeListener
           try {
             Thread.sleep(20L);
           } catch(Exception exception) {
+            logger.warn(exception.getMessage(), exception);
           }
         }
         karaokePane.redrawAll();
       } catch(Exception ex) {
-        System.out.println("Background image : " + karaokePane.props.bgImageFilename + " does not exists");
+        logger.warn("Background image : " + karaokePane.props.bgImageFilename + " does not exists: " + ex.getMessage(), ex);
       }
 
       karaokePane.props.bgImageFilename = chooser.getSelectedFile().getAbsolutePath();

@@ -1,5 +1,8 @@
 package com.plarpebu.plugins.basic.info.segments_clock;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 
@@ -13,6 +16,8 @@ import javax.swing.JLabel;
  * @version 1.0
  */
 public class SevenSegClockPanel extends JLabel implements Runnable {
+
+  private final static Logger logger = LoggerFactory.getLogger(SevenSegClockPanel.class);
 
   private SevenSegDigit sevenSegClock;
 
@@ -38,7 +43,7 @@ public class SevenSegClockPanel extends JLabel implements Runnable {
       try {
         Thread.sleep(1000);
       } catch(InterruptedException ex) {
-        ex.printStackTrace();
+        logger.warn(ex.getMessage(), ex);
       }
     }
   }

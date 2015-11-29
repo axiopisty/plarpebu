@@ -15,11 +15,15 @@ import javazoom.jlgui.basicplayer.BasicPlayerEvent;
 import javazoom.jlgui.basicplayer.BasicPlayerListener;
 
 import com.plarpebu.plugins.sdk.FramePlugin;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Progress Bar
  */
 public class ProgressBarPlugin extends FramePlugin implements BasicPlayerListener, Runnable {
+
+  private final static Logger logger = LoggerFactory.getLogger(ProgressBarPlugin.class);
 
   private JPanel panel = null;
 
@@ -236,18 +240,18 @@ public class ProgressBarPlugin extends FramePlugin implements BasicPlayerListene
 
   public void run() {
     synchronized(lock) {
-      System.out.println("Clock Thread started");
+      logger.debug("Clock Thread started");
       while(running == true) {
         try {
           Thread.sleep(1000);
         } catch(InterruptedException e) {
-          e.printStackTrace();
+          logger.warn(e.getMessage(), e);
         }
         if(paused == false) {
           clock = clock + 1000;
         }
       }
-      System.out.println("Clock Thread completed");
+      logger.debug("Clock Thread completed");
     }
   }
 

@@ -36,6 +36,8 @@ import javax.swing.UIManager;
 import com.plarpebu.plugins.sdk.FramePluginWithFullScreenSupport;
 import com.plarpebu.plugins.sdk.Iconifiable;
 import com.plarpebu.util.ExitListenerSecurityManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * MIDI Karaoke player
@@ -43,6 +45,8 @@ import com.plarpebu.util.ExitListenerSecurityManager;
  * @author Taras P. Galchenko
  */
 public class Karaoke extends FramePluginWithFullScreenSupport implements MetaEventListener {
+
+  private final static Logger logger = LoggerFactory.getLogger(Karaoke.class);
 
   private KaraokePane karaokePane;
 
@@ -117,7 +121,7 @@ public class Karaoke extends FramePluginWithFullScreenSupport implements MetaEve
       loadPreferences();
 
     } catch(Exception e) {
-      e.printStackTrace();
+      logger.warn(e.getMessage(), e);
     }
   }
 
@@ -230,10 +234,11 @@ public class Karaoke extends FramePluginWithFullScreenSupport implements MetaEve
         try {
           Thread.sleep(20L);
         } catch(Exception exception) {
+          logger.warn(exception.getMessage(), exception);
         }
       }
     } catch(Exception ex) {
-      System.out.println("Background image : " + props.bgImageFilename + " does not exists");
+      logger.warn("Background image : " + props.bgImageFilename + " does not exists: " + ex.getMessage(), ex);
     }
 
     // Background gradiant colors
@@ -352,7 +357,7 @@ public class Karaoke extends FramePluginWithFullScreenSupport implements MetaEve
     Lyrics.setCurrentCharset(props.charset);
     song = Lyrics.read(seq);
 
-    System.out.println("Nb frames dans le morceau : " + song.size());
+    logger.debug("Nb frames dans le morceau : " + song.size());
     if(song.size() == 0) {
       return false;
     }
@@ -360,7 +365,7 @@ public class Karaoke extends FramePluginWithFullScreenSupport implements MetaEve
     Lyrics.preformat(song, props.cols);
     artist = Lyrics.getArtist();
     songTitle = Lyrics.getTitle();
-    System.out.println("***SET SONG*** : " + artist + " " + songTitle);
+    logger.debug("***SET SONG*** : " + artist + " " + songTitle);
 
     frames = Lyrics.format(song, props.readLine, props.lines, seq.getTickLength());
     karaokePane.setSong(song, frames, props);
@@ -411,7 +416,7 @@ public class Karaoke extends FramePluginWithFullScreenSupport implements MetaEve
     try {
       jbInit();
     } catch(Exception e) {
-      e.printStackTrace();
+      logger.warn(e.getMessage(), e);
     }
   }
 

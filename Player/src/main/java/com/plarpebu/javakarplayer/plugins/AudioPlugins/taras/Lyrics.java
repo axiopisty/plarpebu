@@ -20,11 +20,15 @@ import org.mozilla.intl.chardet.HtmlCharsetDetector;
 import org.mozilla.intl.chardet.nsDetector;
 import org.mozilla.intl.chardet.nsICharsetDetectionObserver;
 import org.mozilla.intl.chardet.nsPSMDetector;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Main lyrics formatter
  */
 public class Lyrics {
+
+  private final static Logger logger = LoggerFactory.getLogger(Lyrics.class);
 
   public static final int SET_TITLE = 1;
 
@@ -88,7 +92,7 @@ public class Lyrics {
     long startTime = System.currentTimeMillis();
 
     if(charsetAutodetection) {
-      System.out.println("====CHARSET EN AUTODETECTION=====");
+      logger.debug("====CHARSET EN AUTODETECTION=====");
       currentCharset = findCharset(seq);
     }
 
@@ -116,7 +120,7 @@ public class Lyrics {
       }
 
     }
-    System.out.println("Sequence read in " + (System.currentTimeMillis() - startTime));
+    logger.debug("Sequence read in " + (System.currentTimeMillis() - startTime));
     return song;
   }
 
@@ -131,13 +135,13 @@ public class Lyrics {
     boolean isAscii = true;
 
     nsDetector det = new nsDetector(charsetHint);
-    System.out.println("Starting autodetection hint = " + charsetHint);
+    logger.debug("Starting autodetection hint = " + charsetHint);
     // Set an observer...
     // The Notify() will be called when a matching charset is found.
     det.Init(new nsICharsetDetectionObserver() {
       public void Notify(String charset) {
         HtmlCharsetDetector.found = true;
-        System.out.println("CHARSET =TROUVE ==== " + charset);
+        logger.debug("CHARSET =TROUVE ==== " + charset);
       }
     });
 
@@ -176,13 +180,13 @@ public class Lyrics {
         }
       }
 
-      System.out.println("Find charset done in " + (System.currentTimeMillis() - startTime));
+      logger.debug("Find charset done in " + (System.currentTimeMillis() - startTime));
     }
 
     det.DataEnd();
 
     if(isAscii) {
-      System.out.println("CHARSET = ASCII");
+      logger.debug("CHARSET = ASCII");
       found = true;
       charset = "ASCII";
     }
@@ -190,7 +194,7 @@ public class Lyrics {
     if(!found) {
       String prob[] = det.getProbableCharsets();
       for(int i = 0; i < prob.length; i++) {
-        System.out.println("Probable Charset = " + prob[i]);
+        logger.debug("Probable Charset = " + prob[i]);
       }
       // Most probable charset, first one is first guess etc... so the
       // last one

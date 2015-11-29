@@ -1,5 +1,8 @@
 package com.plarpebu.plugins.karaoke.cdg.io;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -24,6 +27,8 @@ import java.io.IOException;
 
 public class CdgFileObject {
 
+  private final static Logger logger = LoggerFactory.getLogger(CdgFileObject.class);
+
   private CdgDataChunk[] cdgDataChunksArray;
 
   public CdgFileObject(String filename) throws IOException {
@@ -46,7 +51,7 @@ public class CdgFileObject {
     // The file is made of CdgDataChunks, each composed of 24 bytes
     byte[] data = new byte[fileLength];
     int bytes_read = in.read(data);
-    System.out.println("Nb of bytes read = " + bytes_read);
+    logger.debug("Nb of bytes read = " + bytes_read);
 
     // Then, from the data byte array, build an array made of CdgDataChunks
     int nb = 0;

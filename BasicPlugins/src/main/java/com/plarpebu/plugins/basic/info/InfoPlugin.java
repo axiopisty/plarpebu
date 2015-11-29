@@ -24,11 +24,15 @@ import javazoom.jlgui.basicplayer.BasicPlayerListener;
 
 import com.plarpebu.plugins.sdk.PanelPlugin;
 import com.plarpebu.test.LabelClock;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Info plugin
  */
 public class InfoPlugin extends PanelPlugin implements BasicPlayerListener, Runnable {
+
+  private final static Logger logger = LoggerFactory.getLogger(InfoPlugin.class);
 
   public static final String NAME = "Info";
 
@@ -110,10 +114,10 @@ public class InfoPlugin extends PanelPlugin implements BasicPlayerListener, Runn
     }
 
     if(stream != null) {
-      System.out.println("stream != null");
+      logger.debug("stream != null");
       if(stream instanceof File) {
         dp.setString(((File) stream).getName());
-        System.out.println("dp.setString(" + ((File) stream).getName());
+        logger.debug("dp.setString(" + ((File) stream).getName());
       } else if(stream instanceof URL) {
         sourceTF.setText(((URL) stream).toString());
       }
@@ -156,6 +160,7 @@ public class InfoPlugin extends PanelPlugin implements BasicPlayerListener, Runn
       try {
         Thread.sleep(speed);
       } catch(InterruptedException e) {
+        logger.warn(e.getMessage(), e);
       }
     }
   }

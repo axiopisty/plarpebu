@@ -30,6 +30,8 @@ import javazoom.jlgui.basicplayer.BasicPlayerListener;
 
 import com.plarpebu.plugins.sdk.Iconifiable;
 import com.plarpebu.util.ZipUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Composite player combines the BasicMP3Player and BasicMidiPlayer.
@@ -38,6 +40,8 @@ import com.plarpebu.util.ZipUtil;
  * @version 1.0
  */
 public class CompositePlayer extends BasicPlayer implements BasicController {
+
+  private final static Logger logger = LoggerFactory.getLogger(CompositePlayer.class);
 
   private BasicPlayer mp3Player = new BasicMP3Player();
 
@@ -55,7 +59,7 @@ public class CompositePlayer extends BasicPlayer implements BasicController {
   }
 
   public void open(InputStream in) throws BasicPlayerException {
-    System.out.println("NOT IMPLEMENTED YET");
+    logger.debug("NOT IMPLEMENTED YET");
   }
 
   /**
@@ -84,7 +88,7 @@ public class CompositePlayer extends BasicPlayer implements BasicController {
   }
 
   public void open(URL url) throws BasicPlayerException {
-    System.out.println("NOT IMPLEMENTED YET");
+    logger.debug("NOT IMPLEMENTED YET");
   }
 
   /**
@@ -147,7 +151,7 @@ public class CompositePlayer extends BasicPlayer implements BasicController {
   public void setGain(double gain) throws BasicPlayerException {
 
     if(currentPlayer != null) {
-      System.out.println("in controller.setgain");
+      logger.debug("in controller.setgain");
     }
     currentPlayer.setGain(gain);
   }
@@ -168,13 +172,13 @@ public class CompositePlayer extends BasicPlayer implements BasicController {
 
     int j = 0;
     for(int i = 0; i < tab1.length; i++) {
-      // System.out.println("1 - supportedFileTypeExtensions["+j+"] = " +
+      // logger.debug("1 - supportedFileTypeExtensions["+j+"] = " +
       // tab1[i]);
       supportedFileTypeExtensions[j++] = tab1[i];
     }
 
     for(int i = 0; i < tab2.length; i++) {
-      // System.out.println("2 - supportedFileTypeExtensions["+j+"] = " +
+      // logger.debug("2 - supportedFileTypeExtensions["+j+"] = " +
       // tab2[i]);
       supportedFileTypeExtensions[j++] = tab2[i];
     }

@@ -1,19 +1,15 @@
 package fr.unice.plugin;
 
-import com.plarpebu.common.PlarpebuUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Iterator;
-import java.net.URL;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Set;
-import java.util.Collection;
-import java.util.logging.Logger;
 import java.lang.reflect.Array;
-
-import static com.plarpebu.common.PlarpebuUtil.configureLogToFile;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Registry for the plugin instances already loaded.
@@ -40,7 +36,7 @@ class PluginInstanceRegister {
   //  - getPluginInfoIterator
   private Map pluginInstances = new HashMap();
 
-  private static Logger logger = configureLogToFile(Logger.getLogger("fr.unice.plugin.PluginManager"));
+  private static final Logger logger = LoggerFactory.getLogger(PluginInstanceRegister.class);
 
   /**
    * Register PluginInfo instances.
@@ -101,15 +97,15 @@ class PluginInstanceRegister {
    * of the method (if not null).
    */
   Plugin[] getPluginInstances(Class type, String name, Object object) {
-    logger.info("type=" + type + "; name=" + name + "; object=" + object);
+    logger.debug("type=" + type + "; name=" + name + "; object=" + object);
     ArrayList instances = new ArrayList();
     //    Iterator it = pluginInstances.values().pluginInfos.iterator();
     Iterator it = getPluginInfoIterator();
     while(it.hasNext()) {
       Plugin instance = ((PluginInfo) it.next()).getPluginInstance();
-      logger.info("instance examin�e=" + instance);
+      logger.trace("instance examin�e=" + instance);
       if(instance.matches(type, name, object)) {
-        logger.info("instance qui convient=" + instance);
+        logger.trace("instance qui convient=" + instance);
         instances.add(instance);
       }
     }

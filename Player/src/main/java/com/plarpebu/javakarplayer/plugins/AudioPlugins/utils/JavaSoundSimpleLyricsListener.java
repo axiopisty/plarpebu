@@ -1,5 +1,8 @@
 package com.plarpebu.javakarplayer.plugins.AudioPlugins.utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * <p>
  * Title:
@@ -19,20 +22,22 @@ package com.plarpebu.javakarplayer.plugins.AudioPlugins.utils;
  */
 public class JavaSoundSimpleLyricsListener extends JavaSoundLyricsListener {
 
+  private final static Logger logger = LoggerFactory.getLogger(JavaSoundSimpleLyricsListener.class);
+
   public void clearScreen() {
-    System.out.println("\n\n");
+    logger.debug("\n\n");
   }
 
   ;
 
   public void newLine() {
-    System.out.println("\n");
+    logger.debug("\n");
   }
 
   ;
 
   public void outputLyric(String lyric) {
-    System.out.print(lyric);
+    logger.debug(lyric);
   }
 
   ;

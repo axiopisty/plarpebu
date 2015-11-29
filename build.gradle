@@ -19,6 +19,10 @@ subprojects {
     options.encoding = "CP1252"
   }
 
+  dependencies {
+    compile 'ch.qos.logback:logback-classic:1.1.3'
+  }
+
 }
 
 task releasePlarpebu(

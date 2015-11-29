@@ -1,5 +1,8 @@
 package com.plarpebu.plugins.basic.playlist;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -40,6 +43,8 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 public class FileTree extends JPanel implements ActionListener {
+
+  private final static Logger logger = LoggerFactory.getLogger(FileTree.class);
 
   public static final ImageIcon ICON_COMPUTER = new ImageIcon(FileTree.class.getResource("/icons/computer.png"));
 
@@ -339,7 +344,7 @@ public class FileTree extends JPanel implements ActionListener {
       }
       bw.close();
     } catch(Exception ex) {
-      ex.printStackTrace();
+      logger.warn(ex.getMessage(), ex);
     }
   }
 
@@ -356,8 +361,7 @@ public class FileTree extends JPanel implements ActionListener {
       }
       br.close();
     } catch(IOException ex) {
-      System.out.println("Aucun favoris enregistr�s");
-      ;
+      logger.debug("Aucun favoris enregistr�s");
     }
   }
 
@@ -517,6 +521,8 @@ class IconData {
  **************************************************************************************************/
 class FileNode {
 
+  private final static Logger logger = LoggerFactory.getLogger(FileNode.class);
+
   protected File m_file;
 
   protected DefaultListModel liste;
@@ -591,7 +597,7 @@ class FileNode {
 
   public void getFiles(File f, int depth) {
     if(depth > PlayListPlugin.MAXDEPTH) {
-      System.out.println("Stopping recursion, MAXDEPTH = " + PlayListPlugin.MAXDEPTH + " reached");
+      logger.debug("Stopping recursion, MAXDEPTH = " + PlayListPlugin.MAXDEPTH + " reached");
       return;
     }
 
@@ -642,8 +648,7 @@ class FileNode {
 
       return m_file.listFiles(filefilter);
     } catch(Exception ex) {
-      JOptionPane.showMessageDialog(null, "Error reading directory " + m_file
-        .getAbsolutePath(), "Warning", JOptionPane.WARNING_MESSAGE);
+      JOptionPane.showMessageDialog(null, "Error reading directory " + m_file.getAbsolutePath(), "Warning", JOptionPane.WARNING_MESSAGE);
       return null;
     }
   }

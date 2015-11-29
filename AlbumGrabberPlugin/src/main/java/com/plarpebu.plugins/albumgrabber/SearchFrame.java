@@ -14,6 +14,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.plarpebu.SkinMgr;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>
@@ -33,6 +35,8 @@ import com.plarpebu.SkinMgr;
  * @version 1.0
  */
 public class SearchFrame extends JFrame {
+
+  private final static Logger logger = LoggerFactory.getLogger(SearchFrame.class);
 
   private BorderLayout borderLayout1 = new BorderLayout();
 
@@ -64,7 +68,7 @@ public class SearchFrame extends JFrame {
     try {
       jbInit();
     } catch(Exception ex) {
-      ex.printStackTrace();
+      logger.warn(ex.getMessage(), ex);
     }
 
     SkinMgr.getInstance().addComponent(this);
@@ -115,10 +119,10 @@ public class SearchFrame extends JFrame {
     gosearch = new JButton("Go search");
     gosearch.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-        System.out.println("on lance la recherche");
+        logger.debug("on lance la recherche");
         auteurS = (String) auteurT.getValue();
         albumS = (String) albumT.getValue();
-        System.out.println(auteurS + albumS);
+        logger.debug(auteurS + albumS);
         abp.setAlbum(auteurS, albumS);
       }
     });

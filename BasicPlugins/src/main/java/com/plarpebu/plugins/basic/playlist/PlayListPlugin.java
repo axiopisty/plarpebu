@@ -73,6 +73,8 @@ import javazoom.jlgui.basicplayer.BasicPlayerListener;
 import com.l2fprod.common.swing.JDirectoryChooser;
 import com.plarpebu.plugins.basic.SwingUtils;
 import com.plarpebu.plugins.sdk.FramePlugin;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Playlist plugin
@@ -81,6 +83,8 @@ import com.plarpebu.plugins.sdk.FramePlugin;
  */
 public class PlayListPlugin extends FramePlugin
   implements BasicPlayerListener, ActionListener, MouseListener, MouseMotionListener, DropTargetListener, KeyListener {
+
+  private final static Logger logger = LoggerFactory.getLogger(PlayListPlugin.class);
 
   private FileDialog fileDialog;
 
@@ -211,7 +215,7 @@ public class PlayListPlugin extends FramePlugin
 
     toolTipMgr = ToolTipManager.sharedInstance();
     toolTipMgr.registerComponent(lstPlayList);
-    // System.out.println(tpm.isEnabled() + " " + tpm.getReshowDelay());
+    // logger.debug(tpm.isEnabled() + " " + tpm.getReshowDelay());
     toolTipMgr.setReshowDelay(100);
     controlPanel = new JPanel();
 
@@ -417,7 +421,7 @@ public class PlayListPlugin extends FramePlugin
       c = StringToColor(preferences.getProperty("selectionForegroundColor"));
       setPlayListSelectionFg(c);
       toolFrame.setSelectionFgColor(c);
-      System.out.println("foreground selection = " + colorToString(c));
+      logger.debug("foreground selection = " + colorToString(c));
 
       c = StringToColor(preferences.getProperty("selectionBackgroundColor"));
       setPlayListSelectionBg(c);
@@ -448,7 +452,7 @@ public class PlayListPlugin extends FramePlugin
         setShowLineNumbersInPlayList(false);
       }
     } catch(Exception e) {
-      e.printStackTrace();
+      logger.warn(e.getMessage(), e);
     }
   }
 
@@ -598,7 +602,7 @@ public class PlayListPlugin extends FramePlugin
   }
 
   public void setPlayListSelectionFg(Color c) {
-    System.out.println("On met sel fg � " + colorToString(c));
+    logger.debug("On met sel fg � " + colorToString(c));
     lstPlayList.setSelectionForeground(c);
     preferences.setProperty("selectionForegroundColor", colorToString(c));
   }
@@ -772,7 +776,7 @@ public class PlayListPlugin extends FramePlugin
           controller.open((File) listModel.elementAt(index + 1));
           controller.play();
         } catch(BasicPlayerException el) {
-          el.printStackTrace();
+          logger.warn(el.getMessage(), el);
         }
       }
     } else {
@@ -783,7 +787,7 @@ public class PlayListPlugin extends FramePlugin
           controller.open((File) listModel.elementAt(0));
           controller.play();
         } catch(BasicPlayerException el) {
-          el.printStackTrace();
+          logger.warn(el.getMessage(), el);
         }
       }
     }
@@ -802,7 +806,7 @@ public class PlayListPlugin extends FramePlugin
           controller.open((File) listModel.elementAt(taille - 1));
           controller.play();
         } catch(BasicPlayerException el) {
-          el.printStackTrace();
+          logger.warn(el.getMessage(), el);
         }
       }
     } else {
@@ -813,7 +817,7 @@ public class PlayListPlugin extends FramePlugin
           controller.open((File) listModel.elementAt(index - 1));
           controller.play();
         } catch(BasicPlayerException el) {
-          el.printStackTrace();
+          logger.warn(el.getMessage(), el);
         }
       }
     }
@@ -851,7 +855,7 @@ public class PlayListPlugin extends FramePlugin
       preferences.setProperty("currentPlaylist", dir + file);
 
     } catch(IOException ioex) {
-      System.out.println("Unable to write playlist to disk");
+      logger.warn("Unable to write playlist to disk", ioex);
     }
   }
 
@@ -941,7 +945,7 @@ public class PlayListPlugin extends FramePlugin
     File f = new File(absolutePlaylistFilename);
 
     if(!f.exists()) {
-      System.out.println("file " + absolutePlaylistFilename + " does not exists");
+      logger.debug("file " + absolutePlaylistFilename + " does not exists");
     }
 
     if(f.exists()) {
@@ -969,7 +973,7 @@ public class PlayListPlugin extends FramePlugin
         // Save current playlist filename in the preferences
         preferences.setProperty("currentPlaylist", absolutePlaylistFilename);
       } catch(IOException ioex) {
-        System.out.println("Unable to read in playlist");
+        logger.warn("Unable to read in playlist", ioex);
       } catch(NumberFormatException nfex) {
         JOptionPane.showMessageDialog(this, "Invalid playlist format ");
       }
@@ -978,7 +982,7 @@ public class PlayListPlugin extends FramePlugin
 
   public void parcoursRecursif(File f, boolean recu, int depth) {
     if(depth > MAXDEPTH) {
-      System.out.println("Stopping recursion, MAXDEPTH = " + MAXDEPTH + " reached");
+      logger.debug("Stopping recursion, MAXDEPTH = " + MAXDEPTH + " reached");
       return;
     }
 
@@ -986,13 +990,13 @@ public class PlayListPlugin extends FramePlugin
     String path;
     for(int i = 0; i < tab.length; i++) {
       path = tab[i].getAbsolutePath();
-      // System.out.println("PATH = " + path);
+      // logger.debug("PATH = " + path);
       if(tab[i].isFile() && controller.isFileSupported(path)) {
         listModel.addElement(tab[i]);
       } else if(tab[i].isDirectory()) {
-        // System.out.println("RECURSIF0");
+        // logger.debug("RECURSIF0");
         if(!(tab[i].getName().equals("System Volume Information")) && recu) {
-          // System.out.println("RECURSIF");
+          // logger.debug("RECURSIF");
           parcoursRecursif(tab[i], recu, depth + 1);
         }
       }
@@ -1006,7 +1010,7 @@ public class PlayListPlugin extends FramePlugin
    */
   public static void addElementToPlayList(String name) {
     File f = new File(name);
-    // System.out.println("On ajoute file = " + f.getAbsolutePath());
+    // logger.debug("On ajoute file = " + f.getAbsolutePath());
     listModel.addElement(f);
   }
 
@@ -1097,18 +1101,18 @@ public class PlayListPlugin extends FramePlugin
             // try {
             // MpegInfo mi = new MpegInfo(((File)
             // listModel.elementAt(index)).getPath());
-            // System.out.println("Informations diverses ");
-            // System.out.println("Artiste : " + mi.getArtist());
-            // System.out.println("Album : " + mi.getAlbum());
-            // System.out.println("Ann�e : " + mi.getYear());
-            // System.out.println("Titre : " + mi.getTitle());
+            // logger.debug("Informations diverses ");
+            // logger.debug("Artiste : " + mi.getArtist());
+            // logger.debug("Album : " + mi.getAlbum());
+            // logger.debug("Ann�e : " + mi.getYear());
+            // logger.debug("Titre : " + mi.getTitle());
             // }
             // catch (ID3Exception ex) {}
             // catch (IOException ex) {}
             // catch (JavaLayerException ex) {}
           }
         } catch(BasicPlayerException el) {
-          el.printStackTrace();
+          logger.warn(el.getMessage(), el);
         }
       }
 
@@ -1123,7 +1127,7 @@ public class PlayListPlugin extends FramePlugin
             paused = true;
           }
         } catch(BasicPlayerException el) {
-          el.printStackTrace();
+          logger.warn(el.getMessage(), el);
         }
       }
 
@@ -1134,7 +1138,7 @@ public class PlayListPlugin extends FramePlugin
           model.setValue(0);
           paused = false;
         } catch(BasicPlayerException el) {
-          el.printStackTrace();
+          logger.warn(el.getMessage(), el);
         }
         playing = false;
         slider.setValue(0);
@@ -1191,7 +1195,7 @@ public class PlayListPlugin extends FramePlugin
             controller.play();
           }
         } catch(BasicPlayerException el) {
-          el.printStackTrace();
+          logger.warn(el.getMessage(), el);
         }
         playing = true;
         slider.setEnabled(true);
@@ -1260,7 +1264,7 @@ public class PlayListPlugin extends FramePlugin
    * @return la chaine d�crivant la figure et qui va etre affich�e
    */
   public String getToolTipText(MouseEvent e) {
-    // System.out.println("on est dans le tooltip");
+    // logger.debug("on est dans le tooltip");
     int index = lstPlayList.locationToIndex(e.getPoint());
     File f = (File) listModel.getElementAt(index);
     if(f != null) {
@@ -1295,8 +1299,8 @@ public class PlayListPlugin extends FramePlugin
         int index = lstPlayList.getSelectedIndex();
         if(index != -1) {
           /************************************************************************************
-           * System.out.println("coor : " + e.getX() + ", " + e.getY());
-           * System.out.println("Nom du fichier : " + ((List)
+           * logger.debug("coor : " + e.getX() + ", " + e.getY());
+           * logger.debug("Nom du fichier : " + ((List)
            * e.getComponent()).getSelectedItem());
            ***********************************************************************************/
 
@@ -1326,7 +1330,7 @@ public class PlayListPlugin extends FramePlugin
         }
         controller.seek(skp);
       } catch(BasicPlayerException e1) {
-        e1.printStackTrace();
+        logger.warn(e1.getMessage(), e1);
       }
     }
   }
@@ -1350,7 +1354,7 @@ public class PlayListPlugin extends FramePlugin
           playing = true;
           slider.setEnabled(true);
         } catch(BasicPlayerException el) {
-          el.printStackTrace();
+          logger.warn(el.getMessage(), el);
         }
       }
     }
@@ -1423,7 +1427,7 @@ public class PlayListPlugin extends FramePlugin
       // (millisec_to_time(progressMilliseconds).equals(millisec_to_time(
       // milliseconds))) {
       // Let's play next song
-      System.out.println("We do play next song ! diff = " + Math.abs(progressMilliseconds - milliseconds));
+      logger.debug("We do play next song ! diff = " + Math.abs(progressMilliseconds - milliseconds));
       getNext();
     }
   }
@@ -1470,9 +1474,9 @@ public class PlayListPlugin extends FramePlugin
     int index = lstPlayList.locationToIndex(e.getPoint());
     if(currentSelection != index && indexSelected != index) {
       currentSelection = index;
-      // System.out.println("on inverse : " +
+      // logger.debug("on inverse : " +
       // (listModel.getElementAt(indexSelected)).toString());
-      // System.out.println("avec : " + listModel.getElementAt(index));
+      // logger.debug("avec : " + listModel.getElementAt(index));
 
       if(index > indexSelected) {
         File f = (File) listModel.getElementAt(index - 1);
@@ -1605,12 +1609,6 @@ public class PlayListPlugin extends FramePlugin
         } else if(data instanceof java.lang.String) {
           parseData((String) data);
         }
-      } catch(IOException ioe) {
-        e.dropComplete(false);
-        return;
-      } catch(UnsupportedFlavorException ufe) {
-        e.dropComplete(false);
-        return;
       } catch(Exception ex) {
         e.dropComplete(false);
         return;

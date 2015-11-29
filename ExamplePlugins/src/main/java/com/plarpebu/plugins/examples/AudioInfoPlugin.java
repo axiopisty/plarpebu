@@ -18,11 +18,15 @@ import javazoom.jlgui.basicplayer.BasicPlayerEvent;
 import javazoom.jlgui.basicplayer.BasicPlayerListener;
 
 import com.plarpebu.plugins.sdk.FramePlugin;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Audio Info
  */
 public class AudioInfoPlugin extends FramePlugin implements BasicPlayerListener {
+
+  private final static Logger logger = LoggerFactory.getLogger(AudioInfoPlugin.class);
 
   private JTextField sourceTF = null;
 
@@ -125,9 +129,7 @@ public class AudioInfoPlugin extends FramePlugin implements BasicPlayerListener 
     while(it.hasNext()) {
       String key = (String) it.next();
       Object value = properties.get(key);
-      System.out.println("key = " + key);
-      System.out.println("value = " + value);
-      System.out.println("audiotype = " + audiotype);
+      logger.debug(String.format("%s = %s, autiotype = %s", key, value, audiotype));
       if(key.startsWith("audio")) {
         jsSB.append(key + "=" + value + "\n");
       } else if((audiotype != null) && (key.startsWith(audiotype))) {

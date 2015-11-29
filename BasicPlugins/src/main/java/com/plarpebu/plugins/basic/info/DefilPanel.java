@@ -1,5 +1,8 @@
 package com.plarpebu.plugins.basic.info;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -31,6 +34,8 @@ import javax.swing.JPanel;
 
 public class DefilPanel extends JPanel {
 
+  private final static Logger logger = LoggerFactory.getLogger(DefilPanel.class);
+
   BorderLayout borderLayout1 = new BorderLayout();
 
   String msg = "";
@@ -51,7 +56,7 @@ public class DefilPanel extends JPanel {
     try {
       jbInit();
     } catch(Exception ex) {
-      ex.printStackTrace();
+      logger.warn(ex.getMessage(), ex);
     }
   }
 
@@ -105,7 +110,7 @@ public class DefilPanel extends JPanel {
     }
 
     g.setColor(Color.white);
-    // System.out.println("x = " + x_coord + " y = " + y_coord);
+    // logger.debug("x = " + x_coord + " y = " + y_coord);
     g.drawString(msg, x_coord, y_coord);
   }
 

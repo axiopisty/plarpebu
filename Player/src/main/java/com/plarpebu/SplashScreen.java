@@ -21,8 +21,12 @@ import javax.swing.border.Border;
 
 import fr.unice.plugin.PluginManagerEvent;
 import fr.unice.plugin.PluginManagerListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SplashScreen extends JWindow implements PluginManagerListener {
+
+  private final static Logger logger = LoggerFactory.getLogger(SplashScreen.class);
 
   ImageIcon icon1 = new ImageIcon(SplashScreen.class.getResource("/icons/splash.jpg"));
 
@@ -74,6 +78,7 @@ public class SplashScreen extends JWindow implements PluginManagerListener {
       try {
         Thread.sleep(duration);
       } catch(Exception e) {
+        logger.warn(e.getMessage(), e);
       }
 
       setVisible(false);
@@ -103,7 +108,7 @@ public class SplashScreen extends JWindow implements PluginManagerListener {
     try {
       jbInit();
     } catch(Exception e) {
-      e.printStackTrace();
+      logger.warn(e.getMessage(), e);
     }
   }
 

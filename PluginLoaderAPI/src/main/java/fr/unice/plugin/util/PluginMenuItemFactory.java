@@ -1,15 +1,15 @@
 package fr.unice.plugin.util;
 
-import javax.swing.JMenu;
+import fr.unice.plugin.Plugin;
+import fr.unice.plugin.PluginManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
-import java.util.logging.Logger;
-import java.awt.Component;
-
-import fr.unice.plugin.*;
-
-import static com.plarpebu.common.PlarpebuUtil.configureLogToFile;
 
 /**
  * This class facilitate the creation and usage
@@ -54,7 +54,7 @@ public class PluginMenuItemFactory extends Observable implements ActionListener 
    */
   private JMenu menu;
 
-  private static Logger logger = configureLogToFile(Logger.getLogger("fr.unice.plugin.PluginMenu"));
+  private static Logger logger = LoggerFactory.getLogger(PluginMenuItemFactory.class);
 
   /**
    * menu will have entries to select one plugin or another.
@@ -77,11 +77,11 @@ public class PluginMenuItemFactory extends Observable implements ActionListener 
     if(pluginManager == null) {
       return;
     }
-    logger.info("Build the plugin menu");
+    logger.trace("Build the plugin menu");
 
     Plugin[] instancesPlugins = pluginManager.getPluginInstances(type);
     //    Plugin[] instancesPlugins = pluginManager.getPluginInstances();
-    logger.info("Number of plugins found:" + instancesPlugins.length);
+    logger.debug("Number of plugins found:" + instancesPlugins.length);
 
     // Add one entry per plugin
     for(int i = 0; i < instancesPlugins.length; i++) {

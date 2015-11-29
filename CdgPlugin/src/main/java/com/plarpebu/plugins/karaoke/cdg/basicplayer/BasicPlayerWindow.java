@@ -43,6 +43,8 @@ import com.plarpebu.plugins.karaoke.cdg.io.CdgDataChunk;
 import com.plarpebu.plugins.karaoke.cdg.io.CdgFileObject;
 import com.plarpebu.plugins.karaoke.cdg.lyricspanel.CdgGraphicBufferedImage;
 import com.plarpebu.plugins.sdk.FramePlugin;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Basic CDG player window
@@ -50,6 +52,8 @@ import com.plarpebu.plugins.sdk.FramePlugin;
  * @author Michel Buffa (buffa@unice.fr)
  */
 public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListener, ActionListener {
+
+  private final static Logger logger = LoggerFactory.getLogger(BasicPlayerWindow.class);
 
   private long tempsMp3;
 
@@ -155,7 +159,7 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
     try {
       jbInit();
     } catch(Exception e) {
-      e.printStackTrace();
+      logger.warn(e.getMessage(), e);
     }
 
     // Dialog for chosing the full screen mode, modal
@@ -206,7 +210,7 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
    * preferences
    */
   public void savePreferences() {
-    System.out.println("dans pref red�finie");
+    logger.debug("dans pref red�finie");
     setVisible(false);
     super.savePreferences();
   }
@@ -266,7 +270,7 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
         userDisplayMode = new DisplayMode(fsWidth, fsHeight, fsDepth, fsFreq);
       }
     } catch(Exception e) {
-      e.printStackTrace();
+      logger.warn(e.getMessage(), e);
     }
   }
 
@@ -306,7 +310,7 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
       String cdgFileName = mp3File.getAbsolutePath().substring(0, length - 4) + ".cdg";
       File f = new File(cdgFileName);
       if(f.exists()) {
-        System.out.println("Opening cdg file : " + cdgFileName);
+        logger.debug("Opening cdg file : " + cdgFileName);
         CdgFileObject cdg = new CdgFileObject(cdgFileName);
         cdgDataChunksArray = cdg.getCdgDataChunksArray();
         cdgFileLoaded = true;
@@ -317,7 +321,7 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
         setVisible(false);
       }
     } catch(IOException ex) {
-      ex.printStackTrace();
+      logger.warn(ex.getMessage(), ex);
       cdgFileLoaded = false;
       setVisible(false);
     }
@@ -333,7 +337,7 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
 
     final int delay = (int) (nbCdgInstructions * 3.33);
 
-    System.out.println("---We launch timer with delay = " + (nbCdgInstructions * 3.33) + "---");
+    logger.debug("---We launch timer with delay = " + (nbCdgInstructions * 3.33) + "---");
     // each cdg instruction lasts 0.00333333 s
     timer = new Timer(delay, new ActionListener() {
 
@@ -360,7 +364,7 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
                 // timer.getDelay());
               } else {
                 // let's continue slowing down
-                // System.out.println("ralentit " + (current_row
+                // logger.debug("ralentit " + (current_row
                 // * 3.33) + " > " + tempsMp3);
                 timer.setDelay(timer.getDelay() + 100);
                 // jLabel1.setText("slowing down\t\t " +
@@ -381,7 +385,7 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
                 // timer.getDelay());
               } else {
 
-                // System.out.println("acc�l�re " + (current_row
+                // logger.debug("acc�l�re " + (current_row
                 // * 3.33) + " < " + tempsMp3);
                 if(timer.getDelay() > 0) {
                   timer.setDelay(timer.getDelay() - 1);
@@ -484,13 +488,13 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
    */
   private void switchFullScreenWindowedMode() {
     if(windowedMode) {
-      System.out.println("Go TO FULL SCREEN");
+      logger.debug("Go TO FULL SCREEN");
       // Go to full screen
       try {
         // go fullscreen
         goToFullScreen();
       } catch(Exception ex) {
-        ex.printStackTrace();
+        logger.warn(ex.getMessage(), ex);
         goToWindowedMode();
       }
     } else {
@@ -594,7 +598,7 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
      * Key pressed
      */
     public void keyPressed(KeyEvent e) {
-      System.out.println("Key Event: " + e.getKeyCode());
+      logger.debug("Key Event: " + e.getKeyCode());
 
       // If escape key is pressed, go to windowed mode!
       if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
@@ -648,19 +652,19 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
 
       if(stream != null) {
         if(stream instanceof File) {
-          System.out.println("File : " + ((File) stream).getAbsolutePath());
-          System.out.println("------------------");
-          System.out.println("Trying to Load cdg file...");
-          System.out.println("------------------");
+          logger.debug("File : " + ((File) stream).getAbsolutePath());
+          logger.debug("------------------");
+          logger.debug("Trying to Load cdg file...");
+          logger.debug("------------------");
           loadCdgFile((File) stream);
           if(!cdgFileLoaded) {
-            System.out.println("No Cdg file associated !");
+            logger.debug("No Cdg file associated !");
             return;
           }
 
           setVisible(true);
         } else if(stream instanceof URL) {
-          System.out.println("URL : " + ((URL) stream).toString());
+          logger.debug("URL : " + ((URL) stream).toString());
         }
       }
       Iterator it = properties.keySet().iterator();
@@ -682,9 +686,9 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
           extjsSB.append(key + "=" + value + "\n");
         }
       }
-      System.out.println(jsSB.toString());
-      System.out.println(extjsSB.toString());
-      System.out.println(spiSB.toString());
+      logger.debug(jsSB.toString());
+      logger.debug(extjsSB.toString());
+      logger.debug(spiSB.toString());
     }
   }
 
@@ -705,18 +709,18 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
     if(seeking) {
       // tempsMp3 = microseconds / 1000;
       String value = "" + properties.get("mp3.position.microseconds");
-      System.out.println(("---microseconds--- = " + value));
+      logger.debug(("---microseconds--- = " + value));
       tempsMp3 = Long.parseLong(value);
       // System.exit(0);
       tempsMp3 /= 1000;
-      System.out.println("tempsMp3 = " + tempsMp3);
-      System.out.println("currentRow avant " + current_row);
+      logger.debug("tempsMp3 = " + tempsMp3);
+      logger.debug("currentRow avant " + current_row);
       current_row = (int) ((tempsMp3 / 3.33) + 0.5);
       seeking = false;
-      System.out.println("-----");
-      System.out.println("Current row recalcul�");
-      System.out.println("currentRow apr�s " + current_row);
-      System.out.println("-----");
+      logger.debug("-----");
+      logger.debug("Current row recalcul�");
+      logger.debug("currentRow apr�s " + current_row);
+      logger.debug("-----");
 
     }
   }
@@ -727,33 +731,33 @@ public class BasicPlayerWindow extends FramePlugin implements BasicPlayerListene
    * @param event
    */
   public void stateUpdated(BasicPlayerEvent event) {
-    System.out.println("RECU BASICPLAYEREVBNT = " + event.getCode());
+    logger.debug("RECU BASICPLAYEREVBNT = " + event.getCode());
     if(cdgFileLoaded) {
       if(event.getCode() == BasicPlayerEvent.PLAYING) {
-        System.out.println("RECU BASICPLAYEREVBNT = PLAYING");
+        logger.debug("RECU BASICPLAYEREVBNT = PLAYING");
         if(!seeking) {
-          System.out.println("NOT SEEKING !");
+          logger.debug("NOT SEEKING !");
           startTimedPlay();
         }
       } else {
         if(event.getCode() == BasicPlayerEvent.STOPPED) {
-          System.out.println("RECU BASICPLAYEREVBNT STOPPED");
+          logger.debug("RECU BASICPLAYEREVBNT STOPPED");
           if(!seeking) {
-            System.out.println("ON ARRETE le cdg ! stopCdgOnly()");
+            logger.debug("ON ARRETE le cdg ! stopCdgOnly()");
             stopCdgOnly();
           }
         } else {
           if(event.getCode() == BasicPlayerEvent.PAUSED) {
-            System.out.println("RECU BASICPLAYEREVBNT PAUSED");
+            logger.debug("RECU BASICPLAYEREVBNT PAUSED");
             pause();
           } else if(event.getCode() == BasicPlayerEvent.RESUMED) {
-            System.out.println("RECU BASICPLAYEREVBNT RESUMED");
+            logger.debug("RECU BASICPLAYEREVBNT RESUMED");
             resume();
           } else if(event.getCode() == BasicPlayerEvent.SEEKED) {
-            System.out.println("RECU BASICPLAYEREVBNT SEEKED");
+            logger.debug("RECU BASICPLAYEREVBNT SEEKED");
             seeking = true;
           } else if(event.getCode() == BasicPlayerEvent.SEEKING) {
-            System.out.println("RECU BASICPLAYEREVBNT SEEKING");
+            logger.debug("RECU BASICPLAYEREVBNT SEEKING");
             seeking = true;
           }
         }

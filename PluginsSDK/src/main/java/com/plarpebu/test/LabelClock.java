@@ -1,14 +1,9 @@
 package com.plarpebu.test;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.Shape;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
@@ -36,6 +31,8 @@ import javax.swing.JLabel;
 
 public class LabelClock extends JLabel implements Runnable {
 
+  private final static Logger logger = LoggerFactory.getLogger(LabelClock.class);
+
   private FontRenderContext frc;
 
   private FontMetrics fontMetrics;
@@ -59,7 +56,7 @@ public class LabelClock extends JLabel implements Runnable {
       try {
         Thread.sleep(1000);
       } catch(InterruptedException ex) {
-        ex.printStackTrace();
+        logger.warn(ex.getMessage(), ex);
       }
     }
   }

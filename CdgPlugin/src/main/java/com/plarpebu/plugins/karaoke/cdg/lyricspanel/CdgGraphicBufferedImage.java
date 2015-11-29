@@ -192,7 +192,7 @@ public class CdgGraphicBufferedImage extends JPanel {
     if(fromPartialRedraw) {
       g.drawImage(img, rDestination.x, rDestination.y, rDestination.x + rDestination.width, rDestination.y + rDestination.height, r.x, r.y, r.x + r.width, r.y + r.height, this);
     } else {
-      // System.out.println("Complete redraw");
+      // logger.debug("Complete redraw");
       g.drawImage(img, 0, 0, getWidth(), getHeight(), this);
     }
 

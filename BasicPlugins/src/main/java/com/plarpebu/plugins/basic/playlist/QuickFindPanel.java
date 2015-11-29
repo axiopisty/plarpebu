@@ -11,8 +11,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.plarpebu.plugins.basic.SwingUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class QuickFindPanel extends JPanel implements ActionListener, KeyListener {
+
+  private final static Logger logger = LoggerFactory.getLogger(QuickFindPanel.class);
 
   private JTextField quickFindField;
 
@@ -99,7 +103,7 @@ public class QuickFindPanel extends JPanel implements ActionListener, KeyListene
   public void findNext() {
     // Search for the value of the textfield in the playlist
     String searchText = quickFindField.getText();
-    System.out.println("Next searchText = " + searchText);
+    logger.debug("Next searchText = " + searchText);
     if(searchText != null && searchText.equals("") == false) {
       PlayListPlugin.findNext(searchText);
     }
@@ -108,7 +112,7 @@ public class QuickFindPanel extends JPanel implements ActionListener, KeyListene
   public void findPrev() {
     // Search for the value of the textfield in the playlist
     String searchText = quickFindField.getText();
-    System.out.println("Prev searchText = " + searchText);
+    logger.debug("Prev searchText = " + searchText);
     if(searchText != null && searchText.equals("") == false) {
       PlayListPlugin.findPrev(searchText);
     }
@@ -116,12 +120,14 @@ public class QuickFindPanel extends JPanel implements ActionListener, KeyListene
 
   private class FindNextThread extends Thread {
 
+    private final Logger logger = LoggerFactory.getLogger(FindNextThread.class);
+
     public void run() {
       try {
         Thread.sleep(10);
         findNext();
       } catch(Exception ex) {
-        System.out.println(ex);
+        logger.warn(ex.getMessage(), ex);
       }
     }
   }

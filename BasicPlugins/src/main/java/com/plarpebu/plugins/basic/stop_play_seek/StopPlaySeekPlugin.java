@@ -24,11 +24,15 @@ import javazoom.jlgui.basicplayer.BasicPlayerListener;
 import com.plarpebu.plugins.basic.SwingUtils;
 import com.plarpebu.plugins.basic.playlist.PlayListPlugin;
 import com.plarpebu.plugins.sdk.PanelPlugin;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Stop PLay Seek Plugin
  */
 public class StopPlaySeekPlugin extends PanelPlugin implements BasicPlayerListener, ActionListener, MouseListener {
+
+  private final static Logger logger = LoggerFactory.getLogger(StopPlaySeekPlugin.class);
 
   public static final String NAME = "Stop Play Seek Plugin";
 
@@ -166,7 +170,7 @@ public class StopPlaySeekPlugin extends PanelPlugin implements BasicPlayerListen
       }
 
     } catch(BasicPlayerException e1) {
-      e1.printStackTrace();
+      logger.warn(e1.getMessage(), e1);
     }
   }
 
@@ -191,7 +195,7 @@ public class StopPlaySeekPlugin extends PanelPlugin implements BasicPlayerListen
         // }
         controller.seek(skp);
       } catch(BasicPlayerException e1) {
-        e1.printStackTrace();
+        logger.warn(e1.getMessage(), e1);
       }
     }
   }
@@ -208,7 +212,7 @@ public class StopPlaySeekPlugin extends PanelPlugin implements BasicPlayerListen
   }
 
   public void stateUpdated(BasicPlayerEvent event) {
-    System.out.println("Player Event : " + event);
+    logger.debug("Player Event : " + event);
   }
 
   public void progress(int bytesread, long microseconds, byte[] pcmdata, Map properties) {

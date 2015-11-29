@@ -1,5 +1,8 @@
 package com.plarpebu.javakarplayer.plugins.AudioPlugins.utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.sound.midi.MetaEventListener;
 import javax.sound.midi.MetaMessage;
 
@@ -22,6 +25,8 @@ import javax.sound.midi.MetaMessage;
  */
 
 public abstract class JavaSoundLyricsListener implements MetaEventListener {
+
+  private final static Logger logger = LoggerFactory.getLogger(JavaSoundLyricsListener.class);
 
   public static final int LYRIC = 1;
 
@@ -90,7 +95,7 @@ public abstract class JavaSoundLyricsListener implements MetaEventListener {
                   outputKaraokeMess(karaokeMess);
                   break;
                 default:
-                  System.err.println("UNKNOWN @ message " + nextChar + " == " + (int) nextChar + " :: " + lyric);
+                  logger.warn("UNKNOWN @ message " + nextChar + " == " + (int) nextChar + " :: " + lyric);
               }
               ;
               break;
@@ -112,7 +117,7 @@ public abstract class JavaSoundLyricsListener implements MetaEventListener {
       default:
         // / What about other Meta information ???
         // / Do we care ???
-        // System.err.println("Unknown MetaInformation TYPE " + metaType + " : "
+        // logger.warn("Unknown MetaInformation TYPE " + metaType + " : "
         // + new String(meta.getData()) );
     }
   }
@@ -126,31 +131,31 @@ public abstract class JavaSoundLyricsListener implements MetaEventListener {
   public abstract void outputLyric(String lyric);
 
   public void songInfo(String info) {
-    System.out.println(info);
+    logger.debug(info);
   }
 
   ;
 
   public void outputTitle(String title) {
-    System.out.println("TITLE: " + title);
+    logger.debug("TITLE: " + title);
   }
 
   ;
 
   public void outputVersion(String version) {
-    System.out.println("VERSION: " + version);
+    logger.debug("VERSION: " + version);
   }
 
   ;
 
   public void outputLanguage(String language) {
-    System.out.println("LANGUAGE: " + language);
+    logger.debug("LANGUAGE: " + language);
   }
 
   ;
 
   public void outputKaraokeMess(String message) {
-    System.out.println("KARAOKE: " + message);
+    logger.debug("KARAOKE: " + message);
   }
 
   ;

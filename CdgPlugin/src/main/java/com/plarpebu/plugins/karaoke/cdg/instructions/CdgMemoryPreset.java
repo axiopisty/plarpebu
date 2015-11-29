@@ -54,7 +54,7 @@ public class CdgMemoryPreset {
       filler[i] = (byte) (data[2 + i] & 0x3F);
     }
 
-    // System.out.println("Clear the screen with color = " + color);
+    // logger.debug("Clear the screen with color = " + color);
     /*
      * for (int i = 0; i < 216 * 300; i++) { pixels[i] = color; }
 		 */
@@ -63,7 +63,7 @@ public class CdgMemoryPreset {
   }
 
   public static void clearScreen(byte[] pixels, byte color) {
-    // System.out.println("Clear the screen with color = " + color);
+    // logger.debug("Clear the screen with color = " + color);
     /*
      * for (int i = 0; i < 216 * 300; i++) { pixels[i] = color; }
 		 */

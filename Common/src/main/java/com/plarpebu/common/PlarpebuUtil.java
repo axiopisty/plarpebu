@@ -1,15 +1,16 @@
 package com.plarpebu.common;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
-import java.io.IOException;
 import java.net.URLDecoder;
 import java.security.CodeSource;
 import java.util.Optional;
-import java.util.logging.FileHandler;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
 public final class PlarpebuUtil {
+
+  private final static Logger logger = LoggerFactory.getLogger(PlarpebuUtil.class);
 
   private static Optional<File> opApplicationRoot = Optional.empty();
 
@@ -31,28 +32,9 @@ public final class PlarpebuUtil {
        .getPath(), "UTF-8"));
       opApplicationRoot = Optional.of(root);
     } catch(Throwable t) {
-      t.printStackTrace();
+      logger.warn(t.getMessage(), t);
     }
     return root;
   }
 
-  private static FileHandler fileHandler;
-
-  static {
-    try {
-      // This block configure the logger with handler and formatter
-      File appRoot = applicationRootDirectory();
-      String logFile = new File(appRoot, "plarpebu.log").getCanonicalPath();
-      fileHandler = new FileHandler(logFile);
-      SimpleFormatter formatter = new SimpleFormatter();
-      fileHandler.setFormatter(formatter);
-    } catch(SecurityException | IOException e) {
-      e.printStackTrace();
-    }
-  }
-
-  public static Logger configureLogToFile(Logger logger) {
-    logger.addHandler(fileHandler);
-    return logger;
-  }
 }

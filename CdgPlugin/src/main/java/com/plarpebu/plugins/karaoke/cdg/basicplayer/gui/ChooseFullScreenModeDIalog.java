@@ -19,6 +19,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
 import com.plarpebu.SkinMgr;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>
@@ -39,6 +41,8 @@ import com.plarpebu.SkinMgr;
  */
 
 public class ChooseFullScreenModeDIalog extends JDialog {
+
+  private final static Logger logger = LoggerFactory.getLogger(ChooseFullScreenModeDIalog.class);
 
   JPanel jPanel1 = new JPanel();
 
@@ -93,7 +97,7 @@ public class ChooseFullScreenModeDIalog extends JDialog {
     try {
       jbInit();
     } catch(Exception e) {
-      e.printStackTrace();
+      logger.warn(e.getMessage(), e);
     }
     // List of display modes
     for(int i = 0; i < COLUMN_WIDTHS.length; i++) {

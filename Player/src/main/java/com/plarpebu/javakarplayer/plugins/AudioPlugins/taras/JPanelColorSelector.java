@@ -1,5 +1,8 @@
 package com.plarpebu.javakarplayer.plugins.AudioPlugins.taras;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
@@ -28,13 +31,15 @@ import javax.swing.JPanel;
  */
 public class JPanelColorSelector extends JPanel {
 
+  private final static Logger logger = LoggerFactory.getLogger(JPanelColorSelector.class);
+
   BorderLayout borderLayout1 = new BorderLayout();
 
   public JPanelColorSelector() {
     try {
       jbInit();
     } catch(Exception ex) {
-      ex.printStackTrace();
+      logger.warn(ex.getMessage(), ex);
     }
   }
 

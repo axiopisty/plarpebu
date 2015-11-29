@@ -24,6 +24,8 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
 import com.plarpebu.SkinMgr;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>
@@ -43,6 +45,8 @@ import com.plarpebu.SkinMgr;
  * @version $Id
  */
 public class CdgOptionsDialog extends JDialog {
+
+  private final static Logger logger = LoggerFactory.getLogger(CdgOptionsDialog.class);
 
   JPanel panel1 = new JPanel();
 
@@ -114,7 +118,7 @@ public class CdgOptionsDialog extends JDialog {
       jSlider1.setValue(20);
       pack();
     } catch(Exception ex) {
-      ex.printStackTrace();
+      logger.warn(ex.getMessage(), ex);
     }
   }
 

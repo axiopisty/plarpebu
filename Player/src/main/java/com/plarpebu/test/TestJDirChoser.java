@@ -9,6 +9,8 @@ import javax.swing.JTextArea;
 import javax.swing.UIManager;
 
 import com.l2fprod.common.swing.JDirectoryChooser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>Title: </p>
@@ -25,6 +27,8 @@ import com.l2fprod.common.swing.JDirectoryChooser;
  * A simple example showing how to use the JDirectoryChooser.
  */
 public class TestJDirChoser implements ActionListener {
+
+  private final static Logger logger = LoggerFactory.getLogger(TestJDirChoser.class);
 
   public TestJDirChoser() {
     JDirectoryChooser chooser = new JDirectoryChooser();
@@ -65,7 +69,7 @@ public class TestJDirChoser implements ActionListener {
   }
 
   public void actionPerformed(ActionEvent e) {
-    System.out.println("Action performed");
+    logger.debug("Action performed");
   }
 
 }

@@ -22,6 +22,7 @@
 package com.plarpebu.basicplayer;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
@@ -32,18 +33,18 @@ import javazoom.jlgui.basicplayer.BasicPlayerEvent;
 import javazoom.jlgui.basicplayer.BasicPlayerException;
 import javazoom.jlgui.basicplayer.BasicPlayerListener;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
 
 import com.plarpebu.javakarplayer.plugins.AudioPlugins.JavaSoundMidiKar;
 import com.plarpebu.javakarplayer.plugins.AudioPlugins.MidiListener;
 import com.plarpebu.plugins.sdk.Iconifiable;
+import org.slf4j.LoggerFactory;
 
 public class BasicMidiPlayer extends BasicPlayer implements MidiListener {
 
-  private Object m_dataSource;
+  private final static Logger logger = LoggerFactory.getLogger(BasicMidiPlayer.class);
 
-  private static Log log = LogFactory.getLog(BasicMP3Player.class);
+  private Object m_dataSource;
 
   // For midi / kar play
   private JavaSoundMidiKar midiKarPlayer = new JavaSoundMidiKar();
@@ -83,10 +84,14 @@ public class BasicMidiPlayer extends BasicPlayer implements MidiListener {
    * Open file to play.
    */
   public void open(File file) throws BasicPlayerException {
-    log.debug("open(" + file + ")");
+    logger.debug("open(" + file + ")");
     if(file != null) {
       if(file.getName().toLowerCase().endsWith(".kar") || file.getName().toLowerCase().endsWith(".mid")) {
-        System.out.println("We got a midi or a kar file !");
+        try {
+          logger.info("Got File: " + file.getCanonicalPath());
+        } catch (IOException e) {
+          logger.info("Got File: " + file.getName());
+        }
         m_dataSource = file;
         initAudioInputStream();
         // midiKarPlayer.loadFile(file);
@@ -98,16 +103,16 @@ public class BasicMidiPlayer extends BasicPlayer implements MidiListener {
    * Open URL to play.
    */
   public void open(URL url) throws BasicPlayerException {
-    log.debug("open(" + url + ")");
-    System.out.println("Not implemented");
+    logger.debug("open(" + url + ")");
+    logger.debug("Not implemented");
   }
 
   /**
    * Open inputstream to play.
    */
   public void open(InputStream inputStream) throws BasicPlayerException {
-    log.debug("open(" + inputStream + ")");
-    System.out.println("Not implemented");
+    logger.debug("open(" + inputStream + ")");
+    logger.debug("Not implemented");
   }
 
   /**
@@ -198,7 +203,7 @@ public class BasicMidiPlayer extends BasicPlayer implements MidiListener {
       m_status = STOPPED;
       notifyEvent(BasicPlayerEvent.STOPPED, getEncodedStreamPosition(), -1, null);
       midiKarPlayer.stop();
-      log.info("stopPlayback() completed");
+      logger.debug("stopPlayback() completed");
     }
   }
 
@@ -209,7 +214,7 @@ public class BasicMidiPlayer extends BasicPlayer implements MidiListener {
   protected void pausePlayback() {
     if(m_status == PLAYING) {
       m_status = PAUSED;
-      log.info("pausePlayback() completed");
+      logger.debug("pausePlayback() completed");
       notifyEvent(BasicPlayerEvent.PAUSED, getEncodedStreamPosition(), -1, null);
       midiKarPlayer.pause();
     }
@@ -222,7 +227,7 @@ public class BasicMidiPlayer extends BasicPlayer implements MidiListener {
   protected void resumePlayback() {
     if(m_status == PAUSED) {
       m_status = PLAYING;
-      log.info("resumePlayback() completed");
+      logger.debug("resumePlayback() completed");
       notifyEvent(BasicPlayerEvent.RESUMED, getEncodedStreamPosition(), -1, null);
       midiKarPlayer.resume();
     }

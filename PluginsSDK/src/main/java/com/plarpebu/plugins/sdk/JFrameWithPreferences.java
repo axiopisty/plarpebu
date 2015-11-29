@@ -13,11 +13,15 @@ import javax.swing.JFrame;
 
 import com.plarpebu.SkinMgr;
 import com.plarpebu.common.PlarpebuUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Plugins can extends this class if they want to store preferences
  */
 public abstract class JFrameWithPreferences extends JFrame implements SystemExitListener {
+
+  private final static Logger logger = LoggerFactory.getLogger(JFrameWithPreferences.class);
 
   // For preferences
   protected Properties preferences = null;
@@ -58,23 +62,11 @@ public abstract class JFrameWithPreferences extends JFrame implements SystemExit
     // create and load default properties
     try {
       in = new FileInputStream(defaultPreferencesFilename);
-      /*
-       * System.out.println("On cherche la ressource " + "/"+defaultPreferencesFilename); in =
-			 * pluginsSDK.JFrameWithPreferences.class.getResourceAsStream("/"+defaultPreferencesFilename);
-			 */
       defaultProps.load(in);
-      // create program properties with default
       preferences = new Properties(defaultProps);
       in.close();
     } catch(Exception e) {
-      System.out.println("*****************************************");
-      e.printStackTrace();
-      try {
-        System.out.println("No default preferences file found : " + defaultPreferencesFilename
-          .getCanonicalPath() + " creating an empty one");
-      } catch(IOException e1) {
-        e1.printStackTrace();
-      }
+      logger.debug(e.getMessage(), e);
       createPreferencesFile(defaultPreferencesFilename);
     }
 
@@ -84,7 +76,7 @@ public abstract class JFrameWithPreferences extends JFrame implements SystemExit
       preferences.load(in);
       in.close();
     } catch(Exception e) {
-      System.out.println("No preferences file found : " + preferenceFileName + " Creating an empty one...");
+      logger.info("Creating preferences file: " + preferenceFileName);
       createPreferencesFile(preferenceFileName);
     }
 
@@ -134,7 +126,7 @@ public abstract class JFrameWithPreferences extends JFrame implements SystemExit
     try {
       File f = new File(PlarpebuUtil.applicationRootDirectory(), "preferences");
       if(!f.exists()) {
-        System.out.println("The preferences dir does not exist, creating it !");
+        logger.debug(f.getCanonicalPath() + " does not exist, creating it !");
         f.mkdir();
       }
 
@@ -142,7 +134,7 @@ public abstract class JFrameWithPreferences extends JFrame implements SystemExit
       out.flush();
       out.close();
     } catch(IOException ex) {
-      System.out.println("Error creating empty preferences file : " + filename);
+      logger.warn("Error creating empty preferences file : " + filename + ": " + ex.getMessage(), ex);
     }
   }
 
@@ -165,12 +157,12 @@ public abstract class JFrameWithPreferences extends JFrame implements SystemExit
         out.close();
       }
     } catch(Exception e) {
-      e.printStackTrace();
+      logger.warn(e.getMessage(), e);
     }
   }
 
   public void exiting() {
-    System.out.println(getClass().getName() + " is exiting, saving preferences");
+    logger.debug(getClass().getName() + " is exiting, saving preferences");
     savePreferences();
   }
 
@@ -187,7 +179,7 @@ public abstract class JFrameWithPreferences extends JFrame implements SystemExit
     int r = Integer.parseInt(st.nextToken());
     int g = Integer.parseInt(st.nextToken());
     int b = Integer.parseInt(st.nextToken());
-    // System.out.println("r = " + r + " g = " + g + " b = " + b);
+    logger.trace("r = " + r + " g = " + g + " b = " + b);
     return new Color(r, g, b);
   }
 }

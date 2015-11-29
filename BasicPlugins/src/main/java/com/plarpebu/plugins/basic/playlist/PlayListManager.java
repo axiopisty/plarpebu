@@ -44,6 +44,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import com.plarpebu.SkinMgr;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Playlist Manager
@@ -52,6 +54,8 @@ import com.plarpebu.SkinMgr;
  * @version 1.0
  */
 public class PlayListManager extends JFrame implements ActionListener, KeyListener, DropTargetListener {
+
+  private final static Logger logger = LoggerFactory.getLogger(PlayListManager.class);
 
   private Container pane = null;
 
@@ -104,7 +108,7 @@ public class PlayListManager extends JFrame implements ActionListener, KeyListen
       jbInit();
       setTitle("Playlist Manager");
     } catch(Exception ex) {
-      ex.printStackTrace();
+      logger.warn(ex.getMessage(), ex);
     }
 
     SkinMgr.getInstance().addComponent(this);
@@ -520,12 +524,6 @@ public class PlayListManager extends JFrame implements ActionListener, KeyListen
         else if(data instanceof java.lang.String) {
           parseData((String) data);
         }
-      } catch(IOException ioe) {
-        e.dropComplete(false);
-        return;
-      } catch(UnsupportedFlavorException ufe) {
-        e.dropComplete(false);
-        return;
       } catch(Exception ex) {
         e.dropComplete(false);
         return;
@@ -543,7 +541,7 @@ public class PlayListManager extends JFrame implements ActionListener, KeyListen
 
   public void parcoursRecursif(File f, boolean recu, int depth) {
     if(depth > PlayListPlugin.MAXDEPTH) {
-      System.out.println("Stopping recursion, MAXDEPTH = " + PlayListPlugin.MAXDEPTH + " reached");
+      logger.debug("Stopping recursion, MAXDEPTH = " + PlayListPlugin.MAXDEPTH + " reached");
       return;
     }
 

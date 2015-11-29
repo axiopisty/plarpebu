@@ -31,11 +31,15 @@ import javazoom.jlgui.basicplayer.BasicPlayerEvent;
 import javazoom.jlgui.basicplayer.BasicPlayerListener;
 
 import com.plarpebu.plugins.sdk.Iconifiable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This has additional functionality not built into the jlGUI BasicPlayer
  */
 public abstract class BasicPlayer implements PlayerController {
+
+  private final static Logger logger = LoggerFactory.getLogger(BasicPlayer.class);
 
   /**
    * These variables are used to distinguish stopped, paused, playing states. We need them to
@@ -108,9 +112,9 @@ public abstract class BasicPlayer implements PlayerController {
    */
   @Override
   public boolean isFileSupported(String filename) {
-    System.out.println("On teste pour " + filename);
+    logger.debug("On teste pour " + filename);
     for(int i = 0; i < supportedFileTypeExtensions.length; i++) {
-      System.out.println("On compare avec " + supportedFileTypeExtensions[i]);
+      logger.debug("On compare avec " + supportedFileTypeExtensions[i]);
       if(filename.toLowerCase().endsWith(supportedFileTypeExtensions[i])) {
         return true;
       }

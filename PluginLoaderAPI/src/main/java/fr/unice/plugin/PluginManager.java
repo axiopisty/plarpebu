@@ -1,24 +1,17 @@
 package fr.unice.plugin;
 
-import java.net.URL;
-import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.Collection;
-import java.util.Iterator;
-
-import java.util.logging.Logger;
-import java.util.logging.Level;
-import java.io.File;
-
 import fr.unice.grin.detectjar.DetectJar;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.FilenameFilter;
-import java.util.*;
-
-import static com.plarpebu.common.PlarpebuUtil.configureLogToFile;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Manage plugins:
@@ -159,7 +152,7 @@ public class PluginManager {
 
   private static PluginManager pluginManager;
 
-  private static Logger logger = configureLogToFile(Logger.getLogger("fr.unice.plugin.PluginManager"));
+  private static final Logger logger = LoggerFactory.getLogger(PluginManager.class);
 
   /**
    * Private constructor for the singleton pattern.
@@ -167,9 +160,9 @@ public class PluginManager {
    * @param urls URLs where the plugins will be searched.
    */
   private PluginManager(URL[] urls) {
-    logger.info("Length of the array of the URLs: " + urls.length);
+    logger.debug("Length of the array of the URLs: " + urls.length);
     for(int i = 0; i < urls.length; i++) {
-      logger.info("Add one URL " + urls[i]);
+      logger.debug("Add one URL " + urls[i]);
       this.urls.add(urls[i]);
     }
     pluginLoader = new PluginLoader(urls);
@@ -283,11 +276,11 @@ public class PluginManager {
       // If a URL is malformed, URL is not added; client will receive an error
       // message by getURL
       try {
-        logger.info("Add URL *" + newUrls[i] + "* for the search of the plugins");
+        logger.debug("Add URL *" + newUrls[i] + "* for the search of the plugins");
         urlt[i] = getURL(newUrls[i]);
         nbUrls++;
       } catch(MalformedURLException ex) {
-        ex.printStackTrace();
+        logger.warn(ex.getMessage(), ex);
       }
     }
     // array must be full (without any null)
@@ -336,7 +329,7 @@ public class PluginManager {
    * @throws MalformedURLException if it not possible to guess the good syntax.
    */
   private static URL getURL(String url) throws MalformedURLException {
-    logger.info("URL non transform�e : " + url);
+    logger.trace("URL non transform�e : " + url);
 
     /* Correct Windows name;
      * for example, C:\rep\machin becomes file:/C:/rep/machin
@@ -434,19 +427,19 @@ public class PluginManager {
            * to the classpath).
            */
           if(url.startsWith("/")) { // Nom absolu
-            logger.info("URL transform�e : ressource " + url);
+            logger.debug("URL transform�e : ressource " + url);
             /* Next line is annoying as it constrains to have an entry for
              * the directory in the jar. But tools like JBuilder does not put
              * entries in the jar for directories that contains resources.
              * To do: if the application is in a jar, look into the jar
              * all the entries that begin with url.
              */
-            //            logger.info("Resource exists? " + new File(url2.getPath()).exists());
-            //            logger.info("equivalent ? " + new File(url2.getPath()).toURL().equals(url2));
-            logger.info("Classpath = " + System.getProperty("java.class.path"));
+            //            logger.debug("Resource exists? " + new File(url2.getPath()).exists());
+            //            logger.debug("equivalent ? " + new File(url2.getPath()).toURL().equals(url2));
+            logger.debug("Classpath = " + System.getProperty("java.class.path"));
             URL url2 = PluginManager.class.getResource(url);
             if(url2 != null) {
-              logger.info("URL of the resource: " + url2);
+              logger.debug("URL of the resource: " + url2);
               return url2;
             } else {
               // ressource does not exist
@@ -463,7 +456,7 @@ public class PluginManager {
               // The URL parameter is condired as the path of a file inside
               // the jar, relative to the root of the jar.
               url = "jar:" + urlName.substring(0, urlName.indexOf('!') + 2) + url;
-              logger.info("Name of a directory relative to a jar" + url);
+              logger.debug("Name of a directory relative to a jar" + url);
             } else {
               // If it is not in a jar, file: is added at the beginning
               url = "file:" + url;
@@ -472,12 +465,12 @@ public class PluginManager {
         } // does not begin with file:
         if(!url.endsWith("/")) {
           // Faut-il le faire aussi pour un r�pertoire dans un jar ????****
-          logger.info("Add a / at the end of a directory");
+          logger.debug("Add a / at the end of a directory");
           url = url + "/";
         }
       } // c'est un r�pertoire
     } // �a n'est pas un jar
-    logger.info("Tranformed URL: " + url);
+    logger.debug("Tranformed URL: " + url);
     return new URL(url);
   }
 
@@ -490,7 +483,7 @@ public class PluginManager {
    *             <code>null</code> if one wants the plugin of any type.
    */
   public final void loadPlugins(Class type) {
-    logger.info("loadPlugins(" + type + ") into urls " + urls);
+    logger.debug("loadPlugins(" + type + ") into urls " + urls);
     // 1. plugin loader loads the plugins
     pluginLoader.loadPlugins(type, true);
     // 2. Registers the loaded plugins
@@ -625,7 +618,7 @@ public class PluginManager {
     // Verify that all the urls correspond to directories
     for(int i = 0; i < urls.length; i++) {
       URL url = urls[i];
-      logger.info("***************** Directory " + url);
+      logger.debug("Directory " + url);
       if(url.getProtocol().equals("file")) { // ou file: ????
         File file = new File(url.getPath());
         if(file.isDirectory()) {
@@ -639,10 +632,9 @@ public class PluginManager {
           // Add all the jars in this directory
           for(int j = 0; j < jars.length; j++) {
             try {
-              logger.info("" + jars[j] + "-->" + jars[j].toString());
               addURL(jars[j].toString());
             } catch(MalformedURLException ex) {
-              ex.printStackTrace();
+              logger.warn(ex.getMessage(), ex);
             }
           }
         } // if (file.isDirectory())
@@ -754,9 +746,7 @@ public class PluginManager {
 
   public String toString() {
     StringBuffer sb = new StringBuffer("PluginManager search in: ");
-    for(Iterator iter = urls.iterator(); iter.hasNext(); ) {
-      sb.append(iter.next() + ";");
-    }
+    sb.append(urls.stream().map(e -> e.toString()).collect(Collectors.joining("\n")));
     return sb.toString();
   }
 
